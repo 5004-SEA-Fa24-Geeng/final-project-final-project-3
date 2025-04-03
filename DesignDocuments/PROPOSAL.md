@@ -6,7 +6,13 @@ Draft	April 2
 
 Proposal	April 3
 
-First Discussion	April 3 Afternoon
+First Discussion (basic features)	April 3 Afternoon
+
+Graphical User Interface April 6
+
+Search, sort, filter items in the collections April 8
+
+Include images for your items April 10
 
 Second Discussion	April 10 Morning
 
