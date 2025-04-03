@@ -22,15 +22,14 @@ public class JSONFileHandler {
      * @param fileName the name of the file saved the wish list to
      * @return if the wish list is successfully saved to the file
      */
-    public static boolean writeWishListToFile(String fileName) {
+    public static boolean writeWishListToFile(String fileName) throws IOException{
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName), WishList.wishList);
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Failed to write the wish list to the file!", e);
         }
-        return false;
     }
 
     /**
