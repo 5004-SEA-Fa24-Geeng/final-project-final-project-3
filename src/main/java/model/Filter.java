@@ -1,49 +1,48 @@
 package model;
 
+import java.util.List;
+
 public interface Filter {
     boolean matches(CharacterRecord character);
 
     default Filter and(Filter other) {
-        return new Filter() {
-            @Override
-            public boolean matches(CharacterRecord c) {
-                return Filter.this.matches(c) && other.matches(c);
-            }
-        };
+        return c -> this.matches(c) && other.matches(c);
     }
 
     default Filter or(Filter other) {
-        return new Filter() {
-            @Override
-            public boolean matches(CharacterRecord c) {
-                return Filter.this.matches(c) || other.matches(c);
-            }
-        };
+        return c -> this.matches(c) || other.matches(c);
     }
 
     static Filter nameContains(String keyword) {
-        return new Filter() {
-            @Override
-            public boolean matches(CharacterRecord c) {
-                return c.getName().toLowerCase().contains(keyword);
-            }
-        };
+        String lowered = keyword.toLowerCase();
+        return c -> c.getName().toLowerCase().contains(lowered);
     }
 
     static Filter genderIs(Integer gender) {
-        return new Filter() {
-            @Override
-            public boolean matches(CharacterRecord c) {
-                return c.getGender().equals(gender);
-            }
-        };
+        return c -> c.getGender().equals(gender);
     }
 
-    static Filter astrologyIs(String sign) {
+    static Filter genderIn(List<Integer> genders) {
+        return genders.stream()
+                .map(Filter::genderIs)
+                .reduce(c -> false, Filter::or);
+    }
+
+    static Filter zodiacIs(String sign) {
         return new Filter() {
             public boolean matches(CharacterRecord c) {
                 return c.getZodiacSign().equalsIgnoreCase(sign);
             }
         };
+    }
+
+    static Filter zodiacIn(List<String> signs) {
+        return signs.stream()
+                .map(Filter::zodiacIs)
+                .reduce(c -> false, Filter::or);
+    }
+
+    static Filter ageBetween(int min, int max) {
+        return c -> c.getAge() >= min && c.getAge() <= max;
     }
 }

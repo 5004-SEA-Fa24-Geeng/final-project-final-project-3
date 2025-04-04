@@ -2,6 +2,8 @@ package controller;
 
 import model.CharactersCollection;
 import model.Filter;
+import view.FilterPanel;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -21,8 +23,8 @@ public class FilterController {
     }
 
     private void initEventHandlers() {
-        view.getSearchButton().addActionListener(this::handleSearch);
-        view.getResetButton().addActionListener(e -> {
+        view.addSearchListener(this::handleSearch);
+        view.addResetListener(e -> {
             view.resetFilters();
             handleSearch(e);
         });
@@ -41,16 +43,21 @@ public class FilterController {
     private Filter buildCompositeFilter() throws IllegalArgumentException {
         Filter filter = character -> true;
 
-        List<String> genders = view.getSelectedGenders();
+        List<Integer> genders = view.getSelectedGenders();
         if (!genders.isEmpty()) {
-            filter = filter.and(character -> genders.contains(character.getGender()));
+            filter = filter.and(Filter.genderIn(genders));
         }
 
         filter = filter.and(buildAgeFilter());
 
         List<String> zodiacs = view.getSelectedZodiacs();
         if (!zodiacs.isEmpty()) {
-            filter = filter.and(character -> zodiacs.contains(character.getZodiacSign()));
+            filter = filter.and(Filter.zodiacIn(zodiacs));
+        }
+
+        String keyword = view.getSearchKeyword();
+        if (keyword != null && !keyword.isBlank()) {
+            filter = filter.and(Filter.nameContains(keyword.trim()));
         }
 
         return filter;
@@ -60,18 +67,13 @@ public class FilterController {
         try {
             int minAge = parseAge(view.getMinAge(), 0);
             int maxAge = parseAge(view.getMaxAge(), Integer.MAX_VALUE);
+            // TODO:年龄范围不合法报错
 
-            if (minAge > maxAge) {
-                throw new InvalidFilterException("age",
-                        minAge + "-" + maxAge,
-                        "minAge cannot be greater than maxAge");
-            }
-
-            return character -> character.getAge() >= minAge
-                    && character.getAge() <= maxAge;
+            return Filter.ageBetween(minAge, maxAge);
         } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
         }
+        return null;
     }
 
     private int parseAge(String input, int defaultValue) throws NumberFormatException {
