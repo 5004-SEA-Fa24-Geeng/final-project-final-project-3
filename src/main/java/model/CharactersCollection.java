@@ -24,4 +24,13 @@ public class CharactersCollection {
     public List<CharacterRecord> getFilteredCharacters() {
         return Collections.unmodifiableList(filteredCharacters);
     }
+
+    public List<CharacterRecord> getAllCharacters() { return Collections.unmodifiableList(allCharacters); }
+
+    public List<CharacterRecord> getSorted(List<CharacterRecord> characters, Comparator<CharacterRecord> comparator) {
+        return characters.stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
+    }
+
 }
