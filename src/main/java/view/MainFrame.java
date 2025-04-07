@@ -1,29 +1,63 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import model.CelebritiesModel;
+import controller.CelebritiesController;
 
 /**
  * @author  Yuchen Huang
  * this program is for the main frame, which shows the GUI.
  */
 
-public class MainFrame {
+public class MainFrame extends JFrame {
+    private static final String IMAGE_CACHE_DIR = "image_cache";
+    
+    public MainFrame() {
+        setTitle("Celebrity Wishlist");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1200, 800);
+        setLocationRelativeTo(null);
+        
+        // 创建ObjectMapper
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+        // 创建Model
+        CelebritiesModel model = new CelebritiesModel(objectMapper, IMAGE_CACHE_DIR);
+        
+        // 创建View
+        CelebritiesView view = new CelebritiesView(objectMapper);
+        
+        // 创建Controller
+        CelebritiesController controller = new CelebritiesController(model, view);
+        
+        // 加载初始数据
+        controller.loadInitialData();
+        
+        // 设置内容面板
+        setContentPane(view.getRootPanel());
+    }
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+        try {
+            // 设置系统外观
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        SwingUtilities.invokeLater(() -> {
+            try {
                 // 创建主窗口
-                JFrame frame = new JFrame("Celebrity Wishing List");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                
-                // 创建并添加Celebrities面板
-                Celebrities celebritiesPanel = new Celebrities();
-                frame.setContentPane(celebritiesPanel.getRootPanel());
-                    
-                // 设置窗口大小和位置
-                frame.setSize(1200, 800);
-                frame.setLocationRelativeTo(null);
+                MainFrame frame = new MainFrame();
                 frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null,
+                    "Error initializing application: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
             }
         });
     }
