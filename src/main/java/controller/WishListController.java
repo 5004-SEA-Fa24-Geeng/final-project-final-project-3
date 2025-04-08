@@ -1,7 +1,10 @@
 package controller;
 
+import View.WishListPanel;
 import model.*;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -10,8 +13,59 @@ public class WishListController {
     /** Get an instance of WishList class. **/
     private WishList wishListModel = new WishList();
 
+    /** Get an instance of WishListPanel class. **/
+    private WishListPanel wishListPanel = new WishListPanel();
+
     /** Get an instance of CharactersCollection class. **/
     private CharactersCollection charactersCollection = new CharactersCollection();
+
+    /** Constructor for this class. **/
+    public WishListController() {
+        initListeners();
+        List<CharacterRecord> initWishList = new ArrayList<>(wishListModel.getWishList());
+        wishListPanel.setWishList(initWishList);
+    }
+
+    private void initListeners() {
+        // the controller registers itself as the observer and implements the notification method
+        // and the panel keeps the reference for future use
+        wishListPanel.setRemoveCharacterListener(characterId -> {
+            Response result = handleRemoveSingleCharacter(characterId);
+            if (result.getStatus() == 200) {
+                updateWishListPanel();
+                JOptionPane.showMessageDialog(null, result.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, result.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        wishListPanel.addClearWishListListener(e -> {
+            Response result = handleClearWishList();
+            if (result.getStatus() == 200) {
+                updateWishListPanel();
+                JOptionPane.showMessageDialog(null, result.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, result.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        wishListPanel.addSaveToFileListener(e -> {
+            String fileName = JOptionPane.showInputDialog("Enter file name:");
+            if (fileName != null && !fileName.trim().isEmpty()) {
+                Response result = handleSaveWishList(fileName.trim()); // 获取保存操作的结果
+                if (result.getStatus() == 200) {
+                    JOptionPane.showMessageDialog(null, result.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, result.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
+
+    private void updateWishListPanel() {
+        List<CharacterRecord> updatedWishList = new ArrayList<>(handleGetWishList());
+        wishListPanel.setWishList(updatedWishList);
+    }
 
     /**
      * Get the wish list.
@@ -59,9 +113,6 @@ public class WishListController {
      * @return a Response object
      */
     public Response handleClearWishList() {
-        if (wishListModel.getWishList().size() == 0) {
-            return Response.disabled();
-        }
         if (wishListModel.removeAllCharacters()) {
             return Response.success("Successfully clear the wish list!");
         }
@@ -74,12 +125,10 @@ public class WishListController {
      * @return a Response object
      */
     public Response handleSaveWishList(String fileName) {
-        if (wishListModel.getWishList().size() == 0) {
-            return Response.disabled();
-        }
         if (wishListModel.saveToFile(fileName)) {
             return Response.success("Successfully save to the file!");
         }
         return Response.failure("Failed to save to the file!");
     }
 }
+
