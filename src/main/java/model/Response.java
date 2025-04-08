@@ -8,11 +8,8 @@ public class Response {
     /** The status of the current operation (success: 200, filure: 400). **/
     private int status;
 
-    /** The response information. **/
-    private String info;
-
-    /** Used to check if the button should be disabled. **/
-    private boolean isDisabled;
+    /** The response message. **/
+    private String message;
 
     /**
      * Constructor for the Response class with response status and information.
@@ -21,17 +18,7 @@ public class Response {
      */
     public Response(int status, String info) {
         this.status = status;
-        this.info = info;
-    }
-
-    /**
-     * Constructor for the Response class with response status and the status of button.
-     * @param status the response status
-     * @param isDisabled if the button should be disabled
-     */
-    public Response(int status, boolean isDisabled) {
-        this.status = status;
-        this.isDisabled = isDisabled;
+        this.message = info;
     }
 
     /**
@@ -46,16 +33,8 @@ public class Response {
      * Get the response info.
      * @return the response info
      */
-    public String getInfo() {
-        return info;
-    }
-
-    /**
-     * Get the button status.
-     * @return the status of button
-     */
-    public boolean isDisabled() {
-        return isDisabled;
+    public String getMessage() {
+        return message;
     }
 
     /**
@@ -74,13 +53,5 @@ public class Response {
      */
     public static Response failure(String info) {
         return new Response(400, info);
-    }
-
-    /**
-     * Construct a response about button status.
-     * @return a Response object.
-     */
-    public static Response disabled() {
-        return new Response(400, true);
     }
 }
