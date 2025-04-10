@@ -6,9 +6,10 @@ import view.FilterPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
-public class FilterController {
+public class FilterController implements IFilterController{
     private final CharactersCollection model;
     private final FilterPanel view;
     private final Runnable refreshCallback;
@@ -23,14 +24,12 @@ public class FilterController {
     }
 
     private void initEventHandlers() {
-        view.addSearchListener(this::handleSearch);
-        view.addResetListener(e -> {
-            view.resetFilters();
-            handleSearch(e);
-        });
+        view.addSearchListener(this::onSearch);
+        view.addResetListener(this::onReset);
     }
 
-    private void handleSearch(ActionEvent e) {
+    @Override
+    public void onSearch(ActionEvent e) {
         try {
             Filter filter = buildCompositeFilter();
             model.applyFilters(filter);
@@ -38,6 +37,12 @@ public class FilterController {
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    @Override
+    public void onReset(ActionEvent e) {
+        view.resetFilters();
+        onSearch(e);
     }
 
     private Filter buildCompositeFilter() throws IllegalArgumentException {
