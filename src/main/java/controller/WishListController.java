@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class WishListController {
+public class WishListController implements IWishListController {
 
     /** Get an instance of WishList class. **/
     private WishList wishListModel = new WishList();
@@ -71,7 +71,7 @@ public class WishListController {
      * Get the wish list.
      * @return a set of characters in the wish list
      */
-    public Set<CharacterRecord> handleGetWishList() {
+    private Set<CharacterRecord> handleGetWishList() {
         return wishListModel.getWishList();
     }
 
@@ -80,6 +80,7 @@ public class WishListController {
      * @param id the id of the character to be added
      * @return a Response object
      */
+    @Override
     public Response handleAddToWishList(int id) {
         List<CharacterRecord> characters = charactersCollection.getFilteredCharacters();
         CharacterRecord newCharacter = characters.stream().filter(character -> character.getId() == id).findFirst().orElse(null); // check if the character corresponding to this id exists in the filtered list
@@ -97,6 +98,7 @@ public class WishListController {
      * @param id the id of the character to be removed
      * @return a Response object
      */
+    @Override
     public Response handleRemoveSingleCharacter(int id) {
         CharacterRecord deleteCharacter = wishListModel.getCharacterById(id); // check if the character corresponding to this id exists in the wish list
         if (deleteCharacter == null) {
@@ -112,6 +114,7 @@ public class WishListController {
      * Clear the wish list.
      * @return a Response object
      */
+    @Override
     public Response handleClearWishList() {
         if (wishListModel.removeAllCharacters()) {
             return Response.success("Successfully clear the wish list!");
@@ -124,6 +127,7 @@ public class WishListController {
      * @param fileName the name of the JSON file
      * @return a Response object
      */
+    @Override
     public Response handleSaveWishList(String fileName) {
         if (wishListModel.saveToFile(fileName)) {
             return Response.success("Successfully save to the file!");
