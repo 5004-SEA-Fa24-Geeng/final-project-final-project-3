@@ -4,7 +4,7 @@ import model.CharacterRecord;
 import model.Response;
 import java.util.Set;
 
-public interface IWishListController {
+public interface IWishListController extends IController {
 
     /**
      * Add the character corresponding to the id to the wish list.

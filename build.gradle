@@ -12,6 +12,11 @@ plugins {
 group 'CS 5004 - Summer 2024'
 version '1.0'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
 repositories {
     mavenCentral()
 }

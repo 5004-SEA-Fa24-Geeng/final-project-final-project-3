@@ -19,4 +19,10 @@ public class SortComparators {
     public static final Comparator<CharacterRecord> BY_AGE =
             Comparator.comparingInt(CharacterRecord::getAge);
 
+    /**
+     * Comparator for sorting characters by popularity, from highest to lowest.
+     */
+    public static final Comparator<CharacterRecord> BY_POPULARITY =
+            Comparator.comparingDouble(CharacterRecord::getPopularity).reversed();
+
 }

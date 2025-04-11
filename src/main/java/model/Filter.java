@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 
+@FunctionalInterface
 public interface Filter {
     boolean matches(CharacterRecord character);
 
@@ -23,23 +24,15 @@ public interface Filter {
     }
 
     static Filter genderIn(List<Integer> genders) {
-        return genders.stream()
-                .map(Filter::genderIs)
-                .reduce(c -> false, Filter::or);
+        return c -> genders.contains(c.getGender());
     }
 
     static Filter zodiacIs(String sign) {
-        return new Filter() {
-            public boolean matches(CharacterRecord c) {
-                return c.getZodiacSign().equalsIgnoreCase(sign);
-            }
-        };
+        return c -> c.getZodiacSign().equalsIgnoreCase(sign);
     }
 
     static Filter zodiacIn(List<String> signs) {
-        return signs.stream()
-                .map(Filter::zodiacIs)
-                .reduce(c -> false, Filter::or);
+        return c -> signs.contains(c.getZodiacSign());
     }
 
     static Filter ageBetween(int min, int max) {

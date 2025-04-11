@@ -5,11 +5,12 @@ import model.Filter;
 import view.FilterPanel;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class FilterController implements IFilterController{
+public class FilterController implements IFilterController, IController {
     private final CharactersCollection model;
     private final FilterPanel view;
     private final Runnable refreshCallback;
@@ -50,41 +51,73 @@ public class FilterController implements IFilterController{
 
         List<Integer> genders = view.getSelectedGenders();
         if (!genders.isEmpty()) {
-            filter = filter.and(Filter.genderIn(genders));
+            filter = filter.and(c -> genders.contains(c.getGender()));
         }
 
-        filter = filter.and(buildAgeFilter());
+        Filter ageFilter = buildAgeFilter();
+        if (ageFilter != null) {
+            filter = filter.and(ageFilter);
+        }
 
         List<String> zodiacs = view.getSelectedZodiacs();
         if (!zodiacs.isEmpty()) {
-            filter = filter.and(Filter.zodiacIn(zodiacs));
+            filter = filter.and(c -> zodiacs.contains(c.getZodiacSign()));
         }
 
         String keyword = view.getSearchKeyword();
         if (keyword != null && !keyword.isBlank()) {
-            filter = filter.and(Filter.nameContains(keyword.trim()));
+            filter = filter.and(c -> c.getName().toLowerCase().contains(keyword.toLowerCase()));
         }
 
         return filter;
     }
 
     private Filter buildAgeFilter() throws IllegalArgumentException {
-        try {
-            int minAge = parseAge(view.getMinAge(), 0);
-            int maxAge = parseAge(view.getMaxAge(), Integer.MAX_VALUE);
-            // TODO:年龄范围不合法报错
-
-            return Filter.ageBetween(minAge, maxAge);
-        } catch (NumberFormatException e) {
-            System.out.println(e.getMessage());
+        String minAgeStr = view.getMinAge();
+        String maxAgeStr = view.getMaxAge();
+        
+        // if both input fields are empty, do not apply age filter
+        if ((minAgeStr == null || minAgeStr.trim().isEmpty()) && 
+            (maxAgeStr == null || maxAgeStr.trim().isEmpty())) {
+            return null;
         }
-        return null;
+
+        try {
+            int minAge = parseAge(minAgeStr, 0);
+            int maxAge = parseAge(maxAgeStr, Integer.MAX_VALUE);
+            
+            // if only the minimum age is entered, filter records greater than or equal to the minimum age
+            if (maxAgeStr == null || maxAgeStr.trim().isEmpty()) {
+                return character -> character.getAge() >= minAge;
+            }
+            
+            // if only the maximum age is entered, filter records less than or equal to the maximum age
+            if (minAgeStr == null || minAgeStr.trim().isEmpty()) {
+                return character -> character.getAge() <= maxAge;
+            }
+            
+            // if both values are entered, check if the range is valid
+            if (minAge > maxAge) {
+                throw new IllegalArgumentException("Age range is not valid");
+            }
+            
+            return character -> character.getAge() >= minAge && character.getAge() <= maxAge;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Age must be a valid number");
+        }
     }
 
-    private int parseAge(String input, int defaultValue) throws NumberFormatException {
+    private int parseAge(String input, int defaultValue) {
         if (input == null || input.trim().isEmpty()) {
             return defaultValue;
         }
         return Integer.parseInt(input.trim());
+    }
+
+    @Override
+    public void updateView() {
+        // update the status label
+        view.setStatusMessage("");
+        // other UI components' status is updated during user interaction
     }
 }

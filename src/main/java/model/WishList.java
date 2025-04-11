@@ -25,13 +25,26 @@ public class WishList {
     }
 
     /**
+     * Initialize the wish list.
+     */
+    public void initWishList() {
+        wishList = new LinkedHashSet<>();
+    }
+
+    /**
      * Add a character to the wish list.
      * @param id the character added by the user
      * @return if the character is successfully added to the wish list
      */
     public boolean addCharacter(int id) {
         List<CharacterRecord> filteredCharacters = charactersCollection.getFilteredCharacters();
-        CharacterRecord newCharacter = filteredCharacters.stream().filter(character -> character.getId() == id).findFirst().get();
+        CharacterRecord newCharacter = filteredCharacters.stream()
+            .filter(character -> character.getId() == id)
+            .findFirst()
+            .orElse(null);
+        if (newCharacter == null) {
+            return false;
+        }
         return wishList.add(newCharacter);
     }
 

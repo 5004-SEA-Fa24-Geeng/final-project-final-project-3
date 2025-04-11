@@ -1,4 +1,4 @@
-package View;
+package view;
 
 @FunctionalInterface
 public interface RemoveCharacterListener {

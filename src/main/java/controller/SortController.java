@@ -7,6 +7,8 @@ import static model.SortComparators.*;
 import view.SortPanel;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Comparator;
 import java.util.List;
 
@@ -14,53 +16,57 @@ import java.util.List;
  * Controller class responsible for handling sorting actions on character data.
  * Aligns with WishListController structure.
  */
-public class SortController {
+public class SortController implements ISortController, IController {
     /** The collection of characters to be sorted. */
-    private final CharactersCollection characterCollection;
+    private final CharactersCollection model;
     /** The UI panel where sorting options are selected. */
-    private final SortPanel sortPanel;
+    private final SortPanel view;
     /** Callback to refresh the UI after sorting is done. */
     private final Runnable refreshCallback;
 
     /**
      * Constructor.
      *
-     * @param characterCollection the collection of character data
-     * @param sortPanel the UI panel that contains sorting controls
+     * @param model the collection of character data
+     * @param view the UI panel that contains sorting controls
      * @param refreshCallback a runnable that refreshes the UI when sorting is applied
      */
-    public SortController(CharactersCollection characterCollection, SortPanel sortPanel, Runnable refreshCallback) {
-        this.characterCollection = characterCollection;
-        this.sortPanel = sortPanel;
+    public SortController(CharactersCollection model, SortPanel view, Runnable refreshCallback) {
+        this.model = model;
+        this.view = view;
         this.refreshCallback = refreshCallback;
-        initListeners();
+        initEventHandlers();
     }
 
     /**
      * Register listeners for sort actions.
      */
-    private void initListeners() {
-        sortPanel.addSortButtonListener(e -> {
-            String selectedOption = sortPanel.getSelectedSortOption();
-            Response response;
+    private void initEventHandlers() {
+        view.addSortListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String field = view.getSelectedSortOption();
+                String order = view.getSortOrder();
+                boolean ascending = order.equals("Ascending");
 
-            switch (selectedOption) {
-                case "Name":
-                    response = handleSortItems(BY_NAME);
-                    break;
-                case "Age":
-                    response = handleSortItems(BY_AGE);
-                    break;
-                default:
-                    response = handleSortItems(BY_NAME);
-                    break;
-            }
+                Comparator<CharacterRecord> comparator;
+                if (field.equals("Name")) {
+                    comparator = Comparator.comparing(CharacterRecord::getName);
+                } else if (field.equals("Age")) {
+                    comparator = Comparator.comparingInt(CharacterRecord::getAge);
+                } else if (field.equals("Popularity")) {
+                    comparator = Comparator.comparingDouble(CharacterRecord::getPopularity);
+                } else {
+                    throw new IllegalArgumentException("Invalid sort field: " + field);
+                }
 
-            if (response.getStatus() == 200) {
+                if (!ascending) {
+                    comparator = comparator.reversed();
+                }
+
+                List<CharacterRecord> sorted = model.getSorted(model.getFilteredCharacters(), comparator);
+                model.setFilteredCharacters(sorted);
                 refreshCallback.run();
-                JOptionPane.showMessageDialog(null, response.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, response.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -72,21 +78,26 @@ public class SortController {
      * @return a Response indicating success or failure
      */
     public Response handleSortItems(Comparator<CharacterRecord> comparator) {
-        List<CharacterRecord> filtered = characterCollection.getFilteredCharacters();
+        List<CharacterRecord> filtered = model.getFilteredCharacters();
         List<CharacterRecord> listToSort;
 
         if (filtered != null && !filtered.isEmpty()) {
             listToSort = filtered;
         } else {
-            listToSort = characterCollection.getAllCharacters();
+            listToSort = model.getAllCharacters();
         }
 
         try {
-            List<CharacterRecord> sorted = characterCollection.getSorted(listToSort, comparator);
-            characterCollection.setFilteredCharacters(sorted);
+            List<CharacterRecord> sorted = model.getSorted(listToSort, comparator);
+            model.setFilteredCharacters(sorted);
             return Response.success("Successfully sorted by selected option.");
         } catch (Exception e) {
             return Response.failure("Sorting failed: " + e.getMessage());
         }
+    }
+
+    @Override
+    public void updateView() {
+        view.updateView();
     }
 }

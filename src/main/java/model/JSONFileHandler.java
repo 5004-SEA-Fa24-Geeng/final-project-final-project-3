@@ -41,7 +41,7 @@ public class JSONFileHandler {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            List<CharacterRecord> characters = objectMapper.readValue(new File(fileName), new TypeReference<>() {});
+            List<CharacterRecord> characters = objectMapper.readValue(new File(fileName), new TypeReference<List<CharacterRecord>>() {});
             return processCharacters(characters);
         } catch (IOException e) {
             e.printStackTrace();

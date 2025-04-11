@@ -10,6 +10,7 @@ public class CharacterRecord {
     private Integer gender;
     private Integer age;
     private String zodiacSign;
+    private double popularity;
     @JsonProperty("known_for_department")
     private String occupation;
     private String birthday;
@@ -21,7 +22,7 @@ public class CharacterRecord {
     public CharacterRecord() {
     }
 
-    public CharacterRecord(Integer id, String name, Integer gender, Integer age, String zodiacSign, String occupation, String birthday, String nationality, String profile) {
+    public CharacterRecord(Integer id, String name, Integer gender, Integer age, double popularity, String zodiacSign, String occupation, String birthday, String nationality, String profile) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -31,6 +32,7 @@ public class CharacterRecord {
         this.birthday = birthday;
         this.nationality = nationality;
         this.profile = profile;
+        this.popularity = popularity;
     }
 
     public Integer getId() {
@@ -55,6 +57,17 @@ public class CharacterRecord {
 
     public void setGender(Integer gender) {
         this.gender = gender;
+    }
+
+    public String getGenderString() {
+        switch (gender) {
+            case 1:
+                return "Male";
+            case 2:
+                return "Female";
+            default:
+                return "Non-binary";
+        }
     }
 
     public Integer getAge() {
@@ -104,6 +117,11 @@ public class CharacterRecord {
     public void setProfile(String profile) {
         this.profile = profile;
     }
+
+    public double getPopularity() {
+        return popularity;
+    }
+
 
     @Override
     public String toString() {

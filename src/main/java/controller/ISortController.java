@@ -8,7 +8,7 @@ import java.util.Comparator;
 /**
  * Interface for SortController.
  */
-public interface ISortController {
+public interface ISortController extends IController {
     /**
      * Sorts a list of characters based on the given comparator.
      * @param comparator the rule used to sort the characters (e.g., by name or age)

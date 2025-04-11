@@ -1,88 +1,202 @@
 package view;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class FilterPanel extends JPanel {
-    private final JTextField keywordField = new JTextField(15);
-    private final JCheckBox maleCheckBox = new JCheckBox("male");
-    private final JCheckBox femaleCheckBox = new JCheckBox("female");
-    private final JCheckBox otherCheckBox = new JCheckBox("non-binary");
-    private final JTextField minAgeField = new JTextField(5);
-    private final JTextField maxAgeField = new JTextField(5);
-    // TODO: 检查星座是否达到预期
-    private final Map<String, JCheckBox> zodiacCheckboxes = new HashMap<>();
+    private final JTextField searchField = new JTextField(15);
     private final JButton searchButton = new JButton("Search");
     private final JButton resetButton = new JButton("Reset");
-    // TODO: 检查status如何呈现
+    private final JTextField minAgeField = new JTextField(5);
+    private final JTextField maxAgeField = new JTextField(5);
+    private final JCheckBox femaleCheckBox = new JCheckBox("Female");
+    private final JCheckBox maleCheckBox = new JCheckBox("Male");
+    private final JCheckBox otherCheckBox = new JCheckBox("Other");
+    private final JList<String> zodiacList = new JList<>(new String[]{
+        "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+        "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+    });
     private final JLabel statusLabel = new JLabel("Ready");
 
     public FilterPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(BorderFactory.createTitledBorder("Filter Options"));
+        setPreferredSize(new Dimension(300, 0));
         initComponents();
-        setupNumberFilter();
     }
 
     private void initComponents() {
-        JPanel namePanel = createTitledPanel("Name");
-        namePanel.add(keywordField);
+        // 搜索部分
+        JPanel searchPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(2, 5, 2, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+        
+        // Logo单独一行，居中显示
+        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        ImageIcon logo = new ImageIcon("src/main/resources/logo.png");
+        Image scaledLogo = logo.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        JLabel logoLabel = new JLabel(new ImageIcon(scaledLogo));
+        logoPanel.add(logoLabel);
+        add(logoPanel);
+        add(Box.createVerticalStrut(15));
+        
+        // 搜索框部分
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 0;
+        searchPanel.add(new JLabel("Search:"), gbc);
+        
+        gbc.gridx = 1;
+        gbc.weightx = 3;
+        searchPanel.add(searchField, gbc);
+        
+        gbc.gridx = 2;
+        gbc.weightx = 0;
+        searchPanel.add(searchButton, gbc);
+        
+        gbc.gridx = 3;
+        searchPanel.add(resetButton, gbc);
+        
+        add(searchPanel);
+        add(Box.createVerticalStrut(15));
 
-        JPanel genderPanel = createTitledPanel("Gender");
-        genderPanel.add(maleCheckBox);
-        genderPanel.add(femaleCheckBox);
-        genderPanel.add(otherCheckBox);
-        maleCheckBox.setSelected(true);
-        femaleCheckBox.setSelected(true);
-        otherCheckBox.setSelected(true);
+        // 年龄部分
+        JPanel agePanel = new JPanel(new GridBagLayout());
+        GridBagConstraints ageGbc = new GridBagConstraints();
+        ageGbc.fill = GridBagConstraints.HORIZONTAL;
+        ageGbc.insets = new Insets(2, 5, 2, 5);
+        ageGbc.anchor = GridBagConstraints.WEST;
+        
+        ageGbc.gridx = 0;
+        ageGbc.weightx = 0;
+        agePanel.add(new JLabel("Age Range:"), ageGbc);
+        
+        ageGbc.gridx = 1;
+        ageGbc.weightx = 0;
+        agePanel.add(minAgeField, ageGbc);
+        
+        ageGbc.gridx = 2;
+        ageGbc.weightx = 0;
+        agePanel.add(new JLabel("——"), ageGbc);
+        
+        ageGbc.gridx = 3;
+        ageGbc.weightx = 0;
+        agePanel.add(maxAgeField, ageGbc);
+        
+        // 使用BoxLayout包装agePanel
+        JPanel ageWrapper = new JPanel();
+        ageWrapper.setLayout(new BoxLayout(ageWrapper, BoxLayout.X_AXIS));
+        ageWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // 添加左边距
+        ageWrapper.add(agePanel);
+        add(ageWrapper);
+        add(Box.createVerticalStrut(10));
 
-        JPanel agePanel = createTitledPanel("Age");
-        agePanel.add(minAgeField);
-        agePanel.add(new JLabel("-"));
-        agePanel.add(maxAgeField);
+        // 性别部分
+        JPanel genderPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints genderGbc = new GridBagConstraints();
+        genderGbc.fill = GridBagConstraints.HORIZONTAL;
+        genderGbc.insets = new Insets(2, 5, 2, 5);
+        genderGbc.anchor = GridBagConstraints.WEST;
+        
+        genderGbc.gridx = 0;
+        genderGbc.weightx = 0;
+        genderPanel.add(new JLabel("Gender:"), genderGbc);
+        
+        genderGbc.gridx = 1;
+        genderGbc.weightx = 0;
+        genderPanel.add(femaleCheckBox, genderGbc);
+        
+        genderGbc.gridx = 2;
+        genderGbc.weightx = 0;
+        genderPanel.add(maleCheckBox, genderGbc);
+        
+        genderGbc.gridx = 3;
+        genderGbc.weightx = 0;
+        genderPanel.add(otherCheckBox, genderGbc);
+        
+        // 使用BoxLayout包装genderPanel
+        JPanel genderWrapper = new JPanel();
+        genderWrapper.setLayout(new BoxLayout(genderWrapper, BoxLayout.X_AXIS));
+        genderWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // 添加左边距
+        genderWrapper.add(genderPanel);
+        add(genderWrapper);
+        add(Box.createVerticalStrut(10));
 
-        JPanel zodiacPanel = createTitledPanel("Sign");
-        zodiacPanel.setLayout(new GridLayout(0, 3, 5, 5)); // 3列
-        String[] zodiacs = {
-                "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-                "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
-        };
-        for (String zodiac : zodiacs) {
-            JCheckBox cb = new JCheckBox(zodiac);
-            zodiacCheckboxes.put(zodiac, cb);
-            zodiacPanel.add(cb);
-        }
+        // 星座部分
+        JPanel zodiacPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints zodiacGbc = new GridBagConstraints();
+        zodiacGbc.fill = GridBagConstraints.HORIZONTAL;
+        zodiacGbc.insets = new Insets(2, 5, 2, 5);
+        zodiacGbc.anchor = GridBagConstraints.WEST;
+        
+        zodiacGbc.gridx = 0;
+        zodiacGbc.weightx = 0;
+        zodiacPanel.add(new JLabel("Zodiac:"), zodiacGbc);
+        
+        zodiacGbc.gridx = 1;
+        zodiacGbc.gridwidth = 3;
+        zodiacGbc.weightx = 1;
+        zodiacList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        zodiacList.setVisibleRowCount(4);
+        JScrollPane zodiacScrollPane = new JScrollPane(zodiacList);
+        zodiacScrollPane.setPreferredSize(new Dimension(200, 80));
+        zodiacPanel.add(zodiacScrollPane, zodiacGbc);
+        
+        // 使用BoxLayout包装zodiacPanel
+        JPanel zodiacWrapper = new JPanel();
+        zodiacWrapper.setLayout(new BoxLayout(zodiacWrapper, BoxLayout.X_AXIS));
+        zodiacWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // 添加左边距
+        zodiacWrapper.add(zodiacPanel);
+        add(zodiacWrapper);
+        add(Box.createVerticalStrut(10));
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(searchButton);
-        buttonPanel.add(resetButton);
+        // 状态标签
+        JPanel statusPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints statusGbc = new GridBagConstraints();
+        statusGbc.fill = GridBagConstraints.HORIZONTAL;
+        statusGbc.insets = new Insets(2, 5, 2, 5);
+        statusGbc.anchor = GridBagConstraints.WEST;
+        
+        statusGbc.gridx = 0;
+        statusGbc.weightx = 0;
+        statusPanel.add(statusLabel, statusGbc);
+        
+        // 使用BoxLayout包装statusPanel
+        JPanel statusWrapper = new JPanel();
+        statusWrapper.setLayout(new BoxLayout(statusWrapper, BoxLayout.X_AXIS));
+        statusWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // 添加左边距
+        statusWrapper.add(statusPanel);
+        add(statusWrapper);
 
-        add(namePanel);
-        add(genderPanel);
-        add(agePanel);
-        add(zodiacPanel);
-        add(buttonPanel);
-        add(statusLabel);
-    }
-
-    public String getSearchKeyword() {
-        return keywordField.getText();
-    }
-
-    private JPanel createTitledPanel(String title) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.setBorder(new TitledBorder(title));
-        return panel;
+        // 添加弹性空间
+        add(Box.createVerticalGlue());
     }
 
     private void setupNumberFilter() {
@@ -110,43 +224,49 @@ public class FilterPanel extends JPanel {
         ((AbstractDocument) maxAgeField.getDocument()).setDocumentFilter(filter);
     }
 
-    public List<Integer> getSelectedGenders() {
-        List<Integer> genders = new ArrayList<>();
-        if (maleCheckBox.isSelected()) genders.add(2);
-        if (femaleCheckBox.isSelected()) genders.add(1);
-        if (otherCheckBox.isSelected()) genders.add(3);
-        return genders;
-    }
-
-    public String getMinAge() { return minAgeField.getText().trim(); }
-    public String getMaxAge() { return maxAgeField.getText().trim(); }
-
-    public List<String> getSelectedZodiacs() {
-        return zodiacCheckboxes.entrySet().stream()
-                .filter(entry -> entry.getValue().isSelected())
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
-    }
-
-    public void setStatusMessage(String message) {
-        statusLabel.setText(message);
-    }
-
-    public void resetFilters() {
-        maleCheckBox.setSelected(true);
-        femaleCheckBox.setSelected(true);
-        otherCheckBox.setSelected(true);
-        minAgeField.setText("");
-        maxAgeField.setText("");
-        zodiacCheckboxes.values().forEach(cb -> cb.setSelected(false));
-        setStatusMessage("Filters reset.");
-    }
-
     public void addSearchListener(ActionListener listener) {
         searchButton.addActionListener(listener);
     }
 
     public void addResetListener(ActionListener listener) {
         resetButton.addActionListener(listener);
+    }
+
+    public String getSearchKeyword() {
+        return searchField.getText();
+    }
+
+    public String getMinAge() {
+        return minAgeField.getText();
+    }
+
+    public String getMaxAge() {
+        return maxAgeField.getText();
+    }
+
+    public List<Integer> getSelectedGenders() {
+        List<Integer> genders = new ArrayList<>();
+        if (femaleCheckBox.isSelected()) genders.add(1);
+        if (maleCheckBox.isSelected()) genders.add(2);
+        if (otherCheckBox.isSelected()) genders.add(3);
+        return genders;
+    }
+
+    public List<String> getSelectedZodiacs() {
+        return zodiacList.getSelectedValuesList();
+    }
+
+    public void resetFilters() {
+        searchField.setText("");
+        minAgeField.setText("");
+        maxAgeField.setText("");
+        femaleCheckBox.setSelected(false);
+        maleCheckBox.setSelected(false);
+        otherCheckBox.setSelected(false);
+        zodiacList.clearSelection();
+    }
+
+    public void setStatusMessage(String message) {
+        statusLabel.setText(message);
     }
 }

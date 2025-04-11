@@ -33,4 +33,13 @@ public class CharactersCollection {
                 .collect(Collectors.toList());
     }
 
+    public void loadData() {
+        // 实现数据加载
+        allCharacters = JSONFileHandler.readJsonFile(SOURCEFILE);
+        filteredCharacters = new ArrayList<>(allCharacters);
+    }
+
+    public void setFilteredCharacters(List<CharacterRecord> characters) {
+        filteredCharacters = new ArrayList<>(characters);
+    }
 }
