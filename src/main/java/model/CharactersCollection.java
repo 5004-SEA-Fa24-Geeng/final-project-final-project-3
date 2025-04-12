@@ -25,6 +25,16 @@ public class CharactersCollection {
         return Collections.unmodifiableList(filteredCharacters);
     }
 
+
+    /**
+     * Sets the current filtered list to a new list.
+     *
+     * @param characters the new list to use as the filtered characters
+     */
+    public void setFilteredCharacters(List<CharacterRecord> characters) {
+        this.filteredCharacters = new ArrayList<>(characters);
+    }
+
     public List<CharacterRecord> getAllCharacters() { return Collections.unmodifiableList(allCharacters); }
 
     public List<CharacterRecord> getSorted(List<CharacterRecord> characters, Comparator<CharacterRecord> comparator) {
