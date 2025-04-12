@@ -27,9 +27,7 @@ public interface IWishListController extends IController {
     Response handleClearWishList();
 
     /**
-     * Save the wish list to a JSON file.
-     * @param fileName the name of the JSON file
-     * @return a Response object
+     * Save the wish list to a file.
      */
-    Response handleSaveWishList(String fileName);
+    void saveToFile();
 }

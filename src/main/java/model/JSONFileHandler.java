@@ -2,6 +2,8 @@ package model;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -22,13 +25,24 @@ public class JSONFileHandler {
      * @param fileName the name of the file saved the wish list to
      * @return if the wish list is successfully saved to the file
      */
-    public static boolean writeWishListToFile(String fileName) throws IOException{
-        ObjectMapper objectMapper = new ObjectMapper();
+    public static void saveWishListToFile(String fileName, Set<CharacterRecord> wishList) throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode jsonArray = mapper.createArrayNode();
+        for (CharacterRecord character : wishList) {
+            ObjectNode jsonObject = mapper.createObjectNode();
+            jsonObject.put("id", character.getId());
+            jsonObject.put("name", character.getName());
+            jsonObject.put("age", character.getAge());
+            jsonObject.put("gender", character.getGender());
+            jsonObject.put("zodiacSign", character.getZodiacSign());
+            jsonObject.put("profile", character.getProfile());
+            jsonArray.add(jsonObject);
+        }
+
         try {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName), WishList.wishList);
-            return true;
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName), jsonArray);
         } catch (IOException e) {
-            throw new IOException("Failed to write the wish list to the file!", e);
+            throw new IOException("Failed to write to file: " + e.getMessage());
         }
     }
 

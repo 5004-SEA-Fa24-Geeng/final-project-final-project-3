@@ -43,7 +43,6 @@ public class MainController {
     public void start() {
         // 初始化数据
         charactersCollection.loadData();
-        wishList.initWishList();
 
         // 更新视图
         refreshCharacterList();

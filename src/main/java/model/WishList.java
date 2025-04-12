@@ -16,19 +16,17 @@ public class WishList {
     /* Get an instance of the CharactersCollection Class. **/
     private CharactersCollection charactersCollection = new CharactersCollection();
 
-    /**
-     * Count the number of the characters in the wish list.
-     * @return the number of the characters in the wish list
-     */
-    public int countWishList() {
-        return wishList.size();
+    /** Public constructor for WishList model. **/
+    public WishList() {
+
     }
 
     /**
-     * Initialize the wish list.
+     * Get the wish list.
+     * @return the wish list
      */
-    public void initWishList() {
-        wishList = new LinkedHashSet<>();
+    public Set<CharacterRecord> getWishList() {
+        return wishList;
     }
 
     /**
@@ -42,9 +40,6 @@ public class WishList {
             .filter(character -> character.getId() == id)
             .findFirst()
             .orElse(null);
-        if (newCharacter == null) {
-            return false;
-        }
         return wishList.add(newCharacter);
     }
 
@@ -73,27 +68,5 @@ public class WishList {
      */
     public CharacterRecord getCharacterById(int id) {
         return wishList.stream().filter(character -> character.getId() == id).findFirst().orElse(null);
-    }
-
-    /**
-     * Get the wish list.
-     * @return the wish list
-     */
-    public Set<CharacterRecord> getWishList() {
-        return wishList;
-    }
-
-    /**
-     * Save the characters in the wish list to a Json file.
-     * @param fileName the name of the file saved the wish list to
-     * @return if the wish list is successfully saved to the file
-     */
-    public boolean saveToFile(String fileName) {
-        try {
-            JSONFileHandler.writeWishListToFile(fileName);
-        } catch (IOException e) {
-            return false;
-        }
-        return true;
     }
 }
