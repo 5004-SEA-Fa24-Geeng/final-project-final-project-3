@@ -2,6 +2,7 @@ package controller;
 
 import model.CharactersCollection;
 import model.Filter;
+import org.checkerframework.checker.units.qual.C;
 import view.FilterPanel;
 
 import javax.swing.*;
@@ -9,6 +10,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.awt.Color;
+
+import static java.awt.Color.RED;
 
 public class FilterController implements IFilterController, IController {
     private final CharactersCollection model;
@@ -34,9 +38,10 @@ public class FilterController implements IFilterController, IController {
         try {
             Filter filter = buildCompositeFilter();
             model.applyFilters(filter);
+            view.setStatusMessage("Results updated", new java.awt.Color(0, 128, 0));
             refreshCallback.run();
         } catch (IllegalArgumentException ex) {
-            System.out.println(ex.getMessage());
+            view.setStatusMessage(ex.getMessage(), Color.RED);
         }
     }
 
@@ -44,6 +49,7 @@ public class FilterController implements IFilterController, IController {
     public void onReset(ActionEvent e) {
         view.resetFilters();
         onSearch(e);
+        view.setStatusMessage("Reset successfully", new java.awt.Color(0, 128, 0));
     }
 
     private Filter buildCompositeFilter() throws IllegalArgumentException {
@@ -117,7 +123,7 @@ public class FilterController implements IFilterController, IController {
     @Override
     public void updateView() {
         // update the status label
-        view.setStatusMessage("");
+        view.setStatusMessage("", Color.BLACK);
         // other UI components' status is updated during user interaction
     }
 }
