@@ -15,37 +15,37 @@ public class MainController {
     private final WishListController wishListController;
 
     public MainController() {
-        // 初始化模型
+        // initialize models
         charactersCollection = new CharactersCollection();
         wishList = new WishList();
 
-        // 初始化视图
+        // initialize views
         mainFrame = new MainFrame();
 
-        // 初始化控制器
+        // initialize controllers
         sortController = new SortController(charactersCollection, mainFrame.getSortPanel(), this::refreshCharacterList);
         filterController = new FilterController(charactersCollection, mainFrame.getFilterPanel(), this::refreshCharacterList);
         
-        // 获取面板引用
+        // get panel references
         CharacterListPanel characterListPanel = mainFrame.getCharacterListPanel();
         WishListPanel wishListPanel = mainFrame.getWishListPanel();
         
-        // 创建并设置WishListController
+        // create and set WishListController
         wishListController = new WishListController(wishList, wishListPanel, characterListPanel, charactersCollection);
         
-        // 验证监听器设置
+        // verify listener settings
         System.out.println("CharacterListPanel listener set: " + characterListPanel.isAddToWishListListenerSet());
 
-        // 设置视图可见
+        // set view visible
         mainFrame.setVisible(true);
     }
 
     public void start() {
-        // 初始化数据
+        // initialize data
         charactersCollection.loadData();
         wishList.initWishList();
 
-        // 更新视图
+        // update views
         refreshCharacterList();
         sortController.updateView();
         filterController.updateView();

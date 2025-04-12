@@ -38,7 +38,7 @@ public class WishListController implements IWishListController {
     private void initListeners(CharacterListPanel characterListPanel) {
         System.out.println("Initializing listeners in WishListController");
         
-        // 设置CharacterListPanel的addToWishListListener
+        // set CharacterListPanel's addToWishListListener
         characterListPanel.setAddToWishListListener(characterId -> {
             System.out.println("AddToWishListListener triggered for characterId: " + characterId);
             Response response = handleAddToWishList(characterId);
@@ -50,7 +50,7 @@ public class WishListController implements IWishListController {
             }
         });
 
-        // 设置移除角色的监听器
+        // set remove character listener
         wishListPanel.setRemoveCharacterListener(characterId -> {
             Response result = handleRemoveSingleCharacter(characterId);
             if (result.getStatus() == 200) {
@@ -61,7 +61,7 @@ public class WishListController implements IWishListController {
             }
         });
 
-        // 设置清空心愿单的监听器
+        // set clear wish list listener
         wishListPanel.addClearWishListListener(e -> {
             Response result = handleClearWishList();
             if (result.getStatus() == 200) {
@@ -72,7 +72,7 @@ public class WishListController implements IWishListController {
             }
         });
 
-        // 设置保存到文件的监听器
+        // set save to file listener
         wishListPanel.addSaveToFileListener(e -> {
             saveToFile();
         });
@@ -108,7 +108,7 @@ public class WishListController implements IWishListController {
         }
         if (wishListModel.addCharacter(id)) {
             System.out.println("Successfully added character with ID: " + id);
-            // 立即更新视图
+            // update view immediately
             List<CharacterRecord> updatedWishList = new ArrayList<>(wishListModel.getWishList());
             System.out.println("Updated wish list size: " + updatedWishList.size());
             wishListPanel.setWishList(updatedWishList);
@@ -182,7 +182,7 @@ public class WishListController implements IWishListController {
             }
             
             try {
-                // 使用Jackson创建JSON
+                // use Jackson to create JSON
                 ObjectMapper mapper = new ObjectMapper();
                 ArrayNode jsonArray = mapper.createArrayNode();
                 for (CharacterRecord character : wishListModel.getWishList()) {
@@ -196,7 +196,7 @@ public class WishListController implements IWishListController {
                     jsonArray.add(jsonObject);
                 }
                 
-                // 写入文件，使用漂亮打印
+                // write to file, use pretty print
                 mapper.writerWithDefaultPrettyPrinter().writeValue(fileToSave, jsonArray);
                 
                 JOptionPane.showMessageDialog(wishListPanel, 
