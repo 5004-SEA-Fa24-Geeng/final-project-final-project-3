@@ -113,7 +113,7 @@ public class WishListController implements IWishListController {
         if (wishListModel.addCharacter(id)) {
             return Response.success("Successfully Add The Character!");
         }
-        return Response.failure("Failed To Add The Character!");
+        return Response.failure("Character Already Exists!");
     }
 
     /**
