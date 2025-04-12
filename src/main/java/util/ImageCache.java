@@ -13,7 +13,7 @@ public class ImageCache {
     private static final Map<String, ImageIcon> memoryCache = new HashMap<>();
     
     static {
-        // 创建缓存目录
+        // create cache directory
         File cacheDir = new File(CACHE_DIR);
         if (!cacheDir.exists()) {
             cacheDir.mkdir();
@@ -21,17 +21,17 @@ public class ImageCache {
     }
 
     public static ImageIcon getImage(String imageUrl) {
-        // 首先检查内存缓存
+        // first check memory cache
         if (memoryCache.containsKey(imageUrl)) {
             return memoryCache.get(imageUrl);
         }
 
-        // 生成缓存文件名
+        // generate cache file name
         String cacheFileName = CACHE_DIR + File.separator + imageUrl.hashCode() + ".png";
         File cacheFile = new File(cacheFileName);
 
         try {
-            // 如果缓存文件存在，直接从文件加载
+            // if cache file exists, load from file
             if (cacheFile.exists()) {
                 BufferedImage image = ImageIO.read(cacheFile);
                 ImageIcon icon = new ImageIcon(image);
@@ -39,14 +39,14 @@ public class ImageCache {
                 return icon;
             }
 
-            // 如果缓存文件不存在，从网络下载并保存
+            // if cache file does not exist, download from network and save
             URL url = new URL(imageUrl);
             BufferedImage image = ImageIO.read(url);
             
-            // 保存到缓存文件
+            // save to cache file
             ImageIO.write(image, "png", cacheFile);
             
-            // 创建图标并存入内存缓存
+            // create icon and save to memory cache
             ImageIcon icon = new ImageIcon(image);
             memoryCache.put(imageUrl, icon);
             return icon;
@@ -57,10 +57,10 @@ public class ImageCache {
     }
 
     public static void clearCache() {
-        // 清空内存缓存
+        // clear memory cache
         memoryCache.clear();
         
-        // 删除缓存文件
+        // delete cache files
         File cacheDir = new File(CACHE_DIR);
         if (cacheDir.exists()) {
             File[] files = cacheDir.listFiles();

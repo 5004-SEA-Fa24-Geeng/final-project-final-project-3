@@ -34,7 +34,7 @@ public class CharactersCollection {
     }
 
     public void loadData() {
-        // 实现数据加载
+        // implement data loading
         allCharacters = JSONFileHandler.readJsonFile(SOURCEFILE);
         filteredCharacters = new ArrayList<>(allCharacters);
     }

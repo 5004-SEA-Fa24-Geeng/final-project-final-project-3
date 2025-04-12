@@ -24,19 +24,19 @@ public class SortPanel extends JPanel {
     }
 
     private void initComponents() {
-        // 添加数量标签
+        // add count label
         add(countLabel);
         add(Box.createHorizontalStrut(20));
 
-        // 添加排序字段选择框
+        // add sort field selection box
         add(new JLabel("Sort by:"));
         add(sortFieldComboBox);
 
-        // 添加排序顺序选择框
+        // add sort order selection box
         add(new JLabel("Order:"));
         add(sortOrderComboBox);
 
-        // 添加排序按钮
+        // add sort button
         add(sortButton);
     }
 
@@ -58,9 +58,9 @@ public class SortPanel extends JPanel {
     }
 
     public void updateView() {
-        // 更新排序选项
+        // update sort options
         sortFieldComboBox.setSelectedItem("Name");
-        // 更新排序按钮状态
+        // update sort button status
         sortButton.setEnabled(true);
     }
 

@@ -51,14 +51,14 @@ public class FilterPanel extends JPanel {
     }
 
     private void initComponents() {
-        // 搜索部分
+        // search part
         JPanel searchPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(2, 5, 2, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Logo单独一行，居中显示
+        // Logo in a separate line, centered
         JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         ImageIcon logo = new ImageIcon("src/main/resources/logo.png");
         Image scaledLogo = logo.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
@@ -67,7 +67,7 @@ public class FilterPanel extends JPanel {
         add(logoPanel);
         add(Box.createVerticalStrut(15));
         
-        // 搜索框部分
+        // search part
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 0;
@@ -87,7 +87,7 @@ public class FilterPanel extends JPanel {
         add(searchPanel);
         add(Box.createVerticalStrut(15));
 
-        // 年龄部分
+        // age part
         JPanel agePanel = new JPanel(new GridBagLayout());
         GridBagConstraints ageGbc = new GridBagConstraints();
         ageGbc.fill = GridBagConstraints.HORIZONTAL;
@@ -110,15 +110,15 @@ public class FilterPanel extends JPanel {
         ageGbc.weightx = 0;
         agePanel.add(maxAgeField, ageGbc);
         
-        // 使用BoxLayout包装agePanel
+        // use BoxLayout to wrap agePanel
         JPanel ageWrapper = new JPanel();
         ageWrapper.setLayout(new BoxLayout(ageWrapper, BoxLayout.X_AXIS));
-        ageWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // 添加左边距
+        ageWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // add left margin
         ageWrapper.add(agePanel);
         add(ageWrapper);
         add(Box.createVerticalStrut(10));
 
-        // 性别部分
+        // gender part
         JPanel genderPanel = new JPanel(new GridBagLayout());
         GridBagConstraints genderGbc = new GridBagConstraints();
         genderGbc.fill = GridBagConstraints.HORIZONTAL;
@@ -141,15 +141,15 @@ public class FilterPanel extends JPanel {
         genderGbc.weightx = 0;
         genderPanel.add(otherCheckBox, genderGbc);
         
-        // 使用BoxLayout包装genderPanel
+        // use BoxLayout to wrap genderPanel
         JPanel genderWrapper = new JPanel();
         genderWrapper.setLayout(new BoxLayout(genderWrapper, BoxLayout.X_AXIS));
-        genderWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // 添加左边距
+        genderWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // add left margin
         genderWrapper.add(genderPanel);
         add(genderWrapper);
         add(Box.createVerticalStrut(10));
 
-        // 星座部分
+        // zodiac part
         JPanel zodiacPanel = new JPanel(new GridBagLayout());
         GridBagConstraints zodiacGbc = new GridBagConstraints();
         zodiacGbc.fill = GridBagConstraints.HORIZONTAL;
@@ -169,15 +169,15 @@ public class FilterPanel extends JPanel {
         zodiacScrollPane.setPreferredSize(new Dimension(200, 80));
         zodiacPanel.add(zodiacScrollPane, zodiacGbc);
         
-        // 使用BoxLayout包装zodiacPanel
+        // use BoxLayout to wrap zodiacPanel
         JPanel zodiacWrapper = new JPanel();
         zodiacWrapper.setLayout(new BoxLayout(zodiacWrapper, BoxLayout.X_AXIS));
-        zodiacWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // 添加左边距
+        zodiacWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // add left margin
         zodiacWrapper.add(zodiacPanel);
         add(zodiacWrapper);
         add(Box.createVerticalStrut(10));
 
-        // 状态标签
+        // status label
         JPanel statusPanel = new JPanel(new GridBagLayout());
         GridBagConstraints statusGbc = new GridBagConstraints();
         statusGbc.fill = GridBagConstraints.HORIZONTAL;
@@ -188,14 +188,14 @@ public class FilterPanel extends JPanel {
         statusGbc.weightx = 0;
         statusPanel.add(statusLabel, statusGbc);
         
-        // 使用BoxLayout包装statusPanel
+        // use BoxLayout to wrap statusPanel
         JPanel statusWrapper = new JPanel();
         statusWrapper.setLayout(new BoxLayout(statusWrapper, BoxLayout.X_AXIS));
-        statusWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // 添加左边距
+        statusWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // add left margin
         statusWrapper.add(statusPanel);
         add(statusWrapper);
 
-        // 添加弹性空间
+        // add elastic space
         add(Box.createVerticalGlue());
     }
 

@@ -56,7 +56,7 @@ public class CharacterListPanel extends JPanel {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
         panel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
-        // 左侧图片面板
+        // left image panel
         JPanel imagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         String imageUrl = "https://image.tmdb.org/t/p/w92" + character.getProfile();
         ImageIcon icon = ImageCache.getImage(imageUrl);
@@ -66,7 +66,7 @@ public class CharacterListPanel extends JPanel {
             imagePanel.add(new JLabel("No Image"));
         }
 
-        // 中间信息面板
+        // middle info panel
         JPanel infoPanel = new JPanel(new GridLayout(4, 1, 0, 2));
         infoPanel.setPreferredSize(new Dimension(200, 92));
         infoPanel.setMinimumSize(new Dimension(200, 92));
@@ -77,7 +77,7 @@ public class CharacterListPanel extends JPanel {
         JLabel genderLabel = new JLabel("Gender: " + getGenderString(character.getGender()));
         JLabel zodiacLabel = new JLabel("Zodiac: " + character.getZodiacSign());
         
-        // 设置字体大小
+        // set font size
         Font labelFont = new Font("Arial", Font.PLAIN, 12);
         nameLabel.setFont(labelFont);
         ageLabel.setFont(labelFont);
@@ -89,7 +89,7 @@ public class CharacterListPanel extends JPanel {
         infoPanel.add(genderLabel);
         infoPanel.add(zodiacLabel);
 
-        // 右侧按钮面板
+        // right button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         JButton addButton = new JButton("+");
         buttonPanel.setPreferredSize(new Dimension(30, 92));
@@ -119,12 +119,12 @@ public class CharacterListPanel extends JPanel {
         
         buttonPanel.add(addButton);
 
-        // 添加面板到主面板
+        // add panel to main panel
         panel.add(imagePanel, BorderLayout.WEST);
         panel.add(infoPanel, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.EAST);
 
-        // 添加分隔线
+        // add separator
         panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
 
         contentPanel.add(panel);

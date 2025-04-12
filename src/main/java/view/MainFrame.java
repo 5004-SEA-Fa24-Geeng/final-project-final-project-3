@@ -18,11 +18,11 @@ public class MainFrame extends JFrame {
     }
 
     private void initComponents() {
-        // 创建主面板
+        // create main panel
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // 创建左侧面板（筛选）
+        // create left panel (filter)
         JPanel leftPanel = new JPanel(new BorderLayout());
         leftPanel.setPreferredSize(new Dimension(350, 30));
         filterPanel = new FilterPanel();
@@ -30,33 +30,33 @@ public class MainFrame extends JFrame {
         filterScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         leftPanel.add(filterScrollPane, BorderLayout.CENTER);
 
-        // 创建右侧面板
+        // create right panel
         JPanel rightPanel = new JPanel(new BorderLayout(10, 10));
 
-        // 创建顶部面板（排序）
+        // create top panel (sort)
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setPreferredSize(new Dimension(0, 30));
         sortPanel = new SortPanel();
         topPanel.add(sortPanel, BorderLayout.WEST);
 
-        // 创建中间面板（角色列表）
+        // create middle panel (character list)
         characterListPanel = new CharacterListPanel(sortPanel);
         JScrollPane listScrollPane = new JScrollPane(characterListPanel);
         listScrollPane.setPreferredSize(new Dimension(600, 0));
 
-        // 创建右侧面板（心愿单）
+        // create right panel (wish list)
         wishListPanel = new WishListPanel();
 
-        // 组装右侧面板
+        // assemble right panel
         rightPanel.add(topPanel, BorderLayout.NORTH);
         rightPanel.add(listScrollPane, BorderLayout.CENTER);
         rightPanel.add(wishListPanel, BorderLayout.EAST);
 
-        // 组装主面板
+        // assemble main panel
         mainPanel.add(leftPanel, BorderLayout.WEST);
         mainPanel.add(rightPanel, BorderLayout.CENTER);
 
-        // 添加主面板到窗口
+        // add main panel to window
         add(mainPanel);
     }
 
