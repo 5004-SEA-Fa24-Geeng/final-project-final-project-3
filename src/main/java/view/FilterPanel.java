@@ -11,6 +11,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A panel for filtering characters based on various criteria such as
+ * keyword, age range, gender, and zodiac sign. Provides a logo,
+ * search controls, and a status label.
+ */
 public class FilterPanel extends JPanel {
     private static final int LOGO_WIDTH = 300;
     private static final int LOGO_HEIGHT = 300;
@@ -31,6 +36,9 @@ public class FilterPanel extends JPanel {
     });
     private final JLabel statusLabel = new JLabel("Ready");
 
+    /**
+     * Constructs the filter panel with initialized components and layout.
+     */
     public FilterPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createTitledBorder("Filter Options"));
@@ -52,7 +60,9 @@ public class FilterPanel extends JPanel {
         setupNumberFilter();
     }
 
-    // ===== 分块构建 UI 方法 =====
+    /**
+     * Adds the logo to the top of the panel.
+     */
     private void addLogo() {
         JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         try {
@@ -65,6 +75,9 @@ public class FilterPanel extends JPanel {
         add(logoPanel);
     }
 
+    /**
+     * Adds the search input field and buttons.
+     */
     private void addSearchPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = createGbc();
@@ -86,6 +99,9 @@ public class FilterPanel extends JPanel {
         add(panel);
     }
 
+    /**
+     * Adds the age range input fields.
+     */
     private void addAgePanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = createGbc();
@@ -105,6 +121,9 @@ public class FilterPanel extends JPanel {
         addSection(panel);
     }
 
+    /**
+     * Adds gender selection checkboxes.
+     */
     private void addGenderPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = createGbc();
@@ -124,6 +143,9 @@ public class FilterPanel extends JPanel {
         addSection(panel);
     }
 
+    /**
+     * Adds the zodiac sign multi-select list.
+     */
     private void addZodiacPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = createGbc();
@@ -142,6 +164,9 @@ public class FilterPanel extends JPanel {
         addSection(panel);
     }
 
+    /**
+     * Adds the status label panel.
+     */
     private void addStatusPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         statusLabel.setFont(statusLabel.getFont().deriveFont(Font.PLAIN, 14f));
@@ -149,7 +174,11 @@ public class FilterPanel extends JPanel {
         add(panel);
     }
 
-    // ===== 工具方法 =====
+    /**
+     * Creates default GridBagConstraints with common spacing and alignment.
+     *
+     * @return a configured GridBagConstraints instance
+     */
     private GridBagConstraints createGbc() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -158,6 +187,11 @@ public class FilterPanel extends JPanel {
         return gbc;
     }
 
+    /**
+     * Wraps and adds a section component with padding.
+     *
+     * @param component the component to add
+     */
     private void addSection(JComponent component) {
         JPanel wrapper = new JPanel();
         wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.X_AXIS));
@@ -166,6 +200,9 @@ public class FilterPanel extends JPanel {
         add(wrapper);
     }
 
+    /**
+     * Restricts the min and max age fields to numeric input only.
+     */
     private void setupNumberFilter() {
         DocumentFilter filter = new DocumentFilter() {
             @Override
@@ -188,28 +225,57 @@ public class FilterPanel extends JPanel {
         ((AbstractDocument) maxAgeField.getDocument()).setDocumentFilter(filter);
     }
 
-    // ===== 事件监听器注册方法 =====
+    /**
+     * Registers an ActionListener for the search button.
+     *
+     * @param listener the ActionListener to register
+     */
     public void addSearchListener(ActionListener listener) {
         searchButton.addActionListener(listener);
     }
 
+    /**
+     * Registers an ActionListener for the reset button.
+     *
+     * @param listener the ActionListener to register
+     */
     public void addResetListener(ActionListener listener) {
         resetButton.addActionListener(listener);
     }
 
-    // ===== Getter & 控件状态操作 =====
+    /**
+     * Returns the keyword entered in the search field.
+     *
+     * @return the keyword string
+     */
     public String getSearchKeyword() {
         return searchField.getText();
     }
 
+    /**
+     * Returns the minimum age entered.
+     *
+     * @return the minimum age string
+     */
     public String getMinAge() {
         return minAgeField.getText();
     }
 
+    /**
+     * Returns the maximum age entered.
+     *
+     * @return the maximum age string
+     */
     public String getMaxAge() {
         return maxAgeField.getText();
     }
 
+    /**
+     * Returns a list of selected gender codes.
+     * 1 = Female, 2 = Male, 3 = Non-binary
+     *
+     * @return list of selected gender codes
+     */
     public List<Integer> getSelectedGenders() {
         List<Integer> genders = new ArrayList<>();
         if (femaleCheckBox.isSelected()) genders.add(1);
@@ -218,10 +284,18 @@ public class FilterPanel extends JPanel {
         return genders;
     }
 
+    /**
+     * Returns a list of selected zodiac signs.
+     *
+     * @return list of selected zodiac sign strings
+     */
     public List<String> getSelectedZodiacs() {
         return zodiacList.getSelectedValuesList();
     }
 
+    /**
+     * Resets all filters and form fields to default values.
+     */
     public void resetFilters() {
         searchField.setText("");
         minAgeField.setText("");
@@ -232,6 +306,12 @@ public class FilterPanel extends JPanel {
         zodiacList.clearSelection();
     }
 
+    /**
+     * Sets the message and color of the status label.
+     *
+     * @param message the message to display
+     * @param color   the color of the message text
+     */
     public void setStatusMessage(String message, Color color) {
         statusLabel.setForeground(color);
         statusLabel.setText(message);

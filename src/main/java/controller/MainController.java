@@ -43,7 +43,6 @@ public class MainController {
     public void start() {
         // initialize data
         charactersCollection.loadData();
-        wishList.initWishList();
 
         // update views
         refreshCharacterList();

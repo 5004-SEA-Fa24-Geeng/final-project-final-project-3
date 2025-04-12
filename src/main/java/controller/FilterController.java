@@ -2,23 +2,30 @@ package controller;
 
 import model.CharactersCollection;
 import model.Filter;
-import org.checkerframework.checker.units.qual.C;
 import view.FilterPanel;
 
 import javax.swing.*;
-
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
-import java.awt.Color;
 
-import static java.awt.Color.RED;
-
+/**
+ * Controller for handling filter-related user interactions in the GUI.
+ * Coordinates between the view (FilterPanel) and model (CharactersCollection)
+ * to apply composite filters and update the display.
+ */
 public class FilterController implements IFilterController, IController {
     private final CharactersCollection model;
     private final FilterPanel view;
     private final Runnable refreshCallback;
 
+    /**
+     * Constructs a FilterController with the specified model, view, and refresh action.
+     *
+     * @param model the character collection to be filtered
+     * @param view the panel providing UI components for filtering
+     * @param refreshCallback the callback to refresh the character list view
+     */
     public FilterController(CharactersCollection model,
                             FilterPanel view,
                             Runnable refreshCallback) {
@@ -28,30 +35,52 @@ public class FilterController implements IFilterController, IController {
         initEventHandlers();
     }
 
+    /**
+     * Initializes event handlers for search and reset actions.
+     */
     private void initEventHandlers() {
         view.addSearchListener(this::onSearch);
         view.addResetListener(this::onReset);
     }
 
+    /**
+     * Handles the search button click event.
+     * Applies composite filters based on user input.
+     *
+     * @param e the ActionEvent triggered by the search button
+     */
     @Override
     public void onSearch(ActionEvent e) {
         try {
             Filter filter = buildCompositeFilter();
             model.applyFilters(filter);
-            view.setStatusMessage("Results updated", new java.awt.Color(0, 128, 0));
+            view.setStatusMessage("Results updated", new Color(0, 128, 0));
             refreshCallback.run();
         } catch (IllegalArgumentException ex) {
             view.setStatusMessage(ex.getMessage(), Color.RED);
         }
     }
 
+    /**
+     * Handles the reset button click event.
+     * Resets all filters and reapplies default filtering.
+     *
+     * @param e the ActionEvent triggered by the reset button
+     */
     @Override
     public void onReset(ActionEvent e) {
         view.resetFilters();
         onSearch(e);
-        view.setStatusMessage("Reset successfully", new java.awt.Color(0, 128, 0));
+        view.setStatusMessage("Reset successfully", new Color(0, 128, 0));
     }
 
+    /**
+     * Builds a composite filter based on the current values in the view.
+     * Combines filters for gender, age, zodiac sign, and keyword.
+     *
+     * @return the composite Filter to be applied
+     * @throws IllegalArgumentException if input validation fails
+     */
     private Filter buildCompositeFilter() throws IllegalArgumentException {
         Filter filter = character -> true;
 
@@ -78,41 +107,50 @@ public class FilterController implements IFilterController, IController {
         return filter;
     }
 
+    /**
+     * Builds a filter for age range based on the min and max age input fields.
+     *
+     * @return the age-based Filter or null if both fields are empty
+     * @throws IllegalArgumentException if input is invalid or range is incorrect
+     */
     private Filter buildAgeFilter() throws IllegalArgumentException {
         String minAgeStr = view.getMinAge();
         String maxAgeStr = view.getMaxAge();
-        
-        // if both input fields are empty, do not apply age filter
-        if ((minAgeStr == null || minAgeStr.trim().isEmpty()) && 
-            (maxAgeStr == null || maxAgeStr.trim().isEmpty())) {
+
+        if ((minAgeStr == null || minAgeStr.trim().isEmpty()) &&
+                (maxAgeStr == null || maxAgeStr.trim().isEmpty())) {
             return null;
         }
 
         try {
             int minAge = parseAge(minAgeStr, 0);
             int maxAge = parseAge(maxAgeStr, Integer.MAX_VALUE);
-            
-            // if only the minimum age is entered, filter records greater than or equal to the minimum age
+
             if (maxAgeStr == null || maxAgeStr.trim().isEmpty()) {
                 return character -> character.getAge() >= minAge;
             }
-            
-            // if only the maximum age is entered, filter records less than or equal to the maximum age
+
             if (minAgeStr == null || minAgeStr.trim().isEmpty()) {
                 return character -> character.getAge() <= maxAge;
             }
-            
-            // if both values are entered, check if the range is valid
+
             if (minAge > maxAge) {
                 throw new IllegalArgumentException("Age range is not valid");
             }
-            
+
             return character -> character.getAge() >= minAge && character.getAge() <= maxAge;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Age must be a valid number");
         }
     }
 
+    /**
+     * Parses a string into an integer with a default fallback.
+     *
+     * @param input the string input
+     * @param defaultValue the default value if input is empty
+     * @return the parsed integer or default
+     */
     private int parseAge(String input, int defaultValue) {
         if (input == null || input.trim().isEmpty()) {
             return defaultValue;
@@ -120,10 +158,12 @@ public class FilterController implements IFilterController, IController {
         return Integer.parseInt(input.trim());
     }
 
+    /**
+     * Updates the view status label and clears any previous messages.
+     * Called when the controller is re-initialized.
+     */
     @Override
     public void updateView() {
-        // update the status label
         view.setStatusMessage("", Color.BLACK);
-        // other UI components' status is updated during user interaction
     }
 }
