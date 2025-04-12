@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class MainFrame extends JFrame {
     private SortPanel sortPanel;
@@ -20,13 +21,38 @@ public class MainFrame extends JFrame {
     private void initComponents() {
         // create main panel
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanel.setBackground(new Color(252,236,222));
+
+        // create upper panel
+        JPanel upperPanel = new JPanel();
+        upperPanel.setPreferredSize(new Dimension(0, 150));
+        upperPanel.setBackground(new Color(252,236,222));// 宽度 0 表示自适应，高度 50
+        JLabel logoLabel = new JLabel("Romantic Wishlist");
+        try {
+            Font fancyFont = Font.createFont(Font.TRUETYPE_FONT,
+                    new File("src/main/resources/GreatVibes-Regular.ttf")).deriveFont(90f);
+
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(fancyFont);
+
+            logoLabel.setFont(fancyFont);
+            logoLabel.setForeground(new Color(204, 0, 102)); // romantic red-pink
+            logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logoLabel.setFont(new Font("Serif", Font.BOLD, 36)); // fallback
+        }
+
+        upperPanel.add(logoLabel);
+        mainPanel.add(upperPanel, BorderLayout.NORTH);
 
         // create left panel (filter)
         JPanel leftPanel = new JPanel(new BorderLayout());
         leftPanel.setPreferredSize(new Dimension(350, 30));
         filterPanel = new FilterPanel();
+        filterPanel.setBorder(null);
         JScrollPane filterScrollPane = new JScrollPane(filterPanel);
+        filterScrollPane.setBorder(null);
         filterScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         leftPanel.add(filterScrollPane, BorderLayout.CENTER);
 

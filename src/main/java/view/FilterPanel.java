@@ -41,10 +41,14 @@ public class FilterPanel extends JPanel {
      */
     public FilterPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(BorderFactory.createTitledBorder("Filter Options"));
-        setPreferredSize(new Dimension(300, 0));
+        setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(204, 102, 153), 2, true), // 🎯 rounded true
+                BorderFactory.createTitledBorder("Filter Options")
+        ));
 
-        addLogo();
+        setPreferredSize(new Dimension(300, 0));
+        setBackground(new Color(252,236,222));
+
         add(Box.createVerticalStrut(VERTICAL_GAP));
         addSearchPanel();
         add(Box.createVerticalStrut(VERTICAL_GAP));
@@ -61,25 +65,11 @@ public class FilterPanel extends JPanel {
     }
 
     /**
-     * Adds the logo to the top of the panel.
-     */
-    private void addLogo() {
-        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        try {
-            ImageIcon logo = new ImageIcon("src/main/resources/logo.png");
-            Image scaledLogo = logo.getImage().getScaledInstance(LOGO_WIDTH, LOGO_HEIGHT, Image.SCALE_SMOOTH);
-            logoPanel.add(new JLabel(new ImageIcon(scaledLogo)));
-        } catch (Exception e) {
-            logoPanel.add(new JLabel("Logo not found"));
-        }
-        add(logoPanel);
-    }
-
-    /**
      * Adds the search input field and buttons.
      */
     private void addSearchPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color( 252,236,222));
         GridBagConstraints gbc = createGbc();
 
         gbc.gridx = 0;
@@ -104,6 +94,8 @@ public class FilterPanel extends JPanel {
      */
     private void addAgePanel() {
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color( 252,236,222));
+
         GridBagConstraints gbc = createGbc();
 
         gbc.gridx = 0;
@@ -127,6 +119,8 @@ public class FilterPanel extends JPanel {
     private void addGenderPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = createGbc();
+        panel.setBackground(new Color( 252,236,222));
+
 
         gbc.gridx = 0;
         panel.add(new JLabel("Gender:"), gbc);
@@ -149,6 +143,8 @@ public class FilterPanel extends JPanel {
     private void addZodiacPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = createGbc();
+        panel.setBackground(new Color( 252,236,222));
+
 
         gbc.gridx = 0;
         panel.add(new JLabel("Zodiac:"), gbc);
@@ -169,6 +165,7 @@ public class FilterPanel extends JPanel {
      */
     private void addStatusPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panel.setBackground(new Color( 252,236,222));
         statusLabel.setFont(statusLabel.getFont().deriveFont(Font.PLAIN, 14f));
         panel.add(statusLabel);
         add(panel);
