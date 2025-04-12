@@ -62,11 +62,11 @@ public class CharacterRecord {
     public String getGenderString() {
         switch (gender) {
             case 1:
-                return "Male";
+                return "Gender: Female";
             case 2:
-                return "Female";
+                return "Gender: Male";
             default:
-                return "Non-binary";
+                return "Gender: Non-binary";
         }
     }
 
@@ -79,7 +79,34 @@ public class CharacterRecord {
     }
 
     public String getZodiacSign() {
-        return zodiacSign;
+        switch (zodiacSign) {
+            case "Aries":
+                return "♈ " + "Aries";
+            case "Taurus":
+                return "♉ " + "Taurus";
+            case "Gemini":
+                return "♊ " + "Gemini";
+            case "Cancer":
+                return "♋ " + "Cancer";
+            case "Leo":
+                return "♌ " + "Leo";
+            case "Virgo":
+                return "♍ " + "Virgo";
+            case "Libra":
+                return "♎ " + "Libra";
+            case "Scorpio":
+                return "♏ " + "Scorpio";
+            case "Sagittarius":
+                return "♐ " + "Sagittarius";
+            case "Capricorn":
+                return "♑ " + "Capricorn";
+            case "Aquarius":
+                return "♒ " + "Aquarius";
+            case "Pisces":
+                return "♓ " + "Pisces";
+            default:
+                return zodiacSign;
+        }
     }
 
     public void setZodiacSign(String zodiacSign) {

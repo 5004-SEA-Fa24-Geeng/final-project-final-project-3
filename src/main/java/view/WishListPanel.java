@@ -92,8 +92,53 @@ public class WishListPanel extends JPanel {
         
         JLabel nameLabel = new JLabel("Name: " + character.getName());
         JLabel ageLabel = new JLabel("Age: " + character.getAge());
-        JLabel genderLabel = new JLabel("Gender: " + getGenderString(character.getGender()));
-        JLabel zodiacLabel = new JLabel("Zodiac: " + character.getZodiacSign());
+        
+        // 创建性别标签
+        JLabel genderLabel = new JLabel();
+        String genderText = "Gender: " + getGenderString(character.getGender());
+        ImageIcon genderIcon = null;
+        
+        // 根据性别设置图标
+        switch (character.getGender()) {
+            case 1:
+                genderIcon = new ImageIcon("src/main/resources/female.png");
+                break;
+            case 2:
+                genderIcon = new ImageIcon("src/main/resources/male.png");
+                break;
+            case 3:
+                genderIcon = new ImageIcon("src/main/resources/other.png");
+                break;
+        }
+        
+        // 调整图标大小
+        if (genderIcon != null) {
+            Image image = genderIcon.getImage();
+            Image newimg = image.getScaledInstance(12, 12, Image.SCALE_SMOOTH);
+            genderIcon = new ImageIcon(newimg);
+            genderLabel.setIcon(genderIcon);
+        }
+        
+        // 设置文字和图标位置
+        genderLabel.setText(genderText);
+        genderLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+        genderLabel.setIconTextGap(5); // 图标和文字之间的间距
+        
+        JLabel zodiacLabel = new JLabel("<html>Zodiac: " + 
+            (character.getZodiacSign().equalsIgnoreCase("Aries") ? "♈ " :
+             character.getZodiacSign().equalsIgnoreCase("Taurus") ? "♉ " :
+             character.getZodiacSign().equalsIgnoreCase("Gemini") ? "♊ " :
+             character.getZodiacSign().equalsIgnoreCase("Cancer") ? "♋ " :
+             character.getZodiacSign().equalsIgnoreCase("Leo") ? "♌ " :
+             character.getZodiacSign().equalsIgnoreCase("Virgo") ? "♍ " :
+             character.getZodiacSign().equalsIgnoreCase("Libra") ? "♎ " :
+             character.getZodiacSign().equalsIgnoreCase("Scorpio") ? "♏ " :
+             character.getZodiacSign().equalsIgnoreCase("Sagittarius") ? "♐ " :
+             character.getZodiacSign().equalsIgnoreCase("Capricorn") ? "♑ " :
+             character.getZodiacSign().equalsIgnoreCase("Aquarius") ? "♒ " :
+             character.getZodiacSign().equalsIgnoreCase("Pisces") ? "♓ " : "") + 
+            character.getZodiacSign() + "</html>");
+        
         JLabel occupationLabel = new JLabel("Occupation: " + character.getOccupation());
         
         // set label font
