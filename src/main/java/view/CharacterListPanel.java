@@ -108,20 +108,7 @@ public class CharacterListPanel extends JPanel {
         genderLabel.setHorizontalTextPosition(SwingConstants.LEFT);
         genderLabel.setIconTextGap(5); // 图标和文字之间的间距
         
-        JLabel zodiacLabel = new JLabel("<html>Zodiac: " + 
-            (character.getZodiacSign().equalsIgnoreCase("Aries") ? "♈ " :
-             character.getZodiacSign().equalsIgnoreCase("Taurus") ? "♉ " :
-             character.getZodiacSign().equalsIgnoreCase("Gemini") ? "♊ " :
-             character.getZodiacSign().equalsIgnoreCase("Cancer") ? "♋ " :
-             character.getZodiacSign().equalsIgnoreCase("Leo") ? "♌ " :
-             character.getZodiacSign().equalsIgnoreCase("Virgo") ? "♍ " :
-             character.getZodiacSign().equalsIgnoreCase("Libra") ? "♎ " :
-             character.getZodiacSign().equalsIgnoreCase("Scorpio") ? "♏ " :
-             character.getZodiacSign().equalsIgnoreCase("Sagittarius") ? "♐ " :
-             character.getZodiacSign().equalsIgnoreCase("Capricorn") ? "♑ " :
-             character.getZodiacSign().equalsIgnoreCase("Aquarius") ? "♒ " :
-             character.getZodiacSign().equalsIgnoreCase("Pisces") ? "♓ " : "") + 
-            character.getZodiacSign() + "</html>");
+        JLabel zodiacLabel = new JLabel("<html>Zodiac: " + getZodiacSign(character.getZodiacSign()) + "</html>");
         JLabel occupationLabel = new JLabel("Occupation: " + character.getOccupation());
         
         // set font size and alignment
@@ -207,6 +194,24 @@ public class CharacterListPanel extends JPanel {
             case 2: return "Male";
             case 3: return "Non-binary";
             default: return "Unknown";
+        }
+    }
+
+    private String getZodiacSign(String zodiac) {
+        switch (zodiac.toLowerCase()) {
+            case "aries": return "♈ " + zodiac;
+            case "taurus": return "♉ " + zodiac;
+            case "gemini": return "♊ " + zodiac;
+            case "cancer": return "♋ " + zodiac;
+            case "leo": return "♌ " + zodiac;
+            case "virgo": return "♍ " + zodiac;
+            case "libra": return "♎ " + zodiac;
+            case "scorpio": return "♏ " + zodiac;
+            case "sagittarius": return "♐ " + zodiac;
+            case "capricorn": return "♑ " + zodiac;
+            case "aquarius": return "♒ " + zodiac;
+            case "pisces": return "♓ " + zodiac;
+            default: return zodiac;
         }
     }
 

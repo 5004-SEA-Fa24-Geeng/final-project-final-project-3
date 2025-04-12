@@ -124,21 +124,7 @@ public class WishListPanel extends JPanel {
         genderLabel.setHorizontalTextPosition(SwingConstants.LEFT);
         genderLabel.setIconTextGap(5); // 图标和文字之间的间距
         
-        JLabel zodiacLabel = new JLabel("<html>Zodiac: " + 
-            (character.getZodiacSign().equalsIgnoreCase("Aries") ? "♈ " :
-             character.getZodiacSign().equalsIgnoreCase("Taurus") ? "♉ " :
-             character.getZodiacSign().equalsIgnoreCase("Gemini") ? "♊ " :
-             character.getZodiacSign().equalsIgnoreCase("Cancer") ? "♋ " :
-             character.getZodiacSign().equalsIgnoreCase("Leo") ? "♌ " :
-             character.getZodiacSign().equalsIgnoreCase("Virgo") ? "♍ " :
-             character.getZodiacSign().equalsIgnoreCase("Libra") ? "♎ " :
-             character.getZodiacSign().equalsIgnoreCase("Scorpio") ? "♏ " :
-             character.getZodiacSign().equalsIgnoreCase("Sagittarius") ? "♐ " :
-             character.getZodiacSign().equalsIgnoreCase("Capricorn") ? "♑ " :
-             character.getZodiacSign().equalsIgnoreCase("Aquarius") ? "♒ " :
-             character.getZodiacSign().equalsIgnoreCase("Pisces") ? "♓ " : "") + 
-            character.getZodiacSign() + "</html>");
-        
+        JLabel zodiacLabel = new JLabel("Zodiac: " + character.getZodiacSign());
         JLabel occupationLabel = new JLabel("Occupation: " + character.getOccupation());
         
         // set label font

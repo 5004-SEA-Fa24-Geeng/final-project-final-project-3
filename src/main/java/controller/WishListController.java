@@ -3,44 +3,47 @@ package controller;
 import view.WishListPanel;
 import view.CharacterListPanel;
 import model.*;
-import util.ImageCache;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
+/**
+ * Controller for the wish list.
+ */
 public class WishListController implements IWishListController {
 
+    /** Get an instance of WishList. **/
     private final WishList wishListModel;
+    /** Get an instance of WishListPanel. **/
     private final WishListPanel wishListPanel;
+    /** Get an instance of CharactersCollection. **/
     private final CharactersCollection charactersCollection;
 
-    /** Constructor for this class. **/
+    /** Constructor for this controller. **/
     public WishListController(WishList wishList, WishListPanel panel, CharacterListPanel characterListPanel, CharactersCollection charactersCollection) {
         this.wishListModel = wishList;
         this.wishListPanel = panel;
         this.charactersCollection = charactersCollection;
         initListeners(characterListPanel);
-        List<CharacterRecord> initWishList = new ArrayList<>(wishListModel.getWishList());
-        wishListPanel.setWishList(initWishList);
     }
 
+    /**
+     * Initializes all listeners between the CharacterListPanel and WishListPanel.
+     * These listeners handle user interactions such as adding/removing characters,
+     * clearing the wish list, and saving the list to a file.
+     * @param characterListPanel the panel that displays all available characters
+     */
     private void initListeners(CharacterListPanel characterListPanel) {
-        System.out.println("Initializing listeners in WishListController");
-        
-        // set CharacterListPanel's addToWishListListener
+
+        // Set the listener for adding a character to the wish list from CharacterListPanel
         characterListPanel.setAddToWishListListener(characterId -> {
-            System.out.println("AddToWishListListener triggered for characterId: " + characterId);
             Response response = handleAddToWishList(characterId);
             if (response.getStatus() == 200) {
                 updateView();
@@ -50,36 +53,40 @@ public class WishListController implements IWishListController {
             }
         });
 
-        // set remove character listener
+        // Set the listener for removing a character from the wish list in WishListPanel
         wishListPanel.setRemoveCharacterListener(characterId -> {
             Response result = handleRemoveSingleCharacter(characterId);
             if (result.getStatus() == 200) {
-                updateWishListPanel();
+                updateView();
                 JOptionPane.showMessageDialog(null, result.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, result.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        // set clear wish list listener
+        // Set the listener for clearing the entire wish list in WishListPanel
         wishListPanel.addClearWishListListener(e -> {
             Response result = handleClearWishList();
             if (result.getStatus() == 200) {
-                updateWishListPanel();
+                updateView();
                 JOptionPane.showMessageDialog(null, result.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, result.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        // set save to file listener
+        // Set the listener for saving the wish list to a file from WishListPanel
         wishListPanel.addSaveToFileListener(e -> {
             saveToFile();
         });
     }
 
-    private void updateWishListPanel() {
-        List<CharacterRecord> updatedWishList = new ArrayList<>(handleGetWishList());
+    /**
+     * update the view.
+     */
+    @Override
+    public void updateView() {
+        List<CharacterRecord> updatedWishList = new ArrayList<>(getWishList());
         wishListPanel.setWishList(updatedWishList);
     }
 
@@ -87,7 +94,7 @@ public class WishListController implements IWishListController {
      * Get the wish list.
      * @return a set of characters in the wish list
      */
-    private Set<CharacterRecord> handleGetWishList() {
+    private Set<CharacterRecord> getWishList() {
         return wishListModel.getWishList();
     }
 
@@ -98,24 +105,15 @@ public class WishListController implements IWishListController {
      */
     @Override
     public Response handleAddToWishList(int id) {
-        System.out.println("Handling add to wish list for ID: " + id);
         List<CharacterRecord> characters = charactersCollection.getFilteredCharacters();
-        System.out.println("Number of filtered characters: " + characters.size());
         CharacterRecord newCharacter = characters.stream().filter(character -> character.getId() == id).findFirst().orElse(null);
         if (newCharacter == null) {
-            System.out.println("Character not found with ID: " + id);
             return Response.failure("The character doesn't exist!");
         }
         if (wishListModel.addCharacter(id)) {
-            System.out.println("Successfully added character with ID: " + id);
-            // update view immediately
-            List<CharacterRecord> updatedWishList = new ArrayList<>(wishListModel.getWishList());
-            System.out.println("Updated wish list size: " + updatedWishList.size());
-            wishListPanel.setWishList(updatedWishList);
-            return Response.success("Successfully add the character!");
+            return Response.success("Successfully Add The Character!");
         }
-        System.out.println("Failed to add character with ID: " + id);
-        return Response.failure("Failed to add the character!");
+        return Response.failure("Character Already Exists!");
     }
 
     /**
@@ -127,12 +125,12 @@ public class WishListController implements IWishListController {
     public Response handleRemoveSingleCharacter(int id) {
         CharacterRecord deleteCharacter = wishListModel.getCharacterById(id);
         if (deleteCharacter == null) {
-            return Response.failure("The character doesn't exist in the wish list!");
+            return Response.failure("The character doesn't exist!");
         }
         if (wishListModel.removeSingleCharacter(id)) {
-            return Response.success("Successfully remove the character!");
+            return Response.success("Successfully Remove The Character!");
         }
-        return Response.failure("Failed to remove the character!");
+        return Response.failure("Failed To Remove The Character!");
     }
 
     /**
@@ -142,71 +140,39 @@ public class WishListController implements IWishListController {
     @Override
     public Response handleClearWishList() {
         if (wishListModel.removeAllCharacters()) {
-            return Response.success("Successfully clear the wish list!");
+            return Response.success("Successfully Clear The Wish List!");
         }
-        return Response.failure("Failed to clear the wish list!");
+        return Response.failure("Failed To Clear The Wish List!");
     }
 
     /**
-     * Save the wish list to a JSON file.
-     * @param fileName the name of the JSON file
-     * @return a Response object
+     * Save the wish list to a file.
      */
     @Override
-    public Response handleSaveWishList(String fileName) {
-        if (wishListModel.saveToFile(fileName)) {
-            return Response.success("Successfully save to the file!");
-        }
-        return Response.failure("Failed to save to the file!");
-    }
-
-    @Override
-    public void updateView() {
-        System.out.println("Updating wish list view");
-        List<CharacterRecord> updatedWishList = new ArrayList<>(wishListModel.getWishList());
-        System.out.println("Current wish list size: " + updatedWishList.size());
-        wishListPanel.setWishList(updatedWishList);
-    }
-
-    private void saveToFile() {
+    public void saveToFile() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Save Wish List");
         fileChooser.setFileFilter(new FileNameExtensionFilter("JSON Files", "json"));
         fileChooser.setSelectedFile(new File("wishlist.json"));
-        
+
         int userSelection = fileChooser.showSaveDialog(wishListPanel);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
             if (!fileToSave.getName().toLowerCase().endsWith(".json")) {
                 fileToSave = new File(fileToSave.getAbsolutePath() + ".json");
             }
-            
+
             try {
-                // use Jackson to create JSON
-                ObjectMapper mapper = new ObjectMapper();
-                ArrayNode jsonArray = mapper.createArrayNode();
-                for (CharacterRecord character : wishListModel.getWishList()) {
-                    ObjectNode jsonObject = mapper.createObjectNode();
-                    jsonObject.put("id", character.getId());
-                    jsonObject.put("name", character.getName());
-                    jsonObject.put("age", character.getAge());
-                    jsonObject.put("gender", character.getGender());
-                    jsonObject.put("zodiacSign", character.getZodiacSign());
-                    jsonObject.put("profile", character.getProfile());
-                    jsonArray.add(jsonObject);
-                }
-                
-                // write to file, use pretty print
-                mapper.writerWithDefaultPrettyPrinter().writeValue(fileToSave, jsonArray);
-                
-                JOptionPane.showMessageDialog(wishListPanel, 
-                    "Wish list saved successfully!", 
-                    "Success", 
+                // call the saveWishListToFile method in the JSONFileHandler util class
+                JSONFileHandler.saveWishListToFile(fileToSave.getAbsolutePath(), wishListModel.getWishList());
+                JOptionPane.showMessageDialog(wishListPanel,
+                    "Wish List Saved Successfully!",
+                    "Success",
                     JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(wishListPanel, 
-                    "Error saving file: " + e.getMessage(), 
-                    "Error", 
+                JOptionPane.showMessageDialog(wishListPanel,
+                    "Failed To Save The File: " + e.getMessage(),
+                    "Error",
                     JOptionPane.ERROR_MESSAGE);
             }
         }
