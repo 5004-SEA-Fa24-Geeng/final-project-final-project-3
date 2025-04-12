@@ -6,6 +6,7 @@ import model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +20,22 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class WishListController implements IWishListController {
 
-    /** Get an instance of WishList. **/
+    /**
+     * Get an instance of WishList.
+     **/
     private final WishList wishListModel;
-    /** Get an instance of WishListPanel. **/
+    /**
+     * Get an instance of WishListPanel.
+     **/
     private final WishListPanel wishListPanel;
-    /** Get an instance of CharactersCollection. **/
+    /**
+     * Get an instance of CharactersCollection.
+     **/
     private final CharactersCollection charactersCollection;
 
-    /** Constructor for this controller. **/
+    /**
+     * Constructor for this controller.
+     **/
     public WishListController(WishList wishList, WishListPanel panel, CharacterListPanel characterListPanel, CharactersCollection charactersCollection) {
         this.wishListModel = wishList;
         this.wishListPanel = panel;
@@ -38,6 +47,7 @@ public class WishListController implements IWishListController {
      * Initializes all listeners between the CharacterListPanel and WishListPanel.
      * These listeners handle user interactions such as adding/removing characters,
      * clearing the wish list, and saving the list to a file.
+     *
      * @param characterListPanel the panel that displays all available characters
      */
     private void initListeners(CharacterListPanel characterListPanel) {
@@ -92,6 +102,7 @@ public class WishListController implements IWishListController {
 
     /**
      * Get the wish list.
+     *
      * @return a set of characters in the wish list
      */
     private Set<CharacterRecord> getWishList() {
@@ -100,6 +111,7 @@ public class WishListController implements IWishListController {
 
     /**
      * Add the character corresponding to the id to the wish list.
+     *
      * @param id the id of the character to be added
      * @return a Response object
      */
@@ -118,6 +130,7 @@ public class WishListController implements IWishListController {
 
     /**
      * Remove the character corresponding to the id from the wish list.
+     *
      * @param id the id of the character to be removed
      * @return a Response object
      */
@@ -135,6 +148,7 @@ public class WishListController implements IWishListController {
 
     /**
      * Clear the wish list.
+     *
      * @return a Response object
      */
     @Override
@@ -166,14 +180,14 @@ public class WishListController implements IWishListController {
                 // call the saveWishListToFile method in the JSONFileHandler util class
                 JSONFileHandler.saveWishListToFile(fileToSave.getAbsolutePath(), wishListModel.getWishList());
                 JOptionPane.showMessageDialog(wishListPanel,
-                    "Wish List Saved Successfully!",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
+                        "Wish List Saved Successfully!",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(wishListPanel,
-                    "Failed To Save The File: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                        "Failed To Save The File: " + e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }

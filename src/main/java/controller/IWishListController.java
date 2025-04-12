@@ -2,12 +2,14 @@ package controller;
 
 import model.CharacterRecord;
 import model.Response;
+
 import java.util.Set;
 
 public interface IWishListController extends IController {
 
     /**
      * Add the character corresponding to the id to the wish list.
+     *
      * @param id the id of the character to be added
      * @return a Response object
      */
@@ -15,6 +17,7 @@ public interface IWishListController extends IController {
 
     /**
      * Remove the character corresponding to the id from the wish list.
+     *
      * @param id the id of the character to be removed
      * @return a Response object
      */
@@ -22,6 +25,7 @@ public interface IWishListController extends IController {
 
     /**
      * Clear the wish list.
+     *
      * @return a Response object
      */
     Response handleClearWishList();

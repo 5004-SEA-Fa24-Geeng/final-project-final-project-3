@@ -3,7 +3,9 @@ package controller;
 import model.CharacterRecord;
 import model.CharactersCollection;
 import model.Response;
+
 import static model.SortComparators.*;
+
 import view.SortPanel;
 
 import javax.swing.*;
@@ -17,18 +19,24 @@ import java.util.List;
  * Aligns with WishListController structure.
  */
 public class SortController implements ISortController, IController {
-    /** The collection of characters to be sorted. */
+    /**
+     * The collection of characters to be sorted.
+     */
     private final CharactersCollection model;
-    /** The UI panel where sorting options are selected. */
+    /**
+     * The UI panel where sorting options are selected.
+     */
     private final SortPanel view;
-    /** Callback to refresh the UI after sorting is done. */
+    /**
+     * Callback to refresh the UI after sorting is done.
+     */
     private final Runnable refreshCallback;
 
     /**
      * Constructor.
      *
-     * @param model the collection of character data
-     * @param view the UI panel that contains sorting controls
+     * @param model           the collection of character data
+     * @param view            the UI panel that contains sorting controls
      * @param refreshCallback a runnable that refreshes the UI when sorting is applied
      */
     public SortController(CharactersCollection model, SortPanel view, Runnable refreshCallback) {

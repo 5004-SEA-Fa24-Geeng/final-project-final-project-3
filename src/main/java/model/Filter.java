@@ -1,41 +1,28 @@
 package model;
 
-import java.util.List;
-
+/**
+ * A functional interface representing a condition that a {@link CharacterRecord} must satisfy.
+ * This interface supports logical composition of filters using the {@code and} method.
+ */
 @FunctionalInterface
 public interface Filter {
+
+    /**
+     * Tests whether the specified character matches this filter.
+     *
+     * @param character the character to be tested
+     * @return {@code true} if the character matches the filter condition; {@code false} otherwise
+     */
     boolean matches(CharacterRecord character);
 
+    /**
+     * Combines this filter with another filter using logical AND.
+     * The resulting filter matches if both this and the other filter match the character.
+     *
+     * @param other the other filter to combine with
+     * @return a new filter representing the logical AND of this and the other filter
+     */
     default Filter and(Filter other) {
         return c -> this.matches(c) && other.matches(c);
-    }
-
-    default Filter or(Filter other) {
-        return c -> this.matches(c) || other.matches(c);
-    }
-
-    static Filter nameContains(String keyword) {
-        String lowered = keyword.toLowerCase();
-        return c -> c.getName().toLowerCase().contains(lowered);
-    }
-
-    static Filter genderIs(Integer gender) {
-        return c -> c.getGender().equals(gender);
-    }
-
-    static Filter genderIn(List<Integer> genders) {
-        return c -> genders.contains(c.getGender());
-    }
-
-    static Filter zodiacIs(String sign) {
-        return c -> c.getZodiacSign().equalsIgnoreCase(sign);
-    }
-
-    static Filter zodiacIn(List<String> signs) {
-        return c -> signs.contains(c.getZodiacSign());
-    }
-
-    static Filter ageBetween(int min, int max) {
-        return c -> c.getAge() >= min && c.getAge() <= max;
     }
 }

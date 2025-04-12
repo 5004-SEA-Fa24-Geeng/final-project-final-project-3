@@ -22,10 +22,11 @@ public class JSONFileHandler {
 
     /**
      * Save the characters in the wish list to a Json file.
+     *
      * @param fileName the name of the file saved the wish list to
      * @return if the wish list is successfully saved to the file
      */
-    public static void saveWishListToFile(String fileName, Set<CharacterRecord> wishList) throws IOException{
+    public static void saveWishListToFile(String fileName, Set<CharacterRecord> wishList) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode jsonArray = mapper.createArrayNode();
         for (CharacterRecord character : wishList) {
@@ -48,6 +49,7 @@ public class JSONFileHandler {
 
     /**
      * Read characters' information from the Json file.
+     *
      * @param fileName the name of the file to be read.
      * @return a list of characters
      */
@@ -55,7 +57,8 @@ public class JSONFileHandler {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            List<CharacterRecord> characters = objectMapper.readValue(new File(fileName), new TypeReference<List<CharacterRecord>>() {});
+            List<CharacterRecord> characters = objectMapper.readValue(new File(fileName), new TypeReference<List<CharacterRecord>>() {
+            });
             return processCharacters(characters);
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,6 +68,7 @@ public class JSONFileHandler {
 
     /**
      * Process characters' information.
+     *
      * @param characters the list of characters to be processed.
      * @return a list of characters
      */
@@ -95,9 +99,10 @@ public class JSONFileHandler {
 
     /**
      * Calculate the age of a character based on the birthday.
-     * @param year the year the character born in
+     *
+     * @param year  the year the character born in
      * @param month the month the character born in
-     * @param day the day the character born on
+     * @param day   the day the character born on
      * @return the age of the character
      */
     private static int calculateAge(int year, int month, int day) {
@@ -108,8 +113,9 @@ public class JSONFileHandler {
 
     /**
      * Calculate the zodiac sign of a character based on the birthday.
+     *
      * @param month the month the character born in
-     * @param day the day the character born on
+     * @param day   the day the character born on
      * @return the zodiac sign of the character
      */
     private static String calculateZodiacSign(int month, int day) {

@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
  * Interface for filter controller event handling.
  * Defines actions related to searching and resetting filter criteria.
  */
-public interface IFilterController {
+public interface IFilterController extends IController {
 
     /**
      * Triggered when the user clicks the search button.

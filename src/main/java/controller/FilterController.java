@@ -15,15 +15,27 @@ import java.util.List;
  * to apply composite filters and update the display.
  */
 public class FilterController implements IFilterController, IController {
+
+    /**
+     * The model that stores and filters the list of characters.
+     */
     private final CharactersCollection model;
+
+    /**
+     * The view panel that provides UI components for filter input.
+     */
     private final FilterPanel view;
+
+    /**
+     * The callback function used to refresh the character list in the UI.
+     */
     private final Runnable refreshCallback;
 
     /**
      * Constructs a FilterController with the specified model, view, and refresh action.
      *
-     * @param model the character collection to be filtered
-     * @param view the panel providing UI components for filtering
+     * @param model           the character collection to be filtered
+     * @param view            the panel providing UI components for filtering
      * @param refreshCallback the callback to refresh the character list view
      */
     public FilterController(CharactersCollection model,
@@ -147,7 +159,7 @@ public class FilterController implements IFilterController, IController {
     /**
      * Parses a string into an integer with a default fallback.
      *
-     * @param input the string input
+     * @param input        the string input
      * @param defaultValue the default value if input is empty
      * @return the parsed integer or default
      */

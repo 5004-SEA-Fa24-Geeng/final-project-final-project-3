@@ -5,16 +5,21 @@ package model;
  */
 public class Response {
 
-    /** The status of the current operation (success: 200, filure: 400). **/
+    /**
+     * The status of the current operation (success: 200, filure: 400).
+     **/
     private int status;
 
-    /** The response message. **/
+    /**
+     * The response message.
+     **/
     private String message;
 
     /**
      * Constructor for the Response class with response status and information.
+     *
      * @param status the response status
-     * @param info the response information
+     * @param info   the response information
      */
     public Response(int status, String info) {
         this.status = status;
@@ -23,6 +28,7 @@ public class Response {
 
     /**
      * Get the response status.
+     *
      * @return the reponse status
      */
     public int getStatus() {
@@ -31,6 +37,7 @@ public class Response {
 
     /**
      * Get the response info.
+     *
      * @return the response info
      */
     public String getMessage() {
@@ -39,6 +46,7 @@ public class Response {
 
     /**
      * Construct a success response.
+     *
      * @param info the successful information
      * @return a Response object
      */
@@ -48,6 +56,7 @@ public class Response {
 
     /**
      * Construct a failure response.
+     *
      * @param info the failed information
      * @return a Response object
      */
