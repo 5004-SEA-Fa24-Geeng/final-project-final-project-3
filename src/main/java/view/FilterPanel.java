@@ -31,8 +31,8 @@ public class FilterPanel extends JPanel {
     private final JCheckBox maleCheckBox = new JCheckBox("Male");
     private final JCheckBox otherCheckBox = new JCheckBox("Non-binary");
     private final JList<String> zodiacList = new JList<>(new String[]{
-            "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-            "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+            "Aries ♈", "Taurus ♉", "Gemini ♊", "Cancer ♋", "Leo ♌", "Virgo ♍",
+            "Libra ♎", "Scorpio ♏", "Sagittarius ♐", "Capricorn ♑", "Aquarius ♒", "Pisces ♓"
     });
     private final JLabel statusLabel = new JLabel("Ready");
 

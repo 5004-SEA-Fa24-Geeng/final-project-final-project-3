@@ -81,29 +81,29 @@ public class CharacterRecord {
     public String getZodiacSign() {
         switch (zodiacSign) {
             case "Aries":
-                return "♈ " + "Aries";
+                return  "Aries" + " ♈";
             case "Taurus":
-                return "♉ " + "Taurus";
+                return "Taurus" + " ♉";
             case "Gemini":
-                return "♊ " + "Gemini";
+                return "Gemini" + " ♊";
             case "Cancer":
-                return "♋ " + "Cancer";
+                return "Cancer" + " ♋";
             case "Leo":
-                return "♌ " + "Leo";
+                return "Leo" + " ♌";
             case "Virgo":
-                return "♍ " + "Virgo";
+                return "Virgo" + " ♍";
             case "Libra":
-                return "♎ " + "Libra";
+                return "Libra" + " ♎";
             case "Scorpio":
-                return "♏ " + "Scorpio";
+                return "Scorpio" + " ♏";
             case "Sagittarius":
-                return "♐ " + "Sagittarius";
+                return "Sagittarius" + " ♐";
             case "Capricorn":
-                return "♑ " + "Capricorn";
+                return "Capricorn" + " ♑";
             case "Aquarius":
-                return "♒ " + "Aquarius";
+                return "Aquarius" + " ♒";
             case "Pisces":
-                return "♓ " + "Pisces";
+                return "Pisces" + " ♓";
             default:
                 return zodiacSign;
         }
