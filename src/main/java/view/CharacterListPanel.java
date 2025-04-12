@@ -67,27 +67,54 @@ public class CharacterListPanel extends JPanel {
         }
 
         // middle info panel
-        JPanel infoPanel = new JPanel(new GridLayout(4, 1, 0, 2));
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setPreferredSize(new Dimension(200, 92));
         infoPanel.setMinimumSize(new Dimension(200, 92));
         infoPanel.setMaximumSize(new Dimension(200, 92));
         infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        
         JLabel nameLabel = new JLabel("Name: " + character.getName());
         JLabel ageLabel = new JLabel("Age: " + character.getAge());
         JLabel genderLabel = new JLabel("Gender: " + getGenderString(character.getGender()));
         JLabel zodiacLabel = new JLabel("Zodiac: " + character.getZodiacSign());
+        JLabel occupationLabel = new JLabel("Occupation: " + character.getOccupation());
         
-        // set font size
+        // set font size and alignment
         Font labelFont = new Font("Arial", Font.PLAIN, 12);
         nameLabel.setFont(labelFont);
         ageLabel.setFont(labelFont);
         genderLabel.setFont(labelFont);
         zodiacLabel.setFont(labelFont);
+        occupationLabel.setFont(labelFont);
+        
+        // set alignment
+        nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        ageLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        genderLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        zodiacLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        occupationLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        // set each label's fixed height
+        Dimension labelSize = new Dimension(200, 15);
+        nameLabel.setPreferredSize(labelSize);
+        ageLabel.setPreferredSize(labelSize);
+        genderLabel.setPreferredSize(labelSize);
+        zodiacLabel.setPreferredSize(labelSize);
+        occupationLabel.setPreferredSize(labelSize);
+
+        // set label margin
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        ageLabel.setBorder(BorderFactory.createEmptyBorder(1, 0, 10, 0));
+        genderLabel.setBorder(BorderFactory.createEmptyBorder(1, 0, 10, 0));
+        zodiacLabel.setBorder(BorderFactory.createEmptyBorder(1, 0, 10, 0));
+        occupationLabel.setBorder(BorderFactory.createEmptyBorder(1, 0, 1, 0));
         
         infoPanel.add(nameLabel);
         infoPanel.add(ageLabel);
         infoPanel.add(genderLabel);
         infoPanel.add(zodiacLabel);
+        infoPanel.add(occupationLabel);
 
         // right button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));

@@ -53,11 +53,11 @@ public class WishListPanel extends JPanel {
     private void addCharacterPanel(CharacterRecord character) {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
         panel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-        panel.setMaximumSize(new Dimension(400, 138));  // 设置最大高度
-        panel.setPreferredSize(new Dimension(400, 138));  // 设置首选高度
-        panel.setMinimumSize(new Dimension(400, 138));  // 设置最小高度
+        panel.setMaximumSize(new Dimension(400, 138));  // set maximum height
+        panel.setPreferredSize(new Dimension(400, 138));  // set preferred height
+        panel.setMinimumSize(new Dimension(400, 138));  // set minimum height
 
-        // 左侧图片面板
+        // left image panel
         JPanel imagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         imagePanel.setMaximumSize(new Dimension(92, 138));
         imagePanel.setPreferredSize(new Dimension(92, 138));
@@ -82,7 +82,7 @@ public class WishListPanel extends JPanel {
             imagePanel.add(noImageLabel);
         }
 
-        // 中间信息面板
+        // middle info panel
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
@@ -94,21 +94,23 @@ public class WishListPanel extends JPanel {
         JLabel ageLabel = new JLabel("Age: " + character.getAge());
         JLabel genderLabel = new JLabel("Gender: " + getGenderString(character.getGender()));
         JLabel zodiacLabel = new JLabel("Zodiac: " + character.getZodiacSign());
+        JLabel occupationLabel = new JLabel("Occupation: " + character.getOccupation());
         
-        // 设置标签的字体
+        // set label font
         Font labelFont = new Font("Dialog", Font.PLAIN, 12);
         nameLabel.setFont(labelFont);
         ageLabel.setFont(labelFont);
         genderLabel.setFont(labelFont);
         zodiacLabel.setFont(labelFont);
+        occupationLabel.setFont(labelFont);
+        // set label margin
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        ageLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        genderLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        zodiacLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        occupationLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         
-        // 设置标签的边距
-        nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        ageLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        genderLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        zodiacLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        
-        // 设置标签的最小和最大高度
+        // set label minimum and maximum height
         nameLabel.setMinimumSize(new Dimension(0, 15));
         nameLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
         ageLabel.setMinimumSize(new Dimension(0, 15));
@@ -117,14 +119,17 @@ public class WishListPanel extends JPanel {
         genderLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
         zodiacLabel.setMinimumSize(new Dimension(0, 15));
         zodiacLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
+        occupationLabel.setMinimumSize(new Dimension(0, 15));
+        occupationLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
         
-        // 添加标签到面板
+        // add label to panel
         infoPanel.add(nameLabel);
         infoPanel.add(ageLabel);
         infoPanel.add(genderLabel);
         infoPanel.add(zodiacLabel);
+        infoPanel.add(occupationLabel);
 
-        // 右侧按钮面板
+        // right button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         buttonPanel.setPreferredSize(new Dimension(30, 92));
         buttonPanel.setMinimumSize(new Dimension(30, 92));
@@ -154,12 +159,12 @@ public class WishListPanel extends JPanel {
         
         buttonPanel.add(removeButton);
 
-        // 添加面板到主面板
+        // add panel to main panel
         panel.add(imagePanel, BorderLayout.WEST);
         panel.add(infoPanel, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.EAST);
 
-        // 添加分隔线
+        // add separator
         panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
 
         contentPanel.add(panel);

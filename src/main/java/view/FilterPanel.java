@@ -104,18 +104,13 @@ public class FilterPanel extends JPanel {
         
         ageGbc.gridx = 2;
         ageGbc.weightx = 0;
-        agePanel.add(new JLabel("——"), ageGbc);
+        agePanel.add(new JLabel("—"), ageGbc);
         
         ageGbc.gridx = 3;
         ageGbc.weightx = 0;
         agePanel.add(maxAgeField, ageGbc);
         
-        // use BoxLayout to wrap agePanel
-        JPanel ageWrapper = new JPanel();
-        ageWrapper.setLayout(new BoxLayout(ageWrapper, BoxLayout.X_AXIS));
-        ageWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // add left margin
-        ageWrapper.add(agePanel);
-        add(ageWrapper);
+        add(agePanel);
         add(Box.createVerticalStrut(10));
 
         // gender part
@@ -141,12 +136,7 @@ public class FilterPanel extends JPanel {
         genderGbc.weightx = 0;
         genderPanel.add(otherCheckBox, genderGbc);
         
-        // use BoxLayout to wrap genderPanel
-        JPanel genderWrapper = new JPanel();
-        genderWrapper.setLayout(new BoxLayout(genderWrapper, BoxLayout.X_AXIS));
-        genderWrapper.add(Box.createRigidArea(new Dimension(5, 0))); // add left margin
-        genderWrapper.add(genderPanel);
-        add(genderWrapper);
+        add(genderPanel);
         add(Box.createVerticalStrut(10));
 
         // zodiac part
