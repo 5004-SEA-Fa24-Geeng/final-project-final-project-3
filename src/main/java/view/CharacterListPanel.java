@@ -143,7 +143,7 @@ public class CharacterListPanel extends JPanel {
         JLabel occupationLabel = new JLabel("Occupation: " + character.getOccupation());
         
         // set font size and alignment
-        Font labelFont = new Font("Arial", Font.PLAIN, 12);
+        Font labelFont = new Font("Arial", Font.PLAIN, 14);
         nameLabel.setFont(labelFont);
         ageLabel.setFont(labelFont);
         genderLabel.setFont(labelFont);
@@ -179,7 +179,7 @@ public class CharacterListPanel extends JPanel {
         infoPanel.add(occupationLabel);
 
         // right button panel
-        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10)); // Aligns top-ish
         buttonPanel.setPreferredSize(new Dimension(30, 92));
         buttonPanel.setMinimumSize(new Dimension(30, 92));
         buttonPanel.setMaximumSize(new Dimension(30, 92));
