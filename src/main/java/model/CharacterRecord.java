@@ -272,6 +272,13 @@ public class CharacterRecord {
     }
 
     /**
+     * @param popularity the popularity to set
+     */
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
+    }
+
+    /**
      * @return a string representation of the character record
      */
     @Override
