@@ -25,12 +25,12 @@ public class WishListPanel extends JPanel {
 
     private void initComponents() {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        contentPanel.setAlignmentX(Component.LEFT_ALIGNMENT);  // 设置左对齐
+        contentPanel.setAlignmentX(Component.LEFT_ALIGNMENT);  // set left alignment
         JScrollPane scrollPane = new JScrollPane(contentPanel);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scrollPane, BorderLayout.CENTER);
 
-        // 按钮面板
+        // button panel
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
         buttonPanel.add(clearButton);
         buttonPanel.add(saveButton);
@@ -93,12 +93,12 @@ public class WishListPanel extends JPanel {
         JLabel nameLabel = new JLabel("Name: " + character.getName());
         JLabel ageLabel = new JLabel("Age: " + character.getAge());
         
-        // 创建性别标签
+        // create gender label
         JLabel genderLabel = new JLabel();
         String genderText = "Gender: " + getGenderString(character.getGender());
         ImageIcon genderIcon = null;
         
-        // 根据性别设置图标
+        // set gender icon based on gender
         switch (character.getGender()) {
             case 1:
                 genderIcon = new ImageIcon("src/main/resources/female.png");
@@ -111,7 +111,7 @@ public class WishListPanel extends JPanel {
                 break;
         }
         
-        // 调整图标大小
+        // adjust icon size
         if (genderIcon != null) {
             Image image = genderIcon.getImage();
             Image newimg = image.getScaledInstance(12, 12, Image.SCALE_SMOOTH);
@@ -119,10 +119,10 @@ public class WishListPanel extends JPanel {
             genderLabel.setIcon(genderIcon);
         }
         
-        // 设置文字和图标位置
+        // set text and icon position
         genderLabel.setText(genderText);
         genderLabel.setHorizontalTextPosition(SwingConstants.LEFT);
-        genderLabel.setIconTextGap(5); // 图标和文字之间的间距
+        genderLabel.setIconTextGap(5); // icon and text gap
         
         JLabel zodiacLabel = new JLabel("Zodiac: " + character.getZodiacSign());
         JLabel occupationLabel = new JLabel("Occupation: " + character.getOccupation());

@@ -12,6 +12,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import util.ImageCache;  // cache the images to reduce loading time
 
+/**
+ * The CharacterListPanel class is responsible for displaying a list of characters in a scrollable panel.
+ * It provides functionality to add characters to the wishlist and update the count of characters.
+ */
 public class CharacterListPanel extends JPanel {
     private final JPanel contentPanel = new JPanel();
     private AddToWishListListener addToWishListListener;
@@ -27,15 +31,26 @@ public class CharacterListPanel extends JPanel {
         initComponents();
     }
 
+    /**
+     * Sets the listener for adding characters to the wishlist.
+     * @param listener the listener to set
+     */
     public void setAddToWishListListener(AddToWishListListener listener) {
         System.out.println("Setting addToWishListListener: " + (listener != null));
         this.addToWishListListener = listener;
     }
 
+    /**
+     * Checks if the addToWishListListener is set.
+     * @return true if the listener is set, false otherwise
+     */
     public boolean isAddToWishListListenerSet() {
         return addToWishListListener != null;
     }
 
+    /**
+     * Initializes the components of the panel.
+     */
     private void initComponents() {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setBackground(new Color(252,236,222));
@@ -47,6 +62,10 @@ public class CharacterListPanel extends JPanel {
 
     }
 
+    /**
+     * Sets the list of characters to display in the panel.
+     * @param characters the list of characters to display
+     */
     public void setCharacterList(List<CharacterRecord> characters) {
         contentPanel.removeAll();
         for (CharacterRecord character : characters) {
@@ -57,6 +76,10 @@ public class CharacterListPanel extends JPanel {
         updateCount();
     }
 
+    /**
+     * Adds a character panel to the content panel.
+     * @param character the character to add
+     */
     private void addCharacterPanel(CharacterRecord character) {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
         panel.setBackground(new Color(252, 236, 222)); // ✅ to match
@@ -85,12 +108,12 @@ public class CharacterListPanel extends JPanel {
         JLabel nameLabel = new JLabel("Name: " + character.getName());
         JLabel ageLabel = new JLabel("Age: " + character.getAge());
         
-        // 创建性别标签
+        // create gender label
         JLabel genderLabel = new JLabel();
         String genderText = "Gender: " + getGenderString(character.getGender());
         ImageIcon genderIcon = null;
         
-        // 根据性别设置图标
+        // set gender icon based on gender
         switch (character.getGender()) {
             case 1:
                 genderIcon = new ImageIcon("src/main/resources/female.png");
@@ -103,7 +126,7 @@ public class CharacterListPanel extends JPanel {
                 break;
         }
         
-        // 调整图标大小
+        // adjust icon size
         if (genderIcon != null) {
             Image image = genderIcon.getImage();
             Image newimg = image.getScaledInstance(12, 12, Image.SCALE_SMOOTH);
@@ -111,10 +134,10 @@ public class CharacterListPanel extends JPanel {
             genderLabel.setIcon(genderIcon);
         }
         
-        // 设置文字和图标位置
+        // set text and icon position
         genderLabel.setText(genderText);
         genderLabel.setHorizontalTextPosition(SwingConstants.LEFT);
-        genderLabel.setIconTextGap(5); // 图标和文字之间的间距
+        genderLabel.setIconTextGap(5); // icon and text gap
         
         JLabel zodiacLabel = new JLabel("<html>Zodiac: " + getZodiacSign(character.getZodiacSign()) + "</html>");
         JLabel occupationLabel = new JLabel("Occupation: " + character.getOccupation());
@@ -214,6 +237,11 @@ public class CharacterListPanel extends JPanel {
         contentPanel.add(panel);
     }
 
+    /**
+     * Gets the gender string for a given gender code.
+     * @param gender the gender code
+     * @return the gender string
+     */
     private String getGenderString(int gender) {
         switch (gender) {
             case 1: return "Female";
@@ -223,6 +251,11 @@ public class CharacterListPanel extends JPanel {
         }
     }
 
+    /**
+     * Gets the zodiac sign for a given zodiac sign.
+     * @param zodiac the zodiac sign
+     * @return the zodiac sign
+     */
     private String getZodiacSign(String zodiac) {
         switch (zodiac.toLowerCase()) {
             case "aries": return "♈ " + zodiac;
@@ -241,17 +274,26 @@ public class CharacterListPanel extends JPanel {
         }
     }
 
+    /**
+     * Updates the count of characters in the panel.
+     */
     private void updateCount() {
         if (sortPanel != null) {
             sortPanel.setCount(contentPanel.getComponentCount());
         }
     }
 
+    /**
+     * Updates the view of the panel.
+     */
     public void updateView() {
         updateCount();
         contentPanel.repaint();
     }
 
+    /**
+     * Adds a character to the wishlist.
+     */
     public interface AddToWishListListener {
         void onAdd(int characterId);
     }
