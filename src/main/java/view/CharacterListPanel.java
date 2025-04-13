@@ -23,6 +23,7 @@ public class CharacterListPanel extends JPanel {
         setPreferredSize(new Dimension(400, 138));
         setMinimumSize(new Dimension(400, 138));
         setMaximumSize(new Dimension(400, 138));
+        setBackground(new Color(252,236,222));
         initComponents();
     }
 
@@ -37,9 +38,13 @@ public class CharacterListPanel extends JPanel {
 
     private void initComponents() {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setBackground(new Color(252,236,222));
         JScrollPane scrollPane = new JScrollPane(contentPanel);
         add(scrollPane, BorderLayout.CENTER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getViewport().setBackground(new Color(252, 236, 222)); // ✅ ADD THIS
+        scrollPane.setBorder(BorderFactory.createEmptyBorder()); // (optional for seamless look)
+
     }
 
     public void setCharacterList(List<CharacterRecord> characters) {
@@ -54,10 +59,12 @@ public class CharacterListPanel extends JPanel {
 
     private void addCharacterPanel(CharacterRecord character) {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
+        panel.setBackground(new Color(252, 236, 222)); // ✅ to match
         panel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
         // left image panel
         JPanel imagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        imagePanel.setBackground(new Color(252, 236, 222)); // ✅
         String imageUrl = "https://image.tmdb.org/t/p/w92" + character.getProfile();
         ImageIcon icon = ImageCache.getImage(imageUrl);
         if (icon != null) {
@@ -72,6 +79,7 @@ public class CharacterListPanel extends JPanel {
         infoPanel.setPreferredSize(new Dimension(200, 92));
         infoPanel.setMinimumSize(new Dimension(200, 92));
         infoPanel.setMaximumSize(new Dimension(200, 92));
+        infoPanel.setBackground(new Color(252,236,222));
         infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         
         JLabel nameLabel = new JLabel("Name: " + character.getName());
@@ -148,17 +156,35 @@ public class CharacterListPanel extends JPanel {
         infoPanel.add(occupationLabel);
 
         // right button panel
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
-        JButton addButton = new JButton("+");
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
         buttonPanel.setPreferredSize(new Dimension(30, 92));
         buttonPanel.setMinimumSize(new Dimension(30, 92));
         buttonPanel.setMaximumSize(new Dimension(30, 92));
+        buttonPanel.setBackground(new Color(252, 236, 222));
+        ImageIcon heartIcon = new ImageIcon("src/main/resources/heart.png");
+        Image scaled = heartIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        JButton addButton = new JButton(new ImageIcon(scaled));
+
+        addButton.setBorderPainted(false);
+        addButton.setContentAreaFilled(false);
+        addButton.setFocusPainted(false);
+        addButton.setOpaque(false);
+        addButton.setToolTipText("Add to Wishlist");
+        // lets background show through
+
+
+
+
+        buttonPanel.setPreferredSize(new Dimension(30, 92));
+        buttonPanel.setMinimumSize(new Dimension(30, 92));
+        buttonPanel.setMaximumSize(new Dimension(30, 92));
+        buttonPanel.setBackground(new Color(252,236,222));
         addButton.setFont(new Font("Arial", Font.BOLD, 20));
         addButton.setPreferredSize(new Dimension(25, 25));
         addButton.setMargin(new Insets(0, 0, 0, 10));
         addButton.setFocusable(false);
         addButton.setOpaque(true);
-        addButton.setBackground(new Color(240, 240, 240));
+        addButton.setBackground(new Color(252, 236, 222));
         addButton.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(200, 200, 200)),
             BorderFactory.createEmptyBorder(0, 0, 0, 0)
