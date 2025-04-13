@@ -17,10 +17,8 @@ import java.util.List;
  * search controls, and a status label.
  */
 public class FilterPanel extends JPanel {
-    private static final int LOGO_WIDTH = 300;
-    private static final int LOGO_HEIGHT = 300;
     private static final int FIELD_WIDTH = 15;
-    private static final int VERTICAL_GAP = 10;
+    private static final int VERTICAL_GAP = 5;
 
     private final JTextField searchField = new JTextField(FIELD_WIDTH);
     private final JButton searchButton = new JButton("Search");
@@ -41,16 +39,9 @@ public class FilterPanel extends JPanel {
      */
     public FilterPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(204, 102, 153), 2, true), // 🎯 rounded true
-                BorderFactory.createTitledBorder("Filter Options")
-        ));
+        setPreferredSize(new Dimension(350, 0));
+        setBackground(new Color(252, 236, 222));
 
-        setPreferredSize(new Dimension(300, 0));
-        setBackground(new Color(252,236,222));
-
-        add(Box.createVerticalStrut(VERTICAL_GAP));
-        addSearchPanel();
         add(Box.createVerticalStrut(VERTICAL_GAP));
         addAgePanel();
         add(Box.createVerticalStrut(VERTICAL_GAP));
@@ -59,6 +50,8 @@ public class FilterPanel extends JPanel {
         addZodiacPanel();
         add(Box.createVerticalStrut(VERTICAL_GAP));
         addStatusPanel();
+        add(Box.createVerticalStrut(VERTICAL_GAP));
+        addSearchPanel();
         add(Box.createVerticalGlue());
 
         setupNumberFilter();
@@ -69,24 +62,48 @@ public class FilterPanel extends JPanel {
      */
     private void addSearchPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(new Color( 252,236,222));
+        panel.setBackground(new Color(252, 236, 222));
         GridBagConstraints gbc = createGbc();
 
-        gbc.gridx = 0;
-        panel.add(new JLabel("Search:"), gbc);
+        Font largerFont = new Font("SansSerif", Font.PLAIN, 15);
 
+        // Search label
+        JLabel searchLabel = new JLabel("Search:");
+        searchLabel.setFont(largerFont);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel.add(searchLabel, gbc);
+
+        // Search field
+        searchField.setFont(largerFont);
+        searchField.setPreferredSize(new Dimension(200, 35));
         gbc.gridx = 1;
-        gbc.weightx = 3;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
         panel.add(searchField, gbc);
 
-        gbc.gridx = 2;
+        // Buttons
+        searchButton.setFont(largerFont);
+        searchButton.setPreferredSize(new Dimension(80, 35));
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
         gbc.weightx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.WEST;
         panel.add(searchButton, gbc);
 
-        gbc.gridx = 3;
+        resetButton.setFont(largerFont);
+        resetButton.setPreferredSize(new Dimension(80, 35));
+        gbc.gridx = 2;
+        gbc.gridy = 1;
         panel.add(resetButton, gbc);
 
-        add(panel);
+        addSection(panel);
     }
 
     /**
@@ -94,19 +111,32 @@ public class FilterPanel extends JPanel {
      */
     private void addAgePanel() {
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(new Color( 252,236,222));
-
+        panel.setBackground(new Color(252, 236, 222));
+        Font font15 = new Font("SansSerif", Font.PLAIN, 15);
         GridBagConstraints gbc = createGbc();
 
+        // Age label
+        JLabel ageLabel = new JLabel("Age Range:");
+        ageLabel.setFont(font15);
         gbc.gridx = 0;
-        panel.add(new JLabel("Age Range:"), gbc);
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel.add(ageLabel, gbc);
 
+        // Age fields
+        minAgeField.setFont(font15);
+        minAgeField.setPreferredSize(new Dimension(60, 35));
         gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.WEST;
         panel.add(minAgeField, gbc);
 
+        JLabel dashLabel = new JLabel("—");
+        dashLabel.setFont(font15);
         gbc.gridx = 2;
-        panel.add(new JLabel("——"), gbc);
+        panel.add(dashLabel, gbc);
 
+        maxAgeField.setFont(font15);
+        maxAgeField.setPreferredSize(new Dimension(60, 35));
         gbc.gridx = 3;
         panel.add(maxAgeField, gbc);
 
@@ -118,20 +148,34 @@ public class FilterPanel extends JPanel {
      */
     private void addGenderPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(252, 236, 222));
+        Font font15 = new Font("SansSerif", Font.PLAIN, 15);
         GridBagConstraints gbc = createGbc();
-        panel.setBackground(new Color( 252,236,222));
 
-
+        // Gender label
+        JLabel genderLabel = new JLabel("Gender:");
+        genderLabel.setFont(font15);
         gbc.gridx = 0;
-        panel.add(new JLabel("Gender:"), gbc);
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel.add(genderLabel, gbc);
 
+        // Checkboxes
+        femaleCheckBox.setFont(font15);
         gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
         panel.add(femaleCheckBox, gbc);
 
+        maleCheckBox.setFont(font15);
         gbc.gridx = 2;
+        gbc.gridy = 0;
         panel.add(maleCheckBox, gbc);
 
-        gbc.gridx = 3;
+        otherCheckBox.setFont(font15);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
         panel.add(otherCheckBox, gbc);
 
         addSection(panel);
@@ -142,19 +186,31 @@ public class FilterPanel extends JPanel {
      */
     private void addZodiacPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(252, 236, 222));
+        Font font15 = new Font("SansSerif", Font.PLAIN, 15);
         GridBagConstraints gbc = createGbc();
-        panel.setBackground(new Color( 252,236,222));
 
-
+        // Zodiac label
+        JLabel zodiacLabel = new JLabel("Zodiac:");
+        zodiacLabel.setFont(font15);
         gbc.gridx = 0;
-        panel.add(new JLabel("Zodiac:"), gbc);
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        panel.add(zodiacLabel, gbc);
+
+        // Zodiac list
+        zodiacList.setFont(font15);
+        zodiacList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        zodiacList.setVisibleRowCount(5);
+        JScrollPane scrollPane = new JScrollPane(zodiacList);
+        scrollPane.setPreferredSize(new Dimension(250, 150));
 
         gbc.gridx = 1;
+        gbc.gridy = 0;
         gbc.gridwidth = 3;
-        zodiacList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        zodiacList.setVisibleRowCount(4);
-        JScrollPane scrollPane = new JScrollPane(zodiacList);
-        scrollPane.setPreferredSize(new Dimension(200, 80));
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.WEST;
         panel.add(scrollPane, gbc);
 
         addSection(panel);
@@ -164,8 +220,8 @@ public class FilterPanel extends JPanel {
      * Adds the status label panel.
      */
     private void addStatusPanel() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.setBackground(new Color( 252,236,222));
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        panel.setBackground(new Color(252, 236, 222));
         statusLabel.setFont(statusLabel.getFont().deriveFont(Font.PLAIN, 14f));
         panel.add(statusLabel);
         add(panel);
@@ -178,8 +234,8 @@ public class FilterPanel extends JPanel {
      */
     private GridBagConstraints createGbc() {
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(2, 5, 2, 5);
+        gbc.insets = new Insets(10, 5, 5, 5);
+        gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.WEST;
         return gbc;
     }
@@ -190,10 +246,10 @@ public class FilterPanel extends JPanel {
      * @param component the component to add
      */
     private void addSection(JComponent component) {
-        JPanel wrapper = new JPanel();
-        wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.X_AXIS));
-        wrapper.add(Box.createRigidArea(new Dimension(5, 0)));
-        wrapper.add(component);
+        JPanel wrapper = new JPanel(new BorderLayout());
+        wrapper.setBackground(new Color(252, 236, 222));
+        wrapper.add(component, BorderLayout.WEST);
+        wrapper.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
         add(wrapper);
     }
 

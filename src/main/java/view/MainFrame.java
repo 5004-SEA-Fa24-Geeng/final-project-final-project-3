@@ -26,11 +26,11 @@ public class MainFrame extends JFrame {
         // create upper panel
         JPanel upperPanel = new JPanel();
         upperPanel.setPreferredSize(new Dimension(0, 150));
-        upperPanel.setBackground(new Color(252,236,222));// 宽度 0 表示自适应，高度 50
+        upperPanel.setBackground(new Color(252,236,222));
         JLabel logoLabel = new JLabel("Romantic Wishlist");
         try {
             Font fancyFont = Font.createFont(Font.TRUETYPE_FONT,
-                    new File("src/main/resources/GreatVibes-Regular.ttf")).deriveFont(90f);
+                    new File("src/main/resources/GreatVibes-Regular.ttf")).deriveFont(100f);
 
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(fancyFont);
@@ -48,11 +48,14 @@ public class MainFrame extends JFrame {
 
         // create left panel (filter)
         JPanel leftPanel = new JPanel(new BorderLayout());
-        leftPanel.setPreferredSize(new Dimension(350, 30));
+        leftPanel.setPreferredSize(new Dimension(350, Integer.MAX_VALUE));
+        leftPanel.setBackground(new Color(252,236,222));
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 0));
         filterPanel = new FilterPanel();
-        filterPanel.setBorder(null);
         JScrollPane filterScrollPane = new JScrollPane(filterPanel);
         filterScrollPane.setBorder(null);
+        filterScrollPane.setOpaque(false);
+        filterScrollPane.getViewport().setOpaque(false);
         filterScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         leftPanel.add(filterScrollPane, BorderLayout.CENTER);
 
