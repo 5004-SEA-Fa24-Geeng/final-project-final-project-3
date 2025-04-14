@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -36,6 +37,8 @@ public class JSONFileHandler {
             jsonObject.put("age", character.getAge());
             jsonObject.put("gender", character.getGender());
             jsonObject.put("zodiacSign", character.getZodiacSign());
+            jsonObject.put("birthday", character.getBirthday());
+            jsonObject.put("nationality", character.getNationality());
             jsonObject.put("profile", character.getProfile());
             jsonArray.add(jsonObject);
         }
@@ -76,25 +79,26 @@ public class JSONFileHandler {
         AtomicInteger idCounter = new AtomicInteger(1);
         return characters.stream().filter(character -> character.getBirthday() != null && character.getNationality() != null)
                 .map(character -> {
-                    String[] dateOfBirth = character.getBirthday().split("-");
-                    int year = 0;
-                    int month = 0;
-                    int day = 0;
                     try {
-                        year = Integer.parseInt(dateOfBirth[0]);
-                        month = Integer.parseInt(dateOfBirth[1]);
-                        day = Integer.parseInt(dateOfBirth[2]);
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
+                        String[] dateOfBirth = character.getBirthday().split("-");
+                        int year = Integer.parseInt(dateOfBirth[0]);
+                        int month = Integer.parseInt(dateOfBirth[1]);
+                        int day = Integer.parseInt(dateOfBirth[2]);
+
+                        String[] nationArr = character.getNationality().split(",");
+                        String nationality = nationArr[nationArr.length - 1].trim();
+
+                        character.setId(idCounter.getAndIncrement());
+                        character.setNationality(nationality);
+                        character.setAge(calculateAge(year, month, day));
+                        character.setZodiacSign(calculateZodiacSign(month, day));
+                        return character;
+
+                    } catch (Exception e) {
+                        System.err.println("Invalid character skipped: " + character.getName());
+                        return null;
                     }
-                    String[] nationArr = character.getNationality().split(",");
-                    String nationality = nationArr[nationArr.length - 1].trim();
-                    character.setId(idCounter.getAndIncrement());
-                    character.setNationality(nationality);
-                    character.setAge(calculateAge(year, month, day));
-                    character.setZodiacSign((calculateZodiacSign(month, day)));
-                    return character;
-                }).collect(Collectors.toList());
+                }).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     /**
