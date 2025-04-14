@@ -67,7 +67,7 @@ public class FilterPanel extends JPanel {
         Font largerFont = new Font("SansSerif", Font.PLAIN, 15);
 
         // Search label
-        JLabel searchLabel = new JLabel("Search:");
+        JLabel searchLabel = new JLabel("Name:");
         searchLabel.setFont(largerFont);
         gbc.gridx = 0;
         gbc.gridy = 0;
