@@ -79,7 +79,7 @@ public class CharacterRecord {
      * @param popularity  popularity score
      * @param zodiacSign  zodiac sign name
      * @param occupation  known for department
-     * @param birthday    birth date
+     * @param birthday    birthdate
      * @param nationality place of birth
      * @param profile     profile image path
      */

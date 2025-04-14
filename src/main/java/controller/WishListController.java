@@ -153,6 +153,9 @@ public class WishListController implements IWishListController {
      */
     @Override
     public Response handleClearWishList() {
+        if (wishListModel.getWishList().isEmpty()) {
+            return Response.failure("The wish list is empty!");
+        }
         if (wishListModel.removeAllCharacters()) {
             return Response.success("Successfully Clear The Wish List!");
         }

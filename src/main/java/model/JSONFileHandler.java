@@ -40,8 +40,6 @@ public class JSONFileHandler {
             jsonObject.put("birthday", character.getBirthday());
             jsonObject.put("nationality", character.getNationality());
             jsonObject.put("profile", character.getProfile());
-            jsonObject.put("birthday", character.getBirthday());
-            jsonObject.put("nationality", character.getNationality());
             jsonArray.add(jsonObject);
         }
 

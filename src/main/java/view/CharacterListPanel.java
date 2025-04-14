@@ -88,10 +88,10 @@ public class CharacterListPanel extends JPanel {
 
         // add the image panel to the left
         panel.add(createImagePanel(character), BorderLayout.WEST);
-        
+
         // add the info panel to the center
         panel.add(createInfoPanel(character), BorderLayout.CENTER);
-        
+
         // add the button panel to the right
         panel.add(createButtonPanel(character), BorderLayout.EAST);
 
@@ -108,8 +108,7 @@ public class CharacterListPanel extends JPanel {
      */
     private JPanel createImagePanel(CharacterRecord character) {
         JPanel imagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        imagePanel.setBackground(new Color(255,240,247));
-        
+        imagePanel.setBackground(new Color(255,240,247)); // ✅
         String imageUrl = "https://image.tmdb.org/t/p/w92" + character.getProfile();
         ImageIcon icon = ImageCache.getImage(imageUrl);
         if (icon != null) {
@@ -117,16 +116,8 @@ public class CharacterListPanel extends JPanel {
         } else {
             imagePanel.add(new JLabel("No Image"));
         }
-        
-        return imagePanel;
-    }
 
-    /**
-     * create the info panel in the center
-     * @param character the character information
-     * @return the info panel
-     */
-    private JPanel createInfoPanel(CharacterRecord character) {
+        // middle info panel
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setPreferredSize(new Dimension(200, 92));
@@ -135,48 +126,28 @@ public class CharacterListPanel extends JPanel {
         infoPanel.setBackground(Color.WHITE);
         infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         
-        // create the labels
-        JLabel nameLabel = createLabel("Name: " + character.getName());
-        JLabel ageLabel = createLabel("Age: " + character.getAge());
-        JLabel genderLabel = createGenderLabel(character.getGender());
-        JLabel zodiacLabel = createLabel("<html>Zodiac: " + getZodiacSign(character.getZodiacSign()) + "</html>");
-        JLabel occupationLabel = createLabel("Occupation: " + character.getOccupation());
+        JLabel nameLabel = new JLabel("Name: " + character.getName());
+        JLabel ageLabel = new JLabel("Age: " + character.getAge());
         
-        // add the labels to the panel
-        infoPanel.add(nameLabel);
-        infoPanel.add(ageLabel);
-        infoPanel.add(genderLabel);
-        infoPanel.add(zodiacLabel);
-        infoPanel.add(occupationLabel);
-        
-        return infoPanel;
-    }
-
-    /**
-     * create the common label
-     * @param text the text of the label
-     * @return the configured label
-     */
-    private JLabel createLabel(String text) {
-        JLabel label = new JLabel(text);
-        Font labelFont = new Font("Arial", Font.PLAIN, 14);
-        label.setFont(labelFont);
-        label.setHorizontalAlignment(SwingConstants.LEFT);
-        label.setPreferredSize(new Dimension(200, 15));
-        label.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        return label;
-    }
-
-    /**
-     * create the gender label
-     * @param gender the gender code
-     * @return the configured gender label
-     */
-    private JLabel createGenderLabel(int gender) {
+        // create gender label
         JLabel genderLabel = new JLabel();
-        String genderText = "Gender: " + getGenderString(gender);
-        ImageIcon genderIcon = getGenderIcon(gender);
+        String genderText = "Gender: " + getGenderString(character.getGender());
+        ImageIcon genderIcon = null;
         
+        // set gender icon based on gender
+        switch (character.getGender()) {
+            case 1:
+                genderIcon = new ImageIcon("src/main/resources/female.png");
+                break;
+            case 2:
+                genderIcon = new ImageIcon("src/main/resources/male.png");
+                break;
+            case 3:
+                genderIcon = new ImageIcon("src/main/resources/other.png");
+                break;
+        }
+        
+        // adjust icon size
         if (genderIcon != null) {
             Image image = genderIcon.getImage();
             Image newimg = image.getScaledInstance(12, 12, Image.SCALE_SMOOTH);
@@ -184,40 +155,52 @@ public class CharacterListPanel extends JPanel {
             genderLabel.setIcon(genderIcon);
         }
         
+        // set text and icon position
         genderLabel.setText(genderText);
         genderLabel.setHorizontalTextPosition(SwingConstants.LEFT);
-        genderLabel.setIconTextGap(5);
+        genderLabel.setIconTextGap(5); // icon and text gap
         
+        JLabel zodiacLabel = new JLabel("<html>Zodiac: " + getZodiacSign(character.getZodiacSign()) + "</html>");
+        JLabel occupationLabel = new JLabel("Occupation: " + character.getOccupation());
+        
+        // set font size and alignment
         Font labelFont = new Font("Arial", Font.PLAIN, 14);
+        nameLabel.setFont(labelFont);
+        ageLabel.setFont(labelFont);
         genderLabel.setFont(labelFont);
-        genderLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        genderLabel.setPreferredSize(new Dimension(200, 15));
-        genderLabel.setBorder(BorderFactory.createEmptyBorder(1, 0, 10, 0));
+        zodiacLabel.setFont(labelFont);
+        occupationLabel.setFont(labelFont);
         
-        return genderLabel;
-    }
+        // set alignment
+        nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        ageLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        genderLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        zodiacLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        occupationLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        // set each label's fixed height
+        Dimension labelSize = new Dimension(200, 15);
+        nameLabel.setPreferredSize(labelSize);
+        ageLabel.setPreferredSize(labelSize);
+        genderLabel.setPreferredSize(labelSize);
+        zodiacLabel.setPreferredSize(labelSize);
+        occupationLabel.setPreferredSize(labelSize);
 
-    /**
-     * get the gender icon
-     * @param gender the gender code
-     * @return the gender icon
-     */
-    private ImageIcon getGenderIcon(int gender) {
-        switch (gender) {
-            case 1: return new ImageIcon("src/main/resources/female.png");
-            case 2: return new ImageIcon("src/main/resources/male.png");
-            case 3: return new ImageIcon("src/main/resources/other.png");
-            default: return null;
-        }
-    }
+        // set label margin
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        ageLabel.setBorder(BorderFactory.createEmptyBorder(1, 0, 10, 0));
+        genderLabel.setBorder(BorderFactory.createEmptyBorder(1, 0, 10, 0));
+        zodiacLabel.setBorder(BorderFactory.createEmptyBorder(1, 0, 10, 0));
+        occupationLabel.setBorder(BorderFactory.createEmptyBorder(1, 0, 1, 0));
+        
+        infoPanel.add(nameLabel);
+        infoPanel.add(ageLabel);
+        infoPanel.add(genderLabel);
+        infoPanel.add(zodiacLabel);
+        infoPanel.add(occupationLabel);
 
-    /**
-     * create the button panel on the right
-     * @param character the character information
-     * @return the button panel
-     */
-    private JPanel createButtonPanel(CharacterRecord character) {
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
+        // right button panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10)); // Aligns top-ish
         buttonPanel.setPreferredSize(new Dimension(30, 92));
         buttonPanel.setMinimumSize(new Dimension(30, 92));
         buttonPanel.setMaximumSize(new Dimension(30, 92));
@@ -227,7 +210,22 @@ public class CharacterListPanel extends JPanel {
         Image scaled = heartIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         JButton addButton = new JButton(new ImageIcon(scaled));
 
-        configureAddButton(addButton);
+        addButton.setBorderPainted(false);
+        addButton.setContentAreaFilled(false);
+        addButton.setFocusPainted(false);
+        addButton.setOpaque(true);
+        addButton.setToolTipText("Add to Wishlist");
+        addButton.setFont(new Font("Arial", Font.BOLD, 20));
+        addButton.setPreferredSize(new Dimension(25, 25));
+        addButton.setMargin(new Insets(0, 0, 0, 10));
+        addButton.setFocusable(false);
+        addButton.setBackground(Color.WHITE);
+        addButton.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200)),
+                BorderFactory.createEmptyBorder(0, 0, 0, 0)
+        ));
+        addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         addButton.addActionListener(e -> {
             System.out.println("Button clicked for character: " + character.getName());
             if (addToWishListListener != null) {
@@ -237,31 +235,17 @@ public class CharacterListPanel extends JPanel {
                 System.out.println("addToWishListListener is null");
             }
         });
-        
         buttonPanel.add(addButton);
-        return buttonPanel;
-    }
 
-    /**
-     * configure the add button
-     * @param button the button to configure
-     */
-    private void configureAddButton(JButton button) {
-        button.setBorderPainted(false);
-        button.setContentAreaFilled(false);
-        button.setFocusPainted(false);
-        button.setOpaque(true);
-        button.setToolTipText("Add to Wishlist");
-        button.setFont(new Font("Arial", Font.BOLD, 20));
-        button.setPreferredSize(new Dimension(25, 25));
-        button.setMargin(new Insets(0, 0, 0, 10));
-        button.setFocusable(false);
-        button.setBackground(Color.WHITE);
-        button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(200, 200, 200)),
-                BorderFactory.createEmptyBorder(0, 0, 0, 0)
-        ));
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        // add panel to main panel
+        panel.add(imagePanel, BorderLayout.WEST);
+        panel.add(infoPanel, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.EAST);
+
+        // add separator
+        panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
+
+        contentPanel.add(panel);
     }
 
     /**
