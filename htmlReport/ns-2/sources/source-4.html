@@ -1,0 +1,311 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > WishListController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">controller</a>
+</div>
+
+<h1>Coverage Summary for Class: WishListController (controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WishListController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    58.3%
+  </span>
+  <span class="absValue">
+    (7/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    45.5%
+  </span>
+  <span class="absValue">
+    (10/22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    46.6%
+  </span>
+  <span class="absValue">
+    (27/58)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package controller;
+&nbsp;
+&nbsp;import view.WishListPanel;
+&nbsp;import view.CharacterListPanel;
+&nbsp;import model.*;
+&nbsp;import com.fasterxml.jackson.databind.ObjectMapper;
+&nbsp;import com.fasterxml.jackson.databind.node.ArrayNode;
+&nbsp;import com.fasterxml.jackson.databind.node.ObjectNode;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Set;
+&nbsp;import java.io.File;
+&nbsp;import java.io.IOException;
+&nbsp;import javax.swing.filechooser.FileNameExtensionFilter;
+&nbsp;
+&nbsp;/**
+&nbsp; * Controller for the wish list.
+&nbsp; */
+&nbsp;public class WishListController implements IWishListController {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Get an instance of WishList.
+&nbsp;     **/
+&nbsp;    private final WishList wishListModel;
+&nbsp;    /**
+&nbsp;     * Get an instance of WishListPanel.
+&nbsp;     **/
+&nbsp;    private final WishListPanel wishListPanel;
+&nbsp;    /**
+&nbsp;     * Get an instance of CharactersCollection.
+&nbsp;     **/
+&nbsp;    private final CharactersCollection charactersCollection;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor for this controller.
+&nbsp;     **/
+<b class="fc">&nbsp;    public WishListController(WishList wishList, WishListPanel panel, CharacterListPanel characterListPanel, CharactersCollection charactersCollection) {</b>
+<b class="fc">&nbsp;        this.wishListModel = wishList;</b>
+<b class="fc">&nbsp;        this.wishListPanel = panel;</b>
+<b class="fc">&nbsp;        this.charactersCollection = charactersCollection;</b>
+<b class="fc">&nbsp;        initListeners(characterListPanel);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initializes all listeners between the CharacterListPanel and WishListPanel.
+&nbsp;     * These listeners handle user interactions such as adding/removing characters,
+&nbsp;     * clearing the wish list, and saving the list to a file.
+&nbsp;     *
+&nbsp;     * @param characterListPanel the panel that displays all available characters
+&nbsp;     */
+&nbsp;    private void initListeners(CharacterListPanel characterListPanel) {
+&nbsp;
+&nbsp;        // Set the listener for adding a character to the wish list from CharacterListPanel
+<b class="fc">&nbsp;        characterListPanel.setAddToWishListListener(characterId -&gt; {</b>
+<b class="nc">&nbsp;            Response response = handleAddToWishList(characterId);</b>
+<b class="nc">&nbsp;            if (response.getStatus() == 200) {</b>
+<b class="nc">&nbsp;                updateView();</b>
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(null, response.getMessage(), &quot;Success&quot;, JOptionPane.INFORMATION_MESSAGE);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(null, response.getMessage(), &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        // Set the listener for removing a character from the wish list in WishListPanel
+<b class="fc">&nbsp;        wishListPanel.setRemoveCharacterListener(characterId -&gt; {</b>
+<b class="nc">&nbsp;            Response result = handleRemoveSingleCharacter(characterId);</b>
+<b class="nc">&nbsp;            if (result.getStatus() == 200) {</b>
+<b class="nc">&nbsp;                updateView();</b>
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(null, result.getMessage(), &quot;Success&quot;, JOptionPane.INFORMATION_MESSAGE);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(null, result.getMessage(), &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        // Set the listener for clearing the entire wish list in WishListPanel
+<b class="fc">&nbsp;        wishListPanel.addClearWishListListener(e -&gt; {</b>
+<b class="nc">&nbsp;            Response result = handleClearWishList();</b>
+<b class="nc">&nbsp;            if (result.getStatus() == 200) {</b>
+<b class="nc">&nbsp;                updateView();</b>
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(null, result.getMessage(), &quot;Success&quot;, JOptionPane.INFORMATION_MESSAGE);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(null, result.getMessage(), &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        // Set the listener for saving the wish list to a file from WishListPanel
+<b class="fc">&nbsp;        wishListPanel.addSaveToFileListener(e -&gt; {</b>
+<b class="nc">&nbsp;            saveToFile();</b>
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * update the view.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void updateView() {
+<b class="fc">&nbsp;        List&lt;CharacterRecord&gt; updatedWishList = new ArrayList&lt;&gt;(getWishList());</b>
+<b class="fc">&nbsp;        wishListPanel.setWishList(updatedWishList);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Get the wish list.
+&nbsp;     *
+&nbsp;     * @return a set of characters in the wish list
+&nbsp;     */
+&nbsp;    private Set&lt;CharacterRecord&gt; getWishList() {
+<b class="fc">&nbsp;        return wishListModel.getWishList();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Add the character corresponding to the id to the wish list.
+&nbsp;     *
+&nbsp;     * @param id the id of the character to be added
+&nbsp;     * @return a Response object
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Response handleAddToWishList(int id) {
+<b class="fc">&nbsp;        List&lt;CharacterRecord&gt; characters = charactersCollection.getFilteredCharacters();</b>
+<b class="pc">&nbsp;        CharacterRecord newCharacter = characters.stream().filter(character -&gt; character.getId() == id).findFirst().orElse(null);</b>
+<b class="fc">&nbsp;        if (newCharacter == null) {</b>
+<b class="fc">&nbsp;            return Response.failure(&quot;The character doesn&#39;t exist!&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (wishListModel.addCharacter(id)) {</b>
+<b class="fc">&nbsp;            return Response.success(&quot;Successfully Add The Character!&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return Response.failure(&quot;Character Already Exists!&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Remove the character corresponding to the id from the wish list.
+&nbsp;     *
+&nbsp;     * @param id the id of the character to be removed
+&nbsp;     * @return a Response object
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Response handleRemoveSingleCharacter(int id) {
+<b class="fc">&nbsp;        CharacterRecord deleteCharacter = wishListModel.getCharacterById(id);</b>
+<b class="fc">&nbsp;        if (deleteCharacter == null) {</b>
+<b class="fc">&nbsp;            return Response.failure(&quot;The character doesn&#39;t exist!&quot;);</b>
+&nbsp;        }
+<b class="pc">&nbsp;        if (wishListModel.removeSingleCharacter(id)) {</b>
+<b class="fc">&nbsp;            return Response.success(&quot;Successfully Remove The Character!&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return Response.failure(&quot;Failed To Remove The Character!&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Clear the wish list.
+&nbsp;     *
+&nbsp;     * @return a Response object
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Response handleClearWishList() {
+<b class="fc">&nbsp;        if (wishListModel.removeAllCharacters()) {</b>
+<b class="fc">&nbsp;            return Response.success(&quot;Successfully Clear The Wish List!&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return Response.failure(&quot;Failed To Clear The Wish List!&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Save the wish list to a file.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void saveToFile() {
+<b class="nc">&nbsp;        JFileChooser fileChooser = new JFileChooser();</b>
+<b class="nc">&nbsp;        fileChooser.setDialogTitle(&quot;Save Wish List&quot;);</b>
+<b class="nc">&nbsp;        fileChooser.setFileFilter(new FileNameExtensionFilter(&quot;JSON Files&quot;, &quot;json&quot;));</b>
+<b class="nc">&nbsp;        fileChooser.setSelectedFile(new File(&quot;wishlist.json&quot;));</b>
+&nbsp;
+<b class="nc">&nbsp;        int userSelection = fileChooser.showSaveDialog(wishListPanel);</b>
+<b class="nc">&nbsp;        if (userSelection == JFileChooser.APPROVE_OPTION) {</b>
+<b class="nc">&nbsp;            File fileToSave = fileChooser.getSelectedFile();</b>
+<b class="nc">&nbsp;            if (!fileToSave.getName().toLowerCase().endsWith(&quot;.json&quot;)) {</b>
+<b class="nc">&nbsp;                fileToSave = new File(fileToSave.getAbsolutePath() + &quot;.json&quot;);</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            try {
+&nbsp;                // call the saveWishListToFile method in the JSONFileHandler util class
+<b class="nc">&nbsp;                JSONFileHandler.saveWishListToFile(fileToSave.getAbsolutePath(), wishListModel.getWishList());</b>
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(wishListPanel,</b>
+&nbsp;                        &quot;Wish List Saved Successfully!&quot;,
+&nbsp;                        &quot;Success&quot;,
+&nbsp;                        JOptionPane.INFORMATION_MESSAGE);
+<b class="nc">&nbsp;            } catch (IOException e) {</b>
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(wishListPanel,</b>
+<b class="nc">&nbsp;                        &quot;Failed To Save The File: &quot; + e.getMessage(),</b>
+&nbsp;                        &quot;Error&quot;,
+&nbsp;                        JOptionPane.ERROR_MESSAGE);
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-13 23:01</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > WishList</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">model</a>
+</div>
+
+<h1>Coverage Summary for Class: WishList (model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WishList</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    14.3%
+  </span>
+  <span class="absValue">
+    (1/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    7.1%
+  </span>
+  <span class="absValue">
+    (1/14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package model;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.databind.ObjectMapper;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.LinkedHashSet;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Set;
+&nbsp;
+&nbsp;public class WishList {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Use a LinkedHashSet as a wish list.
+&nbsp;     **/
+<b class="fc">&nbsp;    static Set&lt;CharacterRecord&gt; wishList = new LinkedHashSet();</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Get an instance of the CharactersCollection Class.
+&nbsp;     **/
+<b class="nc">&nbsp;    private CharactersCollection charactersCollection = new CharactersCollection();</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Public constructor for WishList model.
+&nbsp;     **/
+<b class="nc">&nbsp;    public WishList() {</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Get the wish list.
+&nbsp;     *
+&nbsp;     * @return the wish list
+&nbsp;     */
+&nbsp;    public Set&lt;CharacterRecord&gt; getWishList() {
+<b class="nc">&nbsp;        return wishList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Add a character to the wish list.
+&nbsp;     *
+&nbsp;     * @param id the character added by the user
+&nbsp;     * @return if the character is successfully added to the wish list
+&nbsp;     */
+&nbsp;    public boolean addCharacter(int id) {
+<b class="nc">&nbsp;        List&lt;CharacterRecord&gt; filteredCharacters = charactersCollection.getFilteredCharacters();</b>
+<b class="nc">&nbsp;        CharacterRecord newCharacter = filteredCharacters.stream()</b>
+<b class="nc">&nbsp;                .filter(character -&gt; character.getId() == id)</b>
+<b class="nc">&nbsp;                .findFirst()</b>
+<b class="nc">&nbsp;                .orElse(null);</b>
+<b class="nc">&nbsp;        return wishList.add(newCharacter);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Remove a character from the wish list.
+&nbsp;     *
+&nbsp;     * @param id the character removed by the user
+&nbsp;     * @return if the character is successfully removed from the wish list
+&nbsp;     */
+&nbsp;    public boolean removeSingleCharacter(int id) {
+<b class="nc">&nbsp;        return wishList.removeIf(character -&gt; character.getId() == id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Remove all characters from the wish list.
+&nbsp;     *
+&nbsp;     * @return if all characters are successfully removed from the wish list
+&nbsp;     */
+&nbsp;    public boolean removeAllCharacters() {
+<b class="nc">&nbsp;        wishList.clear();</b>
+<b class="nc">&nbsp;        return wishList.isEmpty();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Get a character by its id.
+&nbsp;     *
+&nbsp;     * @param id the id of the character
+&nbsp;     * @return the character
+&nbsp;     */
+&nbsp;    public CharacterRecord getCharacterById(int id) {
+<b class="nc">&nbsp;        return wishList.stream().filter(character -&gt; character.getId() == id).findFirst().orElse(null);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-13 23:01</div>
+</div>
+</body>
+</html>

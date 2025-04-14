@@ -1,0 +1,214 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ImageCache</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">util</a>
+</div>
+
+<h1>Coverage Summary for Class: ImageCache (util)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ImageCache</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (2/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (3/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (12/30)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package util;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.image.BufferedImage;
+&nbsp;import java.io.*;
+&nbsp;import java.net.URL;
+&nbsp;import javax.imageio.ImageIO;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;/**
+&nbsp; * Utility class for caching images downloaded from URLs.
+&nbsp; * Supports both in-memory and on-disk caching to improve performance
+&nbsp; * and reduce redundant network calls.
+&nbsp; */
+<b class="nc">&nbsp;public class ImageCache {</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The directory where image files are cached on disk.
+&nbsp;     */
+&nbsp;    private static final String CACHE_DIR = &quot;image_cache&quot;;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * In-memory map from image URLs to cached ImageIcons.
+&nbsp;     */
+<b class="fc">&nbsp;    private static final Map&lt;String, ImageIcon&gt; memoryCache = new HashMap&lt;&gt;();</b>
+&nbsp;
+&nbsp;    // Static initializer to ensure the cache directory exists
+&nbsp;    static {
+<b class="fc">&nbsp;        File cacheDir = new File(CACHE_DIR);</b>
+<b class="pc">&nbsp;        if (!cacheDir.exists()) {</b>
+<b class="nc">&nbsp;            cacheDir.mkdir();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns a cached ImageIcon for the specified image URL.
+&nbsp;     * First checks memory cache, then disk cache, and finally downloads from the network.
+&nbsp;     *
+&nbsp;     * @param imageUrl the URL of the image
+&nbsp;     * @return the corresponding ImageIcon, or {@code null} if the image could not be loaded
+&nbsp;     */
+&nbsp;    public static ImageIcon getImage(String imageUrl) {
+&nbsp;        // Check memory cache
+<b class="pc">&nbsp;        if (memoryCache.containsKey(imageUrl)) {</b>
+<b class="nc">&nbsp;            return memoryCache.get(imageUrl);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Generate a unique cache file name based on the image URL hash
+<b class="fc">&nbsp;        String cacheFileName = CACHE_DIR + File.separator + imageUrl.hashCode() + &quot;.png&quot;;</b>
+<b class="fc">&nbsp;        File cacheFile = new File(cacheFileName);</b>
+&nbsp;
+&nbsp;        try {
+&nbsp;            // Load from disk cache if it exists
+<b class="pc">&nbsp;            if (cacheFile.exists()) {</b>
+<b class="nc">&nbsp;                BufferedImage image = ImageIO.read(cacheFile);</b>
+<b class="nc">&nbsp;                ImageIcon icon = new ImageIcon(image);</b>
+<b class="nc">&nbsp;                memoryCache.put(imageUrl, icon);</b>
+<b class="nc">&nbsp;                return icon;</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            // Otherwise, download from the network
+<b class="fc">&nbsp;            URL url = new URL(imageUrl);</b>
+<b class="fc">&nbsp;            BufferedImage image = ImageIO.read(url);</b>
+&nbsp;
+&nbsp;            // Save the downloaded image to disk cache
+<b class="nc">&nbsp;            ImageIO.write(image, &quot;png&quot;, cacheFile);</b>
+&nbsp;
+&nbsp;            // Save to memory cache and return
+<b class="nc">&nbsp;            ImageIcon icon = new ImageIcon(image);</b>
+<b class="nc">&nbsp;            memoryCache.put(imageUrl, icon);</b>
+<b class="nc">&nbsp;            return icon;</b>
+<b class="fc">&nbsp;        } catch (Exception e) {</b>
+<b class="fc">&nbsp;            System.err.println(&quot;Error loading image: &quot; + e.getMessage());</b>
+<b class="fc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Clears both the memory and disk caches.
+&nbsp;     * Useful when resetting cached data or cleaning up resources.
+&nbsp;     */
+&nbsp;    public static void clearCache() {
+&nbsp;        // Clear in-memory cache
+<b class="nc">&nbsp;        memoryCache.clear();</b>
+&nbsp;
+&nbsp;        // Delete all files in the disk cache directory
+<b class="nc">&nbsp;        File cacheDir = new File(CACHE_DIR);</b>
+<b class="nc">&nbsp;        if (cacheDir.exists()) {</b>
+<b class="nc">&nbsp;            File[] files = cacheDir.listFiles();</b>
+<b class="nc">&nbsp;            if (files != null) {</b>
+<b class="nc">&nbsp;                for (File file : files) {</b>
+<b class="nc">&nbsp;                    file.delete();</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-13 23:01</div>
+</div>
+</body>
+</html>

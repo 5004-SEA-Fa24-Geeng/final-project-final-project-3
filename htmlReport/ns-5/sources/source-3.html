@@ -1,0 +1,257 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > MainFrame</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">view</a>
+</div>
+
+<h1>Coverage Summary for Class: MainFrame (view)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MainFrame</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.5%
+  </span>
+  <span class="absValue">
+    (63/66)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package view;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.*;
+&nbsp;import java.io.File;
+&nbsp;
+&nbsp;/**
+&nbsp; * Main application window for the Character Management System.
+&nbsp; * Assembles and lays out all primary panels including sorting, filtering, listing, and wish list.
+&nbsp; */
+&nbsp;public class MainFrame extends JFrame {
+&nbsp;    /** Panel for sorting character list. */
+&nbsp;    private SortPanel sortPanel;
+&nbsp;    /** Panel for displaying the wish list of characters. */
+&nbsp;    private WishListPanel wishListPanel;
+&nbsp;    /** Panel for filtering character list based on criteria. */
+&nbsp;    private FilterPanel filterPanel;
+&nbsp;    /** Panel for showing the list of characters. */
+&nbsp;    private CharacterListPanel characterListPanel;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor of the main frame and initializes all UI components.
+&nbsp;     */
+<b class="fc">&nbsp;    public MainFrame() {</b>
+<b class="fc">&nbsp;        setTitle(&quot;Character Management System&quot;);</b>
+<b class="fc">&nbsp;        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</b>
+<b class="fc">&nbsp;        setSize(1200, 800);</b>
+<b class="fc">&nbsp;        setLocationRelativeTo(null);</b>
+<b class="fc">&nbsp;        initComponents();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initializes and lays out all components in the main application frame.
+&nbsp;     */
+&nbsp;    private void initComponents() {
+&nbsp;        // create main panel
+<b class="fc">&nbsp;        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));</b>
+<b class="fc">&nbsp;        mainPanel.setBackground(new Color(255,240,247));</b>
+&nbsp;
+&nbsp;        // create upper panel
+<b class="fc">&nbsp;        JPanel upperPanel = new JPanel();</b>
+<b class="fc">&nbsp;        upperPanel.setPreferredSize(new Dimension(0, 150));</b>
+<b class="fc">&nbsp;        upperPanel.setBackground(new Color(255,240,247));</b>
+<b class="fc">&nbsp;        upperPanel.setLayout(null);</b>
+<b class="fc">&nbsp;        JLabel logoLabel = new JLabel(&quot;Celebrity Wishlist&quot;);</b>
+&nbsp;        try {
+<b class="fc">&nbsp;            Font fancyFont = Font.createFont(Font.TRUETYPE_FONT,</b>
+<b class="fc">&nbsp;                    new File(&quot;src/main/resources/GreatVibes-Regular.ttf&quot;)).deriveFont(90f);</b>
+&nbsp;
+<b class="fc">&nbsp;            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();</b>
+<b class="fc">&nbsp;            ge.registerFont(fancyFont);</b>
+&nbsp;
+<b class="fc">&nbsp;            logoLabel.setFont(fancyFont);</b>
+<b class="fc">&nbsp;            logoLabel.setForeground(new Color(204, 0, 102)); // romantic red-pink</b>
+<b class="fc">&nbsp;            logoLabel.setHorizontalAlignment(SwingConstants.CENTER);</b>
+<b class="fc">&nbsp;            logoLabel.setPreferredSize(new Dimension(1000, 130));</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;            logoLabel.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 36)); // fallback</b>
+&nbsp;        }
+<b class="fc">&nbsp;        logoLabel.setBounds(200, 20, 800, 120);</b>
+<b class="fc">&nbsp;        TitleHeartAnimationPanel heartOverlay = new TitleHeartAnimationPanel(getWidth(), 150); // matches upperPanel height</b>
+<b class="fc">&nbsp;        heartOverlay.setBounds(0, 0, getWidth(), 150);</b>
+<b class="fc">&nbsp;        upperPanel.setLayout(null); // allow absolute positioning</b>
+<b class="fc">&nbsp;        upperPanel.add(logoLabel);  // keep existing label</b>
+<b class="fc">&nbsp;        upperPanel.add(heartOverlay); // layer hearts on top</b>
+<b class="fc">&nbsp;        upperPanel.add(logoLabel);</b>
+&nbsp;
+&nbsp;        // create left panel (filter)
+<b class="fc">&nbsp;        JPanel leftPanel = new JPanel(new BorderLayout());</b>
+<b class="fc">&nbsp;        leftPanel.setPreferredSize(new Dimension(350, Integer.MAX_VALUE));</b>
+<b class="fc">&nbsp;        leftPanel.setBackground(new Color(255,240,247));</b>
+<b class="fc">&nbsp;        leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 0));</b>
+<b class="fc">&nbsp;        filterPanel = new FilterPanel();</b>
+<b class="fc">&nbsp;        JScrollPane filterScrollPane = new JScrollPane(filterPanel);</b>
+<b class="fc">&nbsp;        filterScrollPane.setBorder(null);</b>
+<b class="fc">&nbsp;        filterScrollPane.setOpaque(false);</b>
+<b class="fc">&nbsp;        filterScrollPane.getViewport().setOpaque(false);</b>
+<b class="fc">&nbsp;        filterScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);</b>
+<b class="fc">&nbsp;        leftPanel.add(filterScrollPane, BorderLayout.CENTER);</b>
+&nbsp;
+&nbsp;        // create right panel
+<b class="fc">&nbsp;        JPanel rightPanel = new JPanel(new BorderLayout(10, 10));</b>
+<b class="fc">&nbsp;        rightPanel.setBackground(new Color(255,242,247));</b>
+<b class="fc">&nbsp;        rightPanel.setOpaque(true);</b>
+<b class="fc">&nbsp;        rightPanel.setBorder(null);</b>
+&nbsp;
+&nbsp;        // create top panel (sort)
+<b class="fc">&nbsp;        JPanel topPanel = new JPanel(new BorderLayout());</b>
+<b class="fc">&nbsp;        topPanel.setPreferredSize(new Dimension(0, 30));</b>
+<b class="fc">&nbsp;        sortPanel = new SortPanel();</b>
+<b class="fc">&nbsp;        topPanel.add(sortPanel, BorderLayout.WEST);</b>
+&nbsp;
+&nbsp;        // create middle panel (character list)
+<b class="fc">&nbsp;        characterListPanel = new CharacterListPanel(sortPanel);</b>
+<b class="fc">&nbsp;        JScrollPane listScrollPane = new JScrollPane(characterListPanel);</b>
+<b class="fc">&nbsp;        listScrollPane.setPreferredSize(new Dimension(600, 0));</b>
+<b class="fc">&nbsp;        listScrollPane.setBorder(null);</b>
+&nbsp;
+&nbsp;        // create right panel (wish list)
+<b class="fc">&nbsp;        wishListPanel = new WishListPanel();</b>
+&nbsp;
+&nbsp;        // assemble right panel
+<b class="fc">&nbsp;        rightPanel.add(topPanel, BorderLayout.NORTH);</b>
+<b class="fc">&nbsp;        rightPanel.add(listScrollPane, BorderLayout.CENTER);</b>
+<b class="fc">&nbsp;        rightPanel.add(wishListPanel, BorderLayout.EAST);</b>
+&nbsp;
+&nbsp;        // assemble main panel
+<b class="fc">&nbsp;        mainPanel.add(leftPanel, BorderLayout.WEST);</b>
+<b class="fc">&nbsp;        mainPanel.add(rightPanel, BorderLayout.CENTER);</b>
+<b class="fc">&nbsp;        mainPanel.add(upperPanel, BorderLayout.NORTH);</b>
+&nbsp;
+&nbsp;        // add main panel to window
+<b class="fc">&nbsp;        add(mainPanel);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the sort panel.
+&nbsp;     *
+&nbsp;     * @return the SortPanel instance
+&nbsp;     */
+&nbsp;    public SortPanel getSortPanel() {
+<b class="fc">&nbsp;        return sortPanel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the wish list panel.
+&nbsp;     *
+&nbsp;     * @return the WishListPanel instance
+&nbsp;     */
+&nbsp;    public WishListPanel getWishListPanel() {
+<b class="fc">&nbsp;        return wishListPanel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the filter panel.
+&nbsp;     *
+&nbsp;     * @return the FilterPanel instance
+&nbsp;     */
+&nbsp;    public FilterPanel getFilterPanel() {
+<b class="fc">&nbsp;        return filterPanel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the character list panel.
+&nbsp;     *
+&nbsp;     * @return the CharacterListPanel instance
+&nbsp;     */
+&nbsp;    public CharacterListPanel getCharacterListPanel() {
+<b class="fc">&nbsp;        return characterListPanel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;} 
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-13 23:01</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,529 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > FilterPanel</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">view</a>
+</div>
+
+<h1>Coverage Summary for Class: FilterPanel (view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FilterPanel</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (170/170)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">FilterPanel$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (1/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (3/5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    95.2%
+  </span>
+  <span class="absValue">
+    (20/21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70%
+  </span>
+  <span class="absValue">
+    (7/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    98.9%
+  </span>
+  <span class="absValue">
+    (173/175)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package view;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import javax.swing.text.AbstractDocument;
+&nbsp;import javax.swing.text.AttributeSet;
+&nbsp;import javax.swing.text.BadLocationException;
+&nbsp;import javax.swing.text.DocumentFilter;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.ActionListener;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * A panel for filtering characters based on various criteria such as
+&nbsp; * keyword, age range, gender, and zodiac sign. Provides a logo,
+&nbsp; * search controls, and a status label.
+&nbsp; */
+&nbsp;public class FilterPanel extends JPanel {
+&nbsp;    private static final int FIELD_WIDTH = 15;
+&nbsp;    private static final int VERTICAL_GAP = 5;
+&nbsp;
+<b class="fc">&nbsp;    private final JTextField searchField = new JTextField(FIELD_WIDTH);</b>
+<b class="fc">&nbsp;    private final JButton searchButton = new JButton(&quot;Search&quot;);</b>
+<b class="fc">&nbsp;    private final JButton resetButton = new JButton(&quot;Reset&quot;);</b>
+<b class="fc">&nbsp;    private final JTextField minAgeField = new JTextField(5);</b>
+<b class="fc">&nbsp;    private final JTextField maxAgeField = new JTextField(5);</b>
+<b class="fc">&nbsp;    private final JCheckBox femaleCheckBox = new JCheckBox(&quot;Female&quot;);</b>
+<b class="fc">&nbsp;    private final JCheckBox maleCheckBox = new JCheckBox(&quot;Male&quot;);</b>
+<b class="fc">&nbsp;    private final JCheckBox otherCheckBox = new JCheckBox(&quot;Non-binary&quot;);</b>
+<b class="fc">&nbsp;    private final JList&lt;String&gt; zodiacList = new JList&lt;&gt;(new String[]{</b>
+&nbsp;            &quot;Aries ♈&quot;, &quot;Taurus ♉&quot;, &quot;Gemini ♊&quot;, &quot;Cancer ♋&quot;, &quot;Leo ♌&quot;, &quot;Virgo ♍&quot;,
+&nbsp;            &quot;Libra ♎&quot;, &quot;Scorpio ♏&quot;, &quot;Sagittarius ♐&quot;, &quot;Capricorn ♑&quot;, &quot;Aquarius ♒&quot;, &quot;Pisces ♓&quot;
+&nbsp;    });
+<b class="fc">&nbsp;    private final JLabel statusLabel = new JLabel(&quot;Ready&quot;);</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs the filter panel with initialized components and layout.
+&nbsp;     */
+<b class="fc">&nbsp;    public FilterPanel() {</b>
+<b class="fc">&nbsp;        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));</b>
+<b class="fc">&nbsp;        setPreferredSize(new Dimension(350, 0));</b>
+<b class="fc">&nbsp;        setBackground(new Color(255,240,247));</b>
+&nbsp;
+<b class="fc">&nbsp;        add(Box.createVerticalStrut(VERTICAL_GAP));</b>
+<b class="fc">&nbsp;        addAgePanel();</b>
+<b class="fc">&nbsp;        add(Box.createVerticalStrut(VERTICAL_GAP));</b>
+<b class="fc">&nbsp;        addGenderPanel();</b>
+<b class="fc">&nbsp;        add(Box.createVerticalStrut(VERTICAL_GAP));</b>
+<b class="fc">&nbsp;        addZodiacPanel();</b>
+<b class="fc">&nbsp;        add(Box.createVerticalStrut(VERTICAL_GAP));</b>
+<b class="fc">&nbsp;        addStatusPanel();</b>
+<b class="fc">&nbsp;        add(Box.createVerticalStrut(VERTICAL_GAP));</b>
+<b class="fc">&nbsp;        addSearchPanel();</b>
+<b class="fc">&nbsp;        add(Box.createVerticalGlue());</b>
+&nbsp;
+<b class="fc">&nbsp;        setupNumberFilter();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds the search input field and buttons.
+&nbsp;     */
+&nbsp;    private void addSearchPanel() {
+<b class="fc">&nbsp;        JPanel panel = new JPanel(new GridBagLayout());</b>
+<b class="fc">&nbsp;        panel.setBackground(new Color(255,240,247));</b>
+<b class="fc">&nbsp;        GridBagConstraints gbc = createGbc();</b>
+&nbsp;
+<b class="fc">&nbsp;        Font largerFont = new Font(&quot;SansSerif&quot;, Font.PLAIN, 15);</b>
+&nbsp;
+&nbsp;        // Search label
+<b class="fc">&nbsp;        JLabel searchLabel = new JLabel(&quot;Search:&quot;);</b>
+<b class="fc">&nbsp;        searchLabel.setFont(largerFont);</b>
+<b class="fc">&nbsp;        gbc.gridx = 0;</b>
+<b class="fc">&nbsp;        gbc.gridy = 0;</b>
+<b class="fc">&nbsp;        gbc.anchor = GridBagConstraints.WEST;</b>
+<b class="fc">&nbsp;        panel.add(searchLabel, gbc);</b>
+&nbsp;
+&nbsp;        // Search field
+<b class="fc">&nbsp;        searchField.setFont(largerFont);</b>
+<b class="fc">&nbsp;        searchField.setPreferredSize(new Dimension(200, 35));</b>
+<b class="fc">&nbsp;        gbc.gridx = 1;</b>
+<b class="fc">&nbsp;        gbc.gridy = 0;</b>
+<b class="fc">&nbsp;        gbc.gridwidth = 2;</b>
+<b class="fc">&nbsp;        gbc.weightx = 1.0;</b>
+<b class="fc">&nbsp;        gbc.fill = GridBagConstraints.HORIZONTAL;</b>
+<b class="fc">&nbsp;        gbc.anchor = GridBagConstraints.WEST;</b>
+<b class="fc">&nbsp;        panel.add(searchField, gbc);</b>
+&nbsp;
+&nbsp;        // Buttons
+<b class="fc">&nbsp;        searchButton.setFont(largerFont);</b>
+<b class="fc">&nbsp;        searchButton.setPreferredSize(new Dimension(80, 35));</b>
+<b class="fc">&nbsp;        gbc.gridx = 1;</b>
+<b class="fc">&nbsp;        gbc.gridy = 1;</b>
+<b class="fc">&nbsp;        gbc.gridwidth = 1;</b>
+<b class="fc">&nbsp;        gbc.weightx = 0;</b>
+<b class="fc">&nbsp;        gbc.fill = GridBagConstraints.NONE;</b>
+<b class="fc">&nbsp;        gbc.anchor = GridBagConstraints.WEST;</b>
+<b class="fc">&nbsp;        panel.add(searchButton, gbc);</b>
+&nbsp;
+<b class="fc">&nbsp;        resetButton.setFont(largerFont);</b>
+<b class="fc">&nbsp;        resetButton.setPreferredSize(new Dimension(80, 35));</b>
+<b class="fc">&nbsp;        gbc.gridx = 2;</b>
+<b class="fc">&nbsp;        gbc.gridy = 1;</b>
+<b class="fc">&nbsp;        panel.add(resetButton, gbc);</b>
+&nbsp;
+<b class="fc">&nbsp;        addSection(panel);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds the age range input fields.
+&nbsp;     */
+&nbsp;    private void addAgePanel() {
+<b class="fc">&nbsp;        JPanel panel = new JPanel(new GridBagLayout());</b>
+<b class="fc">&nbsp;        panel.setBackground(new Color(255,240,247));</b>
+<b class="fc">&nbsp;        Font font15 = new Font(&quot;SansSerif&quot;, Font.PLAIN, 15);</b>
+<b class="fc">&nbsp;        GridBagConstraints gbc = createGbc();</b>
+&nbsp;
+&nbsp;        // Age label
+<b class="fc">&nbsp;        JLabel ageLabel = new JLabel(&quot;Age Range:&quot;);</b>
+<b class="fc">&nbsp;        ageLabel.setFont(font15);</b>
+<b class="fc">&nbsp;        gbc.gridx = 0;</b>
+<b class="fc">&nbsp;        gbc.gridy = 0;</b>
+<b class="fc">&nbsp;        gbc.anchor = GridBagConstraints.WEST;</b>
+<b class="fc">&nbsp;        panel.add(ageLabel, gbc);</b>
+&nbsp;
+&nbsp;        // Age fields
+<b class="fc">&nbsp;        minAgeField.setFont(font15);</b>
+<b class="fc">&nbsp;        minAgeField.setPreferredSize(new Dimension(60, 35));</b>
+<b class="fc">&nbsp;        gbc.gridx = 1;</b>
+<b class="fc">&nbsp;        gbc.anchor = GridBagConstraints.WEST;</b>
+<b class="fc">&nbsp;        panel.add(minAgeField, gbc);</b>
+&nbsp;
+<b class="fc">&nbsp;        JLabel dashLabel = new JLabel(&quot;—&quot;);</b>
+<b class="fc">&nbsp;        dashLabel.setFont(font15);</b>
+<b class="fc">&nbsp;        gbc.gridx = 2;</b>
+<b class="fc">&nbsp;        panel.add(dashLabel, gbc);</b>
+&nbsp;
+<b class="fc">&nbsp;        maxAgeField.setFont(font15);</b>
+<b class="fc">&nbsp;        maxAgeField.setPreferredSize(new Dimension(60, 35));</b>
+<b class="fc">&nbsp;        gbc.gridx = 3;</b>
+<b class="fc">&nbsp;        panel.add(maxAgeField, gbc);</b>
+&nbsp;
+<b class="fc">&nbsp;        addSection(panel);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds gender selection checkboxes.
+&nbsp;     */
+&nbsp;    private void addGenderPanel() {
+<b class="fc">&nbsp;        JPanel panel = new JPanel(new GridBagLayout());</b>
+<b class="fc">&nbsp;        panel.setBackground(new Color(255,240,247));</b>
+<b class="fc">&nbsp;        Font font15 = new Font(&quot;SansSerif&quot;, Font.PLAIN, 15);</b>
+<b class="fc">&nbsp;        GridBagConstraints gbc = createGbc();</b>
+&nbsp;
+&nbsp;        // Gender label
+<b class="fc">&nbsp;        JLabel genderLabel = new JLabel(&quot;Gender:&quot;);</b>
+<b class="fc">&nbsp;        genderLabel.setFont(font15);</b>
+<b class="fc">&nbsp;        gbc.gridx = 0;</b>
+<b class="fc">&nbsp;        gbc.gridy = 0;</b>
+<b class="fc">&nbsp;        gbc.anchor = GridBagConstraints.WEST;</b>
+<b class="fc">&nbsp;        panel.add(genderLabel, gbc);</b>
+&nbsp;
+&nbsp;        // Checkboxes
+<b class="fc">&nbsp;        femaleCheckBox.setFont(font15);</b>
+<b class="fc">&nbsp;        gbc.gridx = 1;</b>
+<b class="fc">&nbsp;        gbc.gridy = 0;</b>
+<b class="fc">&nbsp;        gbc.anchor = GridBagConstraints.WEST;</b>
+<b class="fc">&nbsp;        panel.add(femaleCheckBox, gbc);</b>
+&nbsp;
+<b class="fc">&nbsp;        maleCheckBox.setFont(font15);</b>
+<b class="fc">&nbsp;        gbc.gridx = 2;</b>
+<b class="fc">&nbsp;        gbc.gridy = 0;</b>
+<b class="fc">&nbsp;        panel.add(maleCheckBox, gbc);</b>
+&nbsp;
+<b class="fc">&nbsp;        otherCheckBox.setFont(font15);</b>
+<b class="fc">&nbsp;        gbc.gridx = 1;</b>
+<b class="fc">&nbsp;        gbc.gridy = 1;</b>
+<b class="fc">&nbsp;        gbc.gridwidth = 2;</b>
+<b class="fc">&nbsp;        panel.add(otherCheckBox, gbc);</b>
+&nbsp;
+<b class="fc">&nbsp;        addSection(panel);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds the zodiac sign multi-select list.
+&nbsp;     */
+&nbsp;    private void addZodiacPanel() {
+<b class="fc">&nbsp;        JPanel panel = new JPanel(new GridBagLayout());</b>
+<b class="fc">&nbsp;        panel.setBackground(new Color(255,240,247));</b>
+<b class="fc">&nbsp;        Font font15 = new Font(&quot;SansSerif&quot;, Font.PLAIN, 15);</b>
+<b class="fc">&nbsp;        GridBagConstraints gbc = createGbc();</b>
+&nbsp;
+&nbsp;        // Zodiac label
+<b class="fc">&nbsp;        JLabel zodiacLabel = new JLabel(&quot;Zodiac:&quot;);</b>
+<b class="fc">&nbsp;        zodiacLabel.setFont(font15);</b>
+<b class="fc">&nbsp;        gbc.gridx = 0;</b>
+<b class="fc">&nbsp;        gbc.gridy = 0;</b>
+<b class="fc">&nbsp;        gbc.anchor = GridBagConstraints.NORTHWEST;</b>
+<b class="fc">&nbsp;        panel.add(zodiacLabel, gbc);</b>
+&nbsp;
+&nbsp;        // Zodiac list
+<b class="fc">&nbsp;        zodiacList.setFont(font15);</b>
+<b class="fc">&nbsp;        zodiacList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);</b>
+<b class="fc">&nbsp;        zodiacList.setVisibleRowCount(5);</b>
+<b class="fc">&nbsp;        JScrollPane scrollPane = new JScrollPane(zodiacList);</b>
+<b class="fc">&nbsp;        scrollPane.setPreferredSize(new Dimension(250, 150));</b>
+&nbsp;
+<b class="fc">&nbsp;        gbc.gridx = 1;</b>
+<b class="fc">&nbsp;        gbc.gridy = 0;</b>
+<b class="fc">&nbsp;        gbc.gridwidth = 3;</b>
+<b class="fc">&nbsp;        gbc.weightx = 1.0;</b>
+<b class="fc">&nbsp;        gbc.fill = GridBagConstraints.BOTH;</b>
+<b class="fc">&nbsp;        gbc.anchor = GridBagConstraints.WEST;</b>
+<b class="fc">&nbsp;        panel.add(scrollPane, gbc);</b>
+&nbsp;
+<b class="fc">&nbsp;        addSection(panel);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds the status label panel.
+&nbsp;     */
+&nbsp;    private void addStatusPanel() {
+<b class="fc">&nbsp;        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));</b>
+<b class="fc">&nbsp;        panel.setBackground(new Color(255,240,247));</b>
+<b class="fc">&nbsp;        statusLabel.setFont(statusLabel.getFont().deriveFont(Font.PLAIN, 14f));</b>
+<b class="fc">&nbsp;        panel.add(statusLabel);</b>
+<b class="fc">&nbsp;        add(panel);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates default GridBagConstraints with common spacing and alignment.
+&nbsp;     *
+&nbsp;     * @return a configured GridBagConstraints instance
+&nbsp;     */
+&nbsp;    private GridBagConstraints createGbc() {
+<b class="fc">&nbsp;        GridBagConstraints gbc = new GridBagConstraints();</b>
+<b class="fc">&nbsp;        gbc.insets = new Insets(10, 5, 5, 5);</b>
+<b class="fc">&nbsp;        gbc.fill = GridBagConstraints.NONE;</b>
+<b class="fc">&nbsp;        gbc.anchor = GridBagConstraints.WEST;</b>
+<b class="fc">&nbsp;        return gbc;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Wraps and adds a section component with padding.
+&nbsp;     *
+&nbsp;     * @param component the component to add
+&nbsp;     */
+&nbsp;    private void addSection(JComponent component) {
+<b class="fc">&nbsp;        JPanel wrapper = new JPanel(new BorderLayout());</b>
+<b class="fc">&nbsp;        wrapper.setBackground(new Color(255,240,247));</b>
+<b class="fc">&nbsp;        wrapper.add(component, BorderLayout.WEST);</b>
+<b class="fc">&nbsp;        wrapper.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));</b>
+<b class="fc">&nbsp;        add(wrapper);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Restricts the min and max age fields to numeric input only.
+&nbsp;     */
+&nbsp;    private void setupNumberFilter() {
+<b class="fc">&nbsp;        DocumentFilter filter = new DocumentFilter() {</b>
+&nbsp;            @Override
+&nbsp;            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+&nbsp;                    throws BadLocationException {
+<b class="nc">&nbsp;                if (string.matches(&quot;\\d*&quot;)) {</b>
+<b class="nc">&nbsp;                    super.insertString(fb, offset, string, attr);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+&nbsp;            @Override
+&nbsp;            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+&nbsp;                    throws BadLocationException {
+<b class="pc">&nbsp;                if (text.matches(&quot;\\d*&quot;)) {</b>
+<b class="fc">&nbsp;                    super.replace(fb, offset, length, text, attrs);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        };
+<b class="fc">&nbsp;        ((AbstractDocument) minAgeField.getDocument()).setDocumentFilter(filter);</b>
+<b class="fc">&nbsp;        ((AbstractDocument) maxAgeField.getDocument()).setDocumentFilter(filter);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Registers an ActionListener for the search button.
+&nbsp;     *
+&nbsp;     * @param listener the ActionListener to register
+&nbsp;     */
+&nbsp;    public void addSearchListener(ActionListener listener) {
+<b class="fc">&nbsp;        searchButton.addActionListener(listener);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Registers an ActionListener for the reset button.
+&nbsp;     *
+&nbsp;     * @param listener the ActionListener to register
+&nbsp;     */
+&nbsp;    public void addResetListener(ActionListener listener) {
+<b class="fc">&nbsp;        resetButton.addActionListener(listener);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the keyword entered in the search field.
+&nbsp;     *
+&nbsp;     * @return the keyword string
+&nbsp;     */
+&nbsp;    public String getSearchKeyword() {
+<b class="fc">&nbsp;        return searchField.getText();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the minimum age entered.
+&nbsp;     *
+&nbsp;     * @return the minimum age string
+&nbsp;     */
+&nbsp;    public String getMinAge() {
+<b class="fc">&nbsp;        return minAgeField.getText();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the maximum age entered.
+&nbsp;     *
+&nbsp;     * @return the maximum age string
+&nbsp;     */
+&nbsp;    public String getMaxAge() {
+<b class="fc">&nbsp;        return maxAgeField.getText();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns a list of selected gender codes.
+&nbsp;     * 1 = Female, 2 = Male, 3 = Non-binary
+&nbsp;     *
+&nbsp;     * @return list of selected gender codes
+&nbsp;     */
+&nbsp;    public List&lt;Integer&gt; getSelectedGenders() {
+<b class="fc">&nbsp;        List&lt;Integer&gt; genders = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        if (femaleCheckBox.isSelected()) genders.add(1);</b>
+<b class="fc">&nbsp;        if (maleCheckBox.isSelected()) genders.add(2);</b>
+<b class="fc">&nbsp;        if (otherCheckBox.isSelected()) genders.add(3);</b>
+<b class="fc">&nbsp;        return genders;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns a list of selected zodiac signs.
+&nbsp;     *
+&nbsp;     * @return list of selected zodiac sign strings
+&nbsp;     */
+&nbsp;    public List&lt;String&gt; getSelectedZodiacs() {
+<b class="fc">&nbsp;        return zodiacList.getSelectedValuesList();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Resets all filters and form fields to default values.
+&nbsp;     */
+&nbsp;    public void resetFilters() {
+<b class="fc">&nbsp;        searchField.setText(&quot;&quot;);</b>
+<b class="fc">&nbsp;        minAgeField.setText(&quot;&quot;);</b>
+<b class="fc">&nbsp;        maxAgeField.setText(&quot;&quot;);</b>
+<b class="fc">&nbsp;        femaleCheckBox.setSelected(false);</b>
+<b class="fc">&nbsp;        maleCheckBox.setSelected(false);</b>
+<b class="fc">&nbsp;        otherCheckBox.setSelected(false);</b>
+<b class="fc">&nbsp;        zodiacList.clearSelection();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the message and color of the status label.
+&nbsp;     *
+&nbsp;     * @param message the message to display
+&nbsp;     * @param color   the color of the message text
+&nbsp;     */
+&nbsp;    public void setStatusMessage(String message, Color color) {
+<b class="fc">&nbsp;        statusLabel.setForeground(color);</b>
+<b class="fc">&nbsp;        statusLabel.setText(message);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-13 23:01</div>
+</div>
+</body>
+</html>

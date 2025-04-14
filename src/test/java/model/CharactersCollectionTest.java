@@ -8,6 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+
+/*
+ * This class contains unit tests for the CharactersCollection class.
+ * It tests the constructor, applyFilters, getSorted, loadData, setFilteredCharacters,
+ * getFiltered, emptyDataSource, filterChaining, and sortingEmptyList methods.
+ */
 class CharactersCollectionTest {
     private CharactersCollection collection;
     private static final List<CharacterRecord> MOCK_DATA = List.of(
@@ -20,8 +26,9 @@ class CharactersCollectionTest {
     );
 
     @BeforeEach
+    // set up the test
     void setup() {
-        // Mock JSON文件读取
+        // Mock JSON file reading
         try (MockedStatic<JSONFileHandler> mocked = mockStatic(JSONFileHandler.class)) {
             mocked.when(() -> JSONFileHandler.readJsonFile(anyString()))
                     .thenReturn(new ArrayList<>(MOCK_DATA));
@@ -30,12 +37,14 @@ class CharactersCollectionTest {
     }
 
     @Test
+    // test constructor
     void constructor_ShouldLoadDataCorrectly() {
         assertEquals(3, collection.getAllCharacters().size());
         assertEquals(3, collection.getFilteredCharacters().size());
     }
 
     @Test
+    // test applying filters
     void applyFilters_ShouldUpdateFilteredList() {
         // Age filter
         Filter ageFilter = c -> c.getAge() > 30;
@@ -47,6 +56,7 @@ class CharactersCollectionTest {
     }
 
     @Test
+    // test sorting the list
     void getSorted_ShouldReturnOrderedList() {
         // Name descending sort
         Comparator<CharacterRecord> nameComparator =
@@ -63,6 +73,7 @@ class CharactersCollectionTest {
     }
 
     @Test
+    // test loading data
     void loadData_ShouldResetFilteredList() {
         // Apply filter first
         collection.applyFilters(c -> c.getId() == 1);
@@ -79,6 +90,7 @@ class CharactersCollectionTest {
     }
 
     @Test
+    // test setting filtered characters
     void setFilteredCharacters_ShouldReplaceCurrentList() {
         List<CharacterRecord> newList = List.of(MOCK_DATA.get(0));
         collection.setFilteredCharacters(newList);
@@ -88,6 +100,7 @@ class CharactersCollectionTest {
     }
 
     @Test
+    // test getting an unmodifiable list
     void getFiltered_ShouldReturnUnmodifiableList() {
         assertThrows(UnsupportedOperationException.class, () -> {
             collection.getFilteredCharacters().add(MOCK_DATA.get(0));
@@ -95,6 +108,7 @@ class CharactersCollectionTest {
     }
 
     @Test
+    // test empty data source
     void emptyDataSource_ShouldHandleGracefully() {
         try (MockedStatic<JSONFileHandler> mocked = mockStatic(JSONFileHandler.class)) {
             mocked.when(() -> JSONFileHandler.readJsonFile(anyString()))
@@ -107,6 +121,7 @@ class CharactersCollectionTest {
     }
 
     @Test
+    // test filtering chaining
     void filterChaining_ShouldApplyLatestFilter() {
         collection.applyFilters(c -> c.getAge() > 30);
         assertEquals(2, collection.getFilteredCharacters().size());
@@ -116,6 +131,7 @@ class CharactersCollectionTest {
     }
 
     @Test
+    // test sorting an empty list
     void sortingEmptyList_ShouldReturnEmpty() {
         collection.applyFilters(c -> false);
         List<CharacterRecord> result = collection.getSorted(

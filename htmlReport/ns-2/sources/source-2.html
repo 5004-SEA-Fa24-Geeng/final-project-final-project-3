@@ -1,0 +1,242 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > MainController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">controller</a>
+</div>
+
+<h1>Coverage Summary for Class: MainController (controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MainController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    53.6%
+  </span>
+  <span class="absValue">
+    (15/28)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package controller;
+&nbsp;
+&nbsp;import model.CharactersCollection;
+&nbsp;import model.WishList;
+&nbsp;import view.MainFrame;
+&nbsp;import view.CharacterListPanel;
+&nbsp;import view.WishListPanel;
+&nbsp;
+&nbsp;/**
+&nbsp; * MainController serves as the central coordinator of the application.
+&nbsp; * It initializes models, views, and sub-controllers, and manages view updates and event wiring.
+&nbsp; */
+&nbsp;public class MainController {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The main application frame that contains all UI components.
+&nbsp;     */
+&nbsp;    private final MainFrame mainFrame;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The model that manages all character data and filtering.
+&nbsp;     */
+&nbsp;    private final CharactersCollection charactersCollection;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The model that stores the user&#39;s wish list.
+&nbsp;     */
+&nbsp;    private final WishList wishList;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Controller responsible for sorting logic and events.
+&nbsp;     */
+&nbsp;    private final SortController sortController;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Controller responsible for filtering logic and events.
+&nbsp;     */
+&nbsp;    private final FilterController filterController;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Controller responsible for wish list operations and synchronization with UI.
+&nbsp;     */
+&nbsp;    private final WishListController wishListController;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs and initializes the MainController.
+&nbsp;     * Sets up all models, views, controllers, event listeners, and displays the main UI.
+&nbsp;     */
+<b class="nc">&nbsp;    public MainController() {</b>
+&nbsp;        // Initialize models
+<b class="nc">&nbsp;        charactersCollection = new CharactersCollection();</b>
+<b class="nc">&nbsp;        wishList = new WishList();</b>
+&nbsp;
+&nbsp;        // Initialize main frame
+<b class="nc">&nbsp;        mainFrame = new MainFrame();</b>
+&nbsp;
+&nbsp;        // Initialize sort and filter controllers with refresh callbacks
+<b class="nc">&nbsp;        sortController = new SortController(</b>
+&nbsp;                charactersCollection,
+<b class="nc">&nbsp;                mainFrame.getSortPanel(),</b>
+&nbsp;                this::refreshCharacterList
+&nbsp;        );
+&nbsp;
+<b class="nc">&nbsp;        filterController = new FilterController(</b>
+&nbsp;                charactersCollection,
+<b class="nc">&nbsp;                mainFrame.getFilterPanel(),</b>
+&nbsp;                this::refreshCharacterList
+&nbsp;        );
+&nbsp;
+&nbsp;        // Access sub-panels from main frame
+<b class="nc">&nbsp;        CharacterListPanel characterListPanel = mainFrame.getCharacterListPanel();</b>
+<b class="nc">&nbsp;        WishListPanel wishListPanel = mainFrame.getWishListPanel();</b>
+&nbsp;
+&nbsp;        // Initialize wish list controller
+<b class="nc">&nbsp;        wishListController = new WishListController(</b>
+&nbsp;                wishList,
+&nbsp;                wishListPanel,
+&nbsp;                characterListPanel,
+&nbsp;                charactersCollection
+&nbsp;        );
+&nbsp;
+&nbsp;        // Debug: verify if listener is set on character panel
+<b class="nc">&nbsp;        System.out.println(&quot;CharacterListPanel listener set: &quot; + characterListPanel.isAddToWishListListenerSet());</b>
+&nbsp;
+&nbsp;        // Display UI
+<b class="nc">&nbsp;        mainFrame.setVisible(true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a MainController with injected dependencies.
+&nbsp;     * This constructor is primarily used for testing.
+&nbsp;     *
+&nbsp;     * @param mainFrame The main application frame
+&nbsp;     * @param charactersCollection The characters collection model
+&nbsp;     * @param wishList The wish list model
+&nbsp;     * @param sortController The sort controller
+&nbsp;     * @param filterController The filter controller
+&nbsp;     * @param wishListController The wish list controller
+&nbsp;     */
+&nbsp;    public MainController(MainFrame mainFrame,
+&nbsp;                         CharactersCollection charactersCollection,
+&nbsp;                         WishList wishList,
+&nbsp;                         SortController sortController,
+&nbsp;                         FilterController filterController,
+<b class="fc">&nbsp;                         WishListController wishListController) {</b>
+<b class="fc">&nbsp;        this.mainFrame = mainFrame;</b>
+<b class="fc">&nbsp;        this.charactersCollection = charactersCollection;</b>
+<b class="fc">&nbsp;        this.wishList = wishList;</b>
+<b class="fc">&nbsp;        this.sortController = sortController;</b>
+<b class="fc">&nbsp;        this.filterController = filterController;</b>
+<b class="fc">&nbsp;        this.wishListController = wishListController;</b>
+&nbsp;        
+&nbsp;        // Display UI
+<b class="fc">&nbsp;        mainFrame.setVisible(true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Starts the application logic by loading data and initializing views.
+&nbsp;     * This method should be called after the controller is constructed.
+&nbsp;     */
+&nbsp;    public void start() {
+<b class="fc">&nbsp;        charactersCollection.loadData();</b>
+<b class="fc">&nbsp;        refreshCharacterList();</b>
+<b class="fc">&nbsp;        sortController.updateView();</b>
+<b class="fc">&nbsp;        filterController.updateView();</b>
+<b class="fc">&nbsp;        wishListController.updateView();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Updates the character list panel with the currently filtered characters.
+&nbsp;     * Used as a callback after filtering or sorting.
+&nbsp;     */
+&nbsp;    private void refreshCharacterList() {
+<b class="fc">&nbsp;        mainFrame.getCharacterListPanel().setCharacterList(</b>
+<b class="fc">&nbsp;                charactersCollection.getFilteredCharacters()</b>
+&nbsp;        );
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-13 23:01</div>
+</div>
+</body>
+</html>
