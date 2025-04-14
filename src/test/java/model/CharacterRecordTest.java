@@ -6,10 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CharacterRecordTest {
-    private CharacterRecord fullParamsCharacter;
-    private CharacterRecord defaultCharacter;
+    private CharacterRecord fullParamsCharacter; // the character record to be tested 
+    private CharacterRecord defaultCharacter; // the character record to be tested
 
     @BeforeEach
+    // set up the test
     void setUp() {
         // Full parameter constructor
         fullParamsCharacter = new CharacterRecord(
@@ -71,18 +72,21 @@ class CharacterRecordTest {
 
     // Gender string conversion tests
     @Test
+    // test the getGenderString method with female gender code
     void getGenderString_ShouldReturnFemale_WhenGenderCode1() {
         fullParamsCharacter.setGender(1);
         assertEquals("Gender: Female", fullParamsCharacter.getGenderString());
     }
 
     @Test
+    // test the getGenderString method with male gender code
     void getGenderString_ShouldReturnMale_WhenGenderCode2() {
         fullParamsCharacter.setGender(2);
         assertEquals("Gender: Male", fullParamsCharacter.getGenderString());
     }
 
     @Test
+    // test the getGenderString method with non-binary gender code
     void getGenderString_ShouldReturnNonBinary_WhenOtherCodes() {
         fullParamsCharacter.setGender(3);
         assertEquals("Gender: Non-binary", fullParamsCharacter.getGenderString());
@@ -95,6 +99,7 @@ class CharacterRecordTest {
     }
 
     @Test
+    // test the getGenderString method with null gender code
     void getGenderString_ShouldThrowNPE_WhenGenderNull() {
         fullParamsCharacter.setGender(null);
         assertThrows(NullPointerException.class, () -> fullParamsCharacter.getGenderString());
@@ -102,6 +107,7 @@ class CharacterRecordTest {
 
     // Zodiac sign formatting tests
     @Test
+    // test the getZodiacSign method with valid zodiac sign
     void getZodiacSign_ShouldFormatWithSymbol() {
         String[] signs = {"Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
                 "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"};
@@ -115,12 +121,14 @@ class CharacterRecordTest {
     }
 
     @Test
+    // test the getZodiacSign method with unknown sign
     void getZodiacSign_ShouldReturnOriginal_WhenUnknownSign() {
         fullParamsCharacter.setZodiacSign("Unknown");
         assertEquals("Unknown", fullParamsCharacter.getZodiacSign());
     }
 
     @Test
+    // test the getZodiacSign method with null sign
     void getZodiacSign_ShouldThrowNPE_WhenSignNull() {
         fullParamsCharacter.setZodiacSign(null);
         assertThrows(NullPointerException.class, () -> fullParamsCharacter.getZodiacSign());
@@ -128,6 +136,7 @@ class CharacterRecordTest {
 
     // Boundary value tests
     @Test
+    // test the getAge method with boundary values
     void ageBoundaryValues_ShouldBeHandled() {
         fullParamsCharacter.setAge(0);
         assertEquals(0, fullParamsCharacter.getAge());
@@ -140,6 +149,7 @@ class CharacterRecordTest {
     }
 
     @Test
+    // test the getPopularity method with boundary values
     void popularityBoundaryValues_ShouldBeHandled() {
         fullParamsCharacter.setPopularity(0.0);
         assertEquals(0.0, fullParamsCharacter.getPopularity(), 0.001);
@@ -153,6 +163,7 @@ class CharacterRecordTest {
 
     // ToString validation
     @Test
+    // test the toString method with all fields
     void toString_ShouldContainAllFields() {
         String result = fullParamsCharacter.toString();
 

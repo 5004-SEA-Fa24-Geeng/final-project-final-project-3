@@ -4,12 +4,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
+/**
+ * The main frame of the application.
+ * 
+ * This class extends JFrame and is the main window of the application.
+ * It contains the main panel, which is a BorderLayout panel with a top panel,
+ * a left panel, a right panel, and a bottom panel.
+ */
 public class MainFrame extends JFrame {
     private SortPanel sortPanel;
     private WishListPanel wishListPanel;
     private FilterPanel filterPanel;
     private CharacterListPanel characterListPanel;
 
+    /**
+     * Constructor for the MainFrame class.
+     * 
+     * This constructor initializes the main frame with a title, default close operation,
+     * size, and location. It also initializes the components of the main frame.
+     */
     public MainFrame() {
         setTitle("Character Management System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -18,6 +31,12 @@ public class MainFrame extends JFrame {
         initComponents();
     }
 
+    /**
+     * Initializes the components of the main frame.
+     * 
+     * This method creates the main panel, upper panel, left panel, right panel,
+     * and adds them to the main frame.
+     */
     private void initComponents() {
         // create main panel
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
@@ -89,18 +108,46 @@ public class MainFrame extends JFrame {
         add(mainPanel);
     }
 
+    /**
+     * Getter method for the sort panel.
+     * 
+     * This method returns the sort panel.
+     * 
+     * @return the sort panel
+     */
     public SortPanel getSortPanel() {
         return sortPanel;
     }
 
+    /**
+     * Getter method for the wish list panel.
+     * 
+     * This method returns the wish list panel.
+     * 
+     * @return the wish list panel
+     */
     public WishListPanel getWishListPanel() {
         return wishListPanel;
     }
 
+    /**
+     * Getter method for the filter panel.
+     * 
+     * This method returns the filter panel.
+     * 
+     * @return the filter panel
+     */
     public FilterPanel getFilterPanel() {
         return filterPanel;
     }
 
+    /**
+     * Getter method for the character list panel.
+     * 
+     * This method returns the character list panel.
+     * 
+     * @return the character list panel
+     */
     public CharacterListPanel getCharacterListPanel() {
         return characterListPanel;
     }
