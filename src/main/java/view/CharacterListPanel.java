@@ -3,13 +3,8 @@ package view;
 import model.CharacterRecord;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
-import java.net.URL;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
+
 import util.ImageCache;  // cache the images to reduce loading time
 
 /**
@@ -17,17 +12,24 @@ import util.ImageCache;  // cache the images to reduce loading time
  * It provides functionality to add characters to the wishlist and update the count of characters.
  */
 public class CharacterListPanel extends JPanel {
+    /** Panel that holds the list of character panels. */
     private final JPanel contentPanel = new JPanel();
+    /** Listener for handling "add to wishlist" actions. */
     private AddToWishListListener addToWishListListener;
+    /** Panel used to display sorting controls and character count. */
     private SortPanel sortPanel;
 
+    /**
+     * Constructs a CharacterListPanel with the given sort panel.
+     * @param sortPanel the panel for sorting and displaying character count
+     */
     public CharacterListPanel(SortPanel sortPanel) {
         this.sortPanel = sortPanel;
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(400, 138));
         setMinimumSize(new Dimension(400, 138));
         setMaximumSize(new Dimension(400, 138));
-        setBackground(new Color(252,236,222));
+        setBackground(new Color(255,240,247));
         initComponents();
     }
 
@@ -53,13 +55,12 @@ public class CharacterListPanel extends JPanel {
      */
     private void initComponents() {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        contentPanel.setBackground(new Color(252,236,222));
+        contentPanel.setBackground(new Color(255,240,247));
         JScrollPane scrollPane = new JScrollPane(contentPanel);
         add(scrollPane, BorderLayout.CENTER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.getViewport().setBackground(new Color(252, 236, 222)); // ✅ ADD THIS
-        scrollPane.setBorder(BorderFactory.createEmptyBorder()); // (optional for seamless look)
-
+        scrollPane.getViewport().setBackground(new Color(255,240,247)); // ✅ ADD THIS
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(204, 0, 102), 2));
     }
 
     /**
@@ -82,12 +83,12 @@ public class CharacterListPanel extends JPanel {
      */
     private void addCharacterPanel(CharacterRecord character) {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
-        panel.setBackground(new Color(252, 236, 222)); // ✅ to match
+        panel.setBackground(new Color(255,240,247)); // ✅ to match
         panel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
         // left image panel
         JPanel imagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        imagePanel.setBackground(new Color(252, 236, 222)); // ✅
+        imagePanel.setBackground(new Color(255,240,247)); // ✅
         String imageUrl = "https://image.tmdb.org/t/p/w92" + character.getProfile();
         ImageIcon icon = ImageCache.getImage(imageUrl);
         if (icon != null) {
@@ -102,7 +103,7 @@ public class CharacterListPanel extends JPanel {
         infoPanel.setPreferredSize(new Dimension(200, 92));
         infoPanel.setMinimumSize(new Dimension(200, 92));
         infoPanel.setMaximumSize(new Dimension(200, 92));
-        infoPanel.setBackground(new Color(252,236,222));
+        infoPanel.setBackground(Color.WHITE);
         infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         
         JLabel nameLabel = new JLabel("Name: " + character.getName());
@@ -183,7 +184,8 @@ public class CharacterListPanel extends JPanel {
         buttonPanel.setPreferredSize(new Dimension(30, 92));
         buttonPanel.setMinimumSize(new Dimension(30, 92));
         buttonPanel.setMaximumSize(new Dimension(30, 92));
-        buttonPanel.setBackground(new Color(252, 236, 222));
+        buttonPanel.setBackground(Color.WHITE);
+
         ImageIcon heartIcon = new ImageIcon("src/main/resources/heart.png");
         Image scaled = heartIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         JButton addButton = new JButton(new ImageIcon(scaled));
@@ -191,29 +193,19 @@ public class CharacterListPanel extends JPanel {
         addButton.setBorderPainted(false);
         addButton.setContentAreaFilled(false);
         addButton.setFocusPainted(false);
-        addButton.setOpaque(false);
+        addButton.setOpaque(true);
         addButton.setToolTipText("Add to Wishlist");
-        // lets background show through
-
-
-
-
-        buttonPanel.setPreferredSize(new Dimension(30, 92));
-        buttonPanel.setMinimumSize(new Dimension(30, 92));
-        buttonPanel.setMaximumSize(new Dimension(30, 92));
-        buttonPanel.setBackground(new Color(252,236,222));
         addButton.setFont(new Font("Arial", Font.BOLD, 20));
         addButton.setPreferredSize(new Dimension(25, 25));
         addButton.setMargin(new Insets(0, 0, 0, 10));
         addButton.setFocusable(false);
-        addButton.setOpaque(true);
-        addButton.setBackground(new Color(252, 236, 222));
+        addButton.setBackground(Color.WHITE);
         addButton.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(200, 200, 200)),
-            BorderFactory.createEmptyBorder(0, 0, 0, 0)
+                BorderFactory.createLineBorder(new Color(200, 200, 200)),
+                BorderFactory.createEmptyBorder(0, 0, 0, 0)
         ));
         addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
         addButton.addActionListener(e -> {
             System.out.println("Button clicked for character: " + character.getName());
             if (addToWishListListener != null) {
@@ -223,7 +215,6 @@ public class CharacterListPanel extends JPanel {
                 System.out.println("addToWishListListener is null");
             }
         });
-        
         buttonPanel.add(addButton);
 
         // add panel to main panel
