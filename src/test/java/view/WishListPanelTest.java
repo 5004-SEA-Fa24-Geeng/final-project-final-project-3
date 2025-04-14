@@ -102,24 +102,23 @@ public class WishListPanelTest {
 
     @Test
     void testRemoveCharacterListener() {
-        // test remove character listener
         final int[] removedId = new int[1];
         wishListPanel.setRemoveCharacterListener(id -> removedId[0] = id);
-        
+
         // set test data
         wishListPanel.setWishList(testCharacters);
-        
-        // simulate click remove button
+
         JScrollPane scrollPane = (JScrollPane) wishListPanel.getComponent(0);
         JPanel contentPanel = (JPanel) scrollPane.getViewport().getView();
         JPanel characterPanel = (JPanel) contentPanel.getComponent(0);
-        JPanel buttonPanel = (JPanel) characterPanel.getComponent(2);
-        JButton removeButton = (JButton) buttonPanel.getComponent(0);
+        JPanel buttonPanel = (JPanel) characterPanel.getComponent(2);  // EAST panel
+        JPanel topRightWrapper = (JPanel) buttonPanel.getComponent(0); // wrapper inside NORTH
+        JButton removeButton = (JButton) topRightWrapper.getComponent(0); // the actual "-" button
         removeButton.doClick();
-        
-        // verify listener is called
+
         assertEquals(1, removedId[0], "Remove listener should be called with correct character ID");
     }
+
 
     @Test
     void testClearButtonListener() {
