@@ -158,6 +158,9 @@ class WishListControllerTest {
     // test the handleClearWishList method with success
     void testHandleClearWishListSuccess() {
         // prepare test data
+        Set<CharacterRecord> nonEmptyWishList = mock(Set.class);
+        when(nonEmptyWishList.isEmpty()).thenReturn(false);
+        when(wishListModel.getWishList()).thenReturn(nonEmptyWishList);
         when(wishListModel.removeAllCharacters()).thenReturn(true);
         
         // execute clear operation
@@ -173,6 +176,9 @@ class WishListControllerTest {
     // test the handleClearWishList method with failure
     void testHandleClearWishListFailure() {
         // prepare test data
+        Set<CharacterRecord> nonEmptyWishList = mock(Set.class);
+        when(nonEmptyWishList.isEmpty()).thenReturn(false);
+        when(wishListModel.getWishList()).thenReturn(nonEmptyWishList);
         when(wishListModel.removeAllCharacters()).thenReturn(false);
         
         // execute clear operation
@@ -182,6 +188,23 @@ class WishListControllerTest {
         assertEquals(400, response.getStatus(), "Clearing should fail");
         assertTrue(response.getMessage().contains("Failed To Clear The Wish List!"), 
             "Error message should indicate failure");
+    }
+    
+    @Test
+    // test the handleClearWishList method with empty wish list
+    void testHandleClearWishListEmpty() {
+        // prepare test data
+        Set<CharacterRecord> emptyWishList = mock(Set.class);
+        when(emptyWishList.isEmpty()).thenReturn(true);
+        when(wishListModel.getWishList()).thenReturn(emptyWishList);
+        
+        // execute clear operation
+        Response response = controller.handleClearWishList();
+        
+        // verify result
+        assertEquals(400, response.getStatus(), "Clearing should fail for empty wish list");
+        assertTrue(response.getMessage().contains("The wish list is empty!"), 
+            "Error message should indicate empty wish list");
     }
     
     @Test
