@@ -59,7 +59,7 @@ public class CharacterListPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(contentPanel);
         add(scrollPane, BorderLayout.CENTER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.getViewport().setBackground(new Color(255,240,247)); // ✅ ADD THIS
+        scrollPane.getViewport().setBackground(new Color(255,240,247));
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(204, 0, 102), 2));
     }
 
@@ -108,7 +108,7 @@ public class CharacterListPanel extends JPanel {
      */
     private JPanel createImagePanel(CharacterRecord character) {
         JPanel imagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        imagePanel.setBackground(new Color(255,240,247)); // ✅
+        imagePanel.setBackground(Color.WHITE);
         
         String imageUrl = "https://image.tmdb.org/t/p/w92" + character.getProfile();
         ImageIcon icon = ImageCache.getImage(imageUrl);
