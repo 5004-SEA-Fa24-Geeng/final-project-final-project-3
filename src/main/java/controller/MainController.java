@@ -87,6 +87,34 @@ public class MainController {
     }
 
     /**
+     * Constructs a MainController with injected dependencies.
+     * This constructor is primarily used for testing.
+     *
+     * @param mainFrame The main application frame
+     * @param charactersCollection The characters collection model
+     * @param wishList The wish list model
+     * @param sortController The sort controller
+     * @param filterController The filter controller
+     * @param wishListController The wish list controller
+     */
+    public MainController(MainFrame mainFrame,
+                         CharactersCollection charactersCollection,
+                         WishList wishList,
+                         SortController sortController,
+                         FilterController filterController,
+                         WishListController wishListController) {
+        this.mainFrame = mainFrame;
+        this.charactersCollection = charactersCollection;
+        this.wishList = wishList;
+        this.sortController = sortController;
+        this.filterController = filterController;
+        this.wishListController = wishListController;
+        
+        // Display UI
+        mainFrame.setVisible(true);
+    }
+
+    /**
      * Starts the application logic by loading data and initializing views.
      * This method should be called after the controller is constructed.
      */

@@ -1,0 +1,297 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > FilterController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">controller</a>
+</div>
+
+<h1>Coverage Summary for Class: FilterController (controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FilterController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62.5%
+  </span>
+  <span class="absValue">
+    (5/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    42.5%
+  </span>
+  <span class="absValue">
+    (17/40)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (30/50)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package controller;
+&nbsp;
+&nbsp;import model.CharactersCollection;
+&nbsp;import model.Filter;
+&nbsp;import view.FilterPanel;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.ActionEvent;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * Controller for handling filter-related user interactions in the GUI.
+&nbsp; * Coordinates between the view (FilterPanel) and model (CharactersCollection)
+&nbsp; * to apply composite filters and update the display.
+&nbsp; */
+&nbsp;public class FilterController implements IFilterController, IController {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The model that stores and filters the list of characters.
+&nbsp;     */
+&nbsp;    private final CharactersCollection model;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The view panel that provides UI components for filter input.
+&nbsp;     */
+&nbsp;    private final FilterPanel view;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The callback function used to refresh the character list in the UI.
+&nbsp;     */
+&nbsp;    private final Runnable refreshCallback;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a FilterController with the specified model, view, and refresh action.
+&nbsp;     *
+&nbsp;     * @param model           the character collection to be filtered
+&nbsp;     * @param view            the panel providing UI components for filtering
+&nbsp;     * @param refreshCallback the callback to refresh the character list view
+&nbsp;     */
+&nbsp;    public FilterController(CharactersCollection model,
+&nbsp;                            FilterPanel view,
+<b class="fc">&nbsp;                            Runnable refreshCallback) {</b>
+<b class="fc">&nbsp;        this.model = model;</b>
+<b class="fc">&nbsp;        this.view = view;</b>
+<b class="fc">&nbsp;        this.refreshCallback = refreshCallback;</b>
+<b class="fc">&nbsp;        initEventHandlers();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initializes event handlers for search and reset actions.
+&nbsp;     */
+&nbsp;    private void initEventHandlers() {
+<b class="fc">&nbsp;        view.addSearchListener(this::onSearch);</b>
+<b class="fc">&nbsp;        view.addResetListener(this::onReset);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the search button click event.
+&nbsp;     * Applies composite filters based on user input.
+&nbsp;     *
+&nbsp;     * @param e the ActionEvent triggered by the search button
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void onSearch(ActionEvent e) {
+&nbsp;        try {
+<b class="nc">&nbsp;            Filter filter = buildCompositeFilter();</b>
+<b class="nc">&nbsp;            model.applyFilters(filter);</b>
+<b class="nc">&nbsp;            view.setStatusMessage(&quot;Results updated&quot;, new Color(0, 128, 0));</b>
+<b class="nc">&nbsp;            refreshCallback.run();</b>
+<b class="nc">&nbsp;        } catch (IllegalArgumentException ex) {</b>
+<b class="nc">&nbsp;            view.setStatusMessage(ex.getMessage(), Color.RED);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the reset button click event.
+&nbsp;     * Resets all filters and reapplies default filtering.
+&nbsp;     *
+&nbsp;     * @param e the ActionEvent triggered by the reset button
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void onReset(ActionEvent e) {
+<b class="nc">&nbsp;        view.resetFilters();</b>
+<b class="nc">&nbsp;        onSearch(e);</b>
+<b class="nc">&nbsp;        view.setStatusMessage(&quot;Reset successfully&quot;, new Color(0, 128, 0));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Builds a composite filter based on the current values in the view.
+&nbsp;     * Combines filters for gender, age, zodiac sign, and keyword.
+&nbsp;     *
+&nbsp;     * @return the composite Filter to be applied
+&nbsp;     * @throws IllegalArgumentException if input validation fails
+&nbsp;     */
+&nbsp;    private Filter buildCompositeFilter() throws IllegalArgumentException {
+<b class="fc">&nbsp;        Filter filter = character -&gt; true;</b>
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Integer&gt; genders = view.getSelectedGenders();</b>
+<b class="pc">&nbsp;        if (!genders.isEmpty()) {</b>
+<b class="nc">&nbsp;            filter = filter.and(c -&gt; genders.contains(c.getGender()));</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Filter ageFilter = buildAgeFilter();</b>
+<b class="pc">&nbsp;        if (ageFilter != null) {</b>
+<b class="nc">&nbsp;            filter = filter.and(ageFilter);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        List&lt;String&gt; zodiacs = view.getSelectedZodiacs();</b>
+<b class="pc">&nbsp;        if (!zodiacs.isEmpty()) {</b>
+<b class="nc">&nbsp;            filter = filter.and(c -&gt; zodiacs.contains(c.getZodiacSign()));</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        String keyword = view.getSearchKeyword();</b>
+<b class="pc">&nbsp;        if (keyword != null &amp;&amp; !keyword.isBlank()) {</b>
+<b class="nc">&nbsp;            filter = filter.and(c -&gt; c.getName().toLowerCase().contains(keyword.toLowerCase()));</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return filter;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Builds a filter for age range based on the min and max age input fields.
+&nbsp;     *
+&nbsp;     * @return the age-based Filter or null if both fields are empty
+&nbsp;     * @throws IllegalArgumentException if input is invalid or range is incorrect
+&nbsp;     */
+&nbsp;    private Filter buildAgeFilter() throws IllegalArgumentException {
+<b class="fc">&nbsp;        String minAgeStr = view.getMinAge();</b>
+<b class="fc">&nbsp;        String maxAgeStr = view.getMaxAge();</b>
+&nbsp;
+<b class="pc">&nbsp;        if ((minAgeStr == null || minAgeStr.trim().isEmpty()) &amp;&amp;</b>
+<b class="pc">&nbsp;                (maxAgeStr == null || maxAgeStr.trim().isEmpty())) {</b>
+<b class="fc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            int minAge = parseAge(minAgeStr, 0);</b>
+<b class="fc">&nbsp;            int maxAge = parseAge(maxAgeStr, Integer.MAX_VALUE);</b>
+&nbsp;
+<b class="pc">&nbsp;            if (maxAgeStr == null || maxAgeStr.trim().isEmpty()) {</b>
+<b class="nc">&nbsp;                return character -&gt; character.getAge() &gt;= minAge;</b>
+&nbsp;            }
+&nbsp;
+<b class="pc">&nbsp;            if (minAgeStr == null || minAgeStr.trim().isEmpty()) {</b>
+<b class="nc">&nbsp;                return character -&gt; character.getAge() &lt;= maxAge;</b>
+&nbsp;            }
+&nbsp;
+<b class="pc">&nbsp;            if (minAge &gt; maxAge) {</b>
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;Age range is not valid&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="pc">&nbsp;            return character -&gt; character.getAge() &gt;= minAge &amp;&amp; character.getAge() &lt;= maxAge;</b>
+<b class="nc">&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Age must be a valid number&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Parses a string into an integer with a default fallback.
+&nbsp;     *
+&nbsp;     * @param input        the string input
+&nbsp;     * @param defaultValue the default value if input is empty
+&nbsp;     * @return the parsed integer or default
+&nbsp;     */
+&nbsp;    private int parseAge(String input, int defaultValue) {
+<b class="pc">&nbsp;        if (input == null || input.trim().isEmpty()) {</b>
+<b class="nc">&nbsp;            return defaultValue;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return Integer.parseInt(input.trim());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Updates the view status label and clears any previous messages.
+&nbsp;     * Called when the controller is re-initialized.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void updateView() {
+<b class="nc">&nbsp;        view.setStatusMessage(&quot;&quot;, Color.BLACK);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-13 23:01</div>
+</div>
+</body>
+</html>

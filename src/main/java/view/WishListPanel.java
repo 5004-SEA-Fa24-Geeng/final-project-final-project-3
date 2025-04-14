@@ -92,9 +92,9 @@ public class WishListPanel extends JPanel {
     private void addCharacterPanel(CharacterRecord character) {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
         panel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-        panel.setMaximumSize(new Dimension(400, 138));  // set maximum height
-        panel.setPreferredSize(new Dimension(400, 138));  // set preferred height
-        panel.setMinimumSize(new Dimension(400, 138));  // set minimum height
+        panel.setMaximumSize(new Dimension(380, 138));
+        panel.setPreferredSize(new Dimension(380, 138));
+        panel.setMinimumSize(new Dimension(380, 138));
 
         // left image panel
         JPanel imagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -202,9 +202,9 @@ public class WishListPanel extends JPanel {
 
         // right button panel
         JPanel buttonPanel = new JPanel(new BorderLayout());
-        buttonPanel.setPreferredSize(new Dimension(37, 92));
-        buttonPanel.setMinimumSize(new Dimension(37, 92));
-        buttonPanel.setMaximumSize(new Dimension(37, 92));
+        buttonPanel.setPreferredSize(new Dimension(57, 92));
+        buttonPanel.setMinimumSize(new Dimension(57, 92));
+        buttonPanel.setMaximumSize(new Dimension(57, 92));
         buttonPanel.setBackground(Color.WHITE);
         JPanel topRightWrapper = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0)); // 🔧 aligns to top-right
         topRightWrapper.setOpaque(false); // Let background show through

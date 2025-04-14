@@ -37,6 +37,8 @@ public class JSONFileHandler {
             jsonObject.put("gender", character.getGender());
             jsonObject.put("zodiacSign", character.getZodiacSign());
             jsonObject.put("profile", character.getProfile());
+            jsonObject.put("birthday", character.getBirthday());
+            jsonObject.put("nationality", character.getNationality());
             jsonArray.add(jsonObject);
         }
 

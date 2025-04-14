@@ -9,11 +9,18 @@ import org.junit.jupiter.api.BeforeEach;
 import javax.swing.*;
 import java.util.List;
 
+/**
+ * Test class for the WishListPanel class.
+ * 
+ * This class contains unit tests for the WishListPanel class.
+ * It tests the setRemoveCharacterListener, setWishList, addClearWishListListener, addSaveToFileListener, updateView, testSetWishList, testSetEmptyWishList, testRemoveCharacterListener, testClearButtonListener, and testSaveButtonListener methods.
+ */
 public class WishListPanelTest {
     private WishListPanel wishListPanel;
     private List<CharacterRecord> testCharacters;
 
     @BeforeEach
+    // set up the test
     void setUp() {
         wishListPanel = new WishListPanel();
         testCharacters = new ArrayList<>();
@@ -42,6 +49,7 @@ public class WishListPanelTest {
     }
 
     @Test
+    // test the setRemoveCharacterListener method
     void setRemoveCharacterListener() {
         WishListPanel.RemoveCharacterListener listener = characterId -> {};
         wishListPanel.setRemoveCharacterListener(listener);
@@ -49,12 +57,14 @@ public class WishListPanelTest {
     }
 
     @Test
+    // test the setWishList method
     void setWishList() {
         wishListPanel.setWishList(testCharacters);
         assertNotNull(wishListPanel);
     }
 
     @Test
+    // test the addClearWishListListener method
     void addClearWishListListener() {
         ActionListener listener = e -> {};
         wishListPanel.addClearWishListListener(listener);
@@ -62,6 +72,7 @@ public class WishListPanelTest {
     }
 
     @Test
+    // test the addSaveToFileListener method
     void addSaveToFileListener() {
         ActionListener listener = e -> {};
         wishListPanel.addSaveToFileListener(listener);
@@ -69,12 +80,14 @@ public class WishListPanelTest {
     }
 
     @Test
+    // test the updateView method
     void updateView() {
         wishListPanel.updateView();
         assertNotNull(wishListPanel);
     }
 
     @Test
+    // test the testSetWishList method
     void testSetWishList() {
         // test setting wish list
         wishListPanel.setWishList(testCharacters);
@@ -88,6 +101,7 @@ public class WishListPanelTest {
     }
 
     @Test
+    // test the testSetEmptyWishList method
     void testSetEmptyWishList() {
         // test setting empty wish list
         wishListPanel.setWishList(new ArrayList<>());
@@ -101,6 +115,7 @@ public class WishListPanelTest {
     }
 
     @Test
+    // test the testRemoveCharacterListener method
     void testRemoveCharacterListener() {
         final int[] removedId = new int[1];
         wishListPanel.setRemoveCharacterListener(id -> removedId[0] = id);
@@ -119,8 +134,8 @@ public class WishListPanelTest {
         assertEquals(1, removedId[0], "Remove listener should be called with correct character ID");
     }
 
-
     @Test
+    // test the testClearButtonListener method
     void testClearButtonListener() {
         // test clear button listener
         final boolean[] listenerCalled = new boolean[1];
@@ -139,6 +154,7 @@ public class WishListPanelTest {
     }
 
     @Test
+    // test the testSaveButtonListener method
     void testSaveButtonListener() {
         // test save button listener
         final boolean[] listenerCalled = new boolean[1];

@@ -9,11 +9,18 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Test class for the SortPanel class.
+ * 
+ * This class contains unit tests for the SortPanel class.
+ * It tests the getSelectedSortOption, getSortOrder, setCount, and addSortListener methods.
+ */
 class SortPanelTest {
     private SortPanel sortPanel;
     private List<CharacterRecord> testCharacters;
 
     @BeforeEach
+    // set up the test
     void setUp() {
         sortPanel = new SortPanel();
         testCharacters = new ArrayList<>();
@@ -42,6 +49,7 @@ class SortPanelTest {
     }
 
     @Test
+    // test the getSelectedSortOption method
     void testGetSelectedSortOption() {
         // test getting selected sort option
         JComboBox<String> sortFieldComboBox = null;
@@ -57,6 +65,7 @@ class SortPanelTest {
     }
 
     @Test
+    // test the getSortOrder method
     void testGetSortOrder() {
         // test getting sort order
         JComboBox<String> sortOrderComboBox = null;
@@ -82,6 +91,7 @@ class SortPanelTest {
     }
 
     @Test
+    // test the setCount method
     void testSetCount() {
         // test setting count
         sortPanel.setCount(5);
@@ -97,6 +107,7 @@ class SortPanelTest {
     }
 
     @Test
+    // test the addSortListener method
     void testAddSortListener() {
         // test adding sort listener
         final boolean[] listenerCalled = new boolean[1];
@@ -118,6 +129,7 @@ class SortPanelTest {
     }
 
     @Test
+    // test the updateView method
     void testUpdateView() {
         // test updating view
         sortPanel.updateView();
