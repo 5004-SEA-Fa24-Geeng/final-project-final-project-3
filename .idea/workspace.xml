@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1dd2c0d9-10e1-45c8-8769-588fda56063c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/final-project-final-project-3.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/RemoveCharacterListener.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="final-project-final-project-3" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2vBRVgvpkWVpg89AfEZ8czms8Li" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Gradle.Build final-project-final-project-3.executor": "Run",
+    "Gradle.CharacterRecordTest.executor": "Run",
+    "Gradle.CharacterRecordTest.setId.executor": "Run",
+    "Gradle.CharacterRecordTest.settersAndGetters_ShouldWorkCorrectly.executor": "Run",
+    "Gradle.FilterControllerTest.executor": "Run",
+    "Gradle.Tests in 'final-project-final-project-3.test'.executor": "Run",
+    "Gradle.final-project-final-project-3 [:Main.main()].executor": "Run",
+    "JUnit.All in final-project-final-project-3.test (1).executor": "Run",
+    "JUnit.All in final-project-final-project-3.test (2).executor": "Run",
+    "JUnit.All in final-project-final-project-3.test.executor": "Run",
+    "JUnit.CharacterRecordTest.executor": "Run",
+    "JUnit.CharacterRecordTest.settersAndGetters_ShouldWorkCorrectly.executor": "Run",
+    "JUnit.CharactersCollectionTest.executor": "Run",
+    "JUnit.JSONFileHandlerTest.executor": "Run",
+    "JUnit.JSONFileHandlerTest.saveWishListToFile_ShouldCreateValidFile.executor": "Run",
+    "JUnit.JSONFileHandlerTest.testReadJsonFileSuccess.executor": "Run",
+    "JUnit.ResponseTest.executor": "Run",
+    "JUnit.SortComparatorsTest.executor": "Run",
+    "JUnit.WishListControllerTest.testHandleClearWishListFailure.executor": "Run",
+    "JUnit.WishListControllerTest.testHandleClearWishListSuccess.executor": "Run",
+    "JUnit.WishListTest.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "new-merge",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "D:/data/lulu data/NEU/课程/5004 Object-Oriented Design/final project/final-project-final-project-3/src/main/java/model",
+    "last_opened_file_path": "D:/data/lulu data/NEU/课程/5004 Object-Oriented Design/final project/final-project-final-project-3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="model" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="model" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.WishListControllerTest.testHandleClearWishListSuccess">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="final-project-final-project-3.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in final-project-final-project-3.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="final-project-final-project-3.test" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in final-project-final-project-3.test (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="final-project-final-project-3.test" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WishListControllerTest.testHandleClearWishListFailure" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="final-project-final-project-3.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.WishListControllerTest" />
+      <option name="METHOD_NAME" value="testHandleClearWishListFailure" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WishListControllerTest.testHandleClearWishListSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="final-project-final-project-3.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.WishListControllerTest" />
+      <option name="METHOD_NAME" value="testHandleClearWishListSuccess" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.WishListControllerTest.testHandleClearWishListSuccess" />
+        <item itemvalue="JUnit.All in final-project-final-project-3.test (2)" />
+        <item itemvalue="JUnit.WishListControllerTest.testHandleClearWishListFailure" />
+        <item itemvalue="JUnit.All in final-project-final-project-3.test (1)" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1dd2c0d9-10e1-45c8-8769-588fda56063c" name="Changes" comment="" />
+      <created>1743616505506</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743616505506</updated>
+      <workItem from="1743616506659" duration="2187000" />
+      <workItem from="1743639446460" duration="2395000" />
+      <workItem from="1743700075656" duration="3165000" />
+      <workItem from="1743713641854" duration="1734000" />
+      <workItem from="1743715899548" duration="10000" />
+      <workItem from="1743716032089" duration="7000" />
+      <workItem from="1743716059899" duration="1493000" />
+      <workItem from="1743719019641" duration="6265000" />
+      <workItem from="1744305287803" duration="59000" />
+      <workItem from="1744305386177" duration="2046000" />
+      <workItem from="1744307867837" duration="1460000" />
+      <workItem from="1744492959585" duration="23000" />
+      <workItem from="1744492999436" duration="3670000" />
+      <workItem from="1744496811292" duration="203000" />
+      <workItem from="1744497045867" duration="302000" />
+      <workItem from="1744497445303" duration="314000" />
+      <workItem from="1744497869873" duration="23000" />
+      <workItem from="1744497956248" duration="56000" />
+      <workItem from="1744498033340" duration="384000" />
+      <workItem from="1744498450309" duration="556000" />
+      <workItem from="1744499042262" duration="1138000" />
+      <workItem from="1744500224080" duration="1262000" />
+      <workItem from="1744501518742" duration="6000" />
+      <workItem from="1744501882174" duration="3846000" />
+      <workItem from="1744506195711" duration="37000" />
+      <workItem from="1744611425130" duration="2816000" />
+      <workItem from="1744614276859" duration="95000" />
+      <workItem from="1744654114078" duration="23000" />
+      <workItem from="1744654147976" duration="301000" />
+      <workItem from="1744655244745" duration="460000" />
+      <workItem from="1744655749200" duration="882000" />
+      <workItem from="1744664753865" duration="28000" />
+      <workItem from="1744664788838" duration="43000" />
+      <workItem from="1744664874386" duration="16000" />
+      <workItem from="1744664902047" duration="2000" />
+      <workItem from="1744664917502" duration="34000" />
+      <workItem from="1744664958776" duration="5000" />
+      <workItem from="1744664991863" duration="174000" />
+      <workItem from="1744665199835" duration="2453000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

@@ -30,17 +30,17 @@ public class MainController {
     /**
      * Controller responsible for sorting logic and events.
      */
-    private final SortController sortController;
+    private final IController sortController;
 
     /**
      * Controller responsible for filtering logic and events.
      */
-    private final FilterController filterController;
+    private final IController filterController;
 
     /**
      * Controller responsible for wish list operations and synchronization with UI.
      */
-    private final WishListController wishListController;
+    private final IController wishListController;
 
     /**
      * Constructs and initializes the MainController.
