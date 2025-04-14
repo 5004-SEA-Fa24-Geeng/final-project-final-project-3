@@ -18,7 +18,7 @@ import java.util.List;
  * Controller class responsible for handling sorting actions on character data.
  * Aligns with WishListController structure.
  */
-public class SortController implements ISortController, IController {
+public class SortController implements ISortController {
     /**
      * The collection of characters to be sorted.
      */

@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1dd2c0d9-10e1-45c8-8769-588fda56063c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_core_2_17_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_databind_2_17_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/CharacterListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/CharacterListPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/WishListControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/WishListControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +126,7 @@
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.final-project-final-project-3 [test]">
+  <component name="RunManager">
     <configuration name="final-project-final-project-3 [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -271,7 +262,7 @@
       <workItem from="1744664958776" duration="5000" />
       <workItem from="1744664991863" duration="174000" />
       <workItem from="1744665199835" duration="2453000" />
-      <workItem from="1744668246665" duration="38000" />
+      <workItem from="1744668246665" duration="1798000" />
     </task>
     <servers />
   </component>

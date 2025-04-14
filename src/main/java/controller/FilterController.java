@@ -14,7 +14,7 @@ import java.util.List;
  * Coordinates between the view (FilterPanel) and model (CharactersCollection)
  * to apply composite filters and update the display.
  */
-public class FilterController implements IFilterController, IController {
+public class FilterController implements IFilterController {
 
     /**
      * The model that stores and filters the list of characters.
