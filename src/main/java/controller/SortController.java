@@ -8,7 +8,7 @@ import static model.SortComparators.*;
 
 import view.SortPanel;
 
-import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Comparator;
@@ -58,14 +58,19 @@ public class SortController implements ISortController {
                 boolean ascending = order.equals("Ascending");
 
                 Comparator<CharacterRecord> comparator;
-                if (field.equals("Name")) {
-                    comparator = Comparator.comparing(CharacterRecord::getName);
-                } else if (field.equals("Age")) {
-                    comparator = Comparator.comparingInt(CharacterRecord::getAge);
-                } else if (field.equals("Popularity")) {
-                    comparator = Comparator.comparingDouble(CharacterRecord::getPopularity);
-                } else {
-                    throw new IllegalArgumentException("Invalid sort field: " + field);
+
+                switch (field) {
+                    case "Name":
+                        comparator = BY_NAME;
+                        break;
+                    case "Age":
+                        comparator = BY_AGE;
+                        break;
+                    case "Popularity":
+                        comparator = BY_POPULARITY;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Invalid sort field: " + field);
                 }
 
                 if (!ascending) {
@@ -78,6 +83,7 @@ public class SortController implements ISortController {
             }
         });
     }
+
 
     /**
      * Perform the sorting based on the given comparator.
