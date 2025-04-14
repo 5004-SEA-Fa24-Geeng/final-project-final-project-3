@@ -83,12 +83,11 @@ public class CharacterListPanel extends JPanel {
      */
     private void addCharacterPanel(CharacterRecord character) {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
-        panel.setBackground(new Color(255,240,247)); // ✅ to match
         panel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
         // left image panel
         JPanel imagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        imagePanel.setBackground(new Color(255,240,247)); // ✅
+        imagePanel.setBackground(Color.WHITE);
         String imageUrl = "https://image.tmdb.org/t/p/w92" + character.getProfile();
         ImageIcon icon = ImageCache.getImage(imageUrl);
         if (icon != null) {
