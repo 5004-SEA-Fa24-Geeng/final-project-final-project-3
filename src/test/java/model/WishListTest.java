@@ -20,14 +20,7 @@ class WishListTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        resetStaticWishList();
         initMockDependencies();
-    }
-
-    private void resetStaticWishList() throws Exception {
-        Field field = WishList.class.getDeclaredField("wishList");
-        field.setAccessible(true);
-        ((Set<?>) field.get(null)).clear();
     }
 
     private void initMockDependencies() throws Exception {
