@@ -13,7 +13,7 @@ public class WishList {
     /**
      * Use a LinkedHashSet as a wish list.
      **/
-    static Set<CharacterRecord> wishList = new LinkedHashSet();
+    private Set<CharacterRecord> wishList = new LinkedHashSet();
 
     /**
      * Get an instance of the CharactersCollection Class.
