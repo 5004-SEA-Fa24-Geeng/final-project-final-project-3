@@ -77,9 +77,10 @@ public class SortController implements ISortController {
                     comparator = comparator.reversed();
                 }
 
-                List<CharacterRecord> sorted = model.getSorted(model.getFilteredCharacters(), comparator);
-                model.setFilteredCharacters(sorted);
-                refreshCallback.run();
+                Response response = handleSortItems(comparator);
+                if (response.getStatus() == 200) {
+                    refreshCallback.run();
+                }
             }
         });
     }
