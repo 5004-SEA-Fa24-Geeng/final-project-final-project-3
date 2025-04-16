@@ -15,7 +15,7 @@ This readme should contain the following information:
   - Description: This application is a Character Management System built using Java and the MVC (Model-View-Controller) architecture. It provides a user-friendly interface for managing and viewing celebrity information, with features including:
     - Display and manage celebrity profiles
     - Build a wishlist
-    - get info from online API
+    - Get info from online API
     - Show celebrity image
     - Search celebrity's name
     - Filter celebrity list
