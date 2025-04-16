@@ -56,13 +56,7 @@ This readme should contain the following information:
     
        4. Running the Application
           After successful build, run:
-          ```
-          gradle run
-          ```
-          Or run the JAR directly:
-          ```
-          java -jar build/libs/final-project-final-project-3-1.0.jar
-          ```
+           Main.java
     
        5. Using the Application
            - Main window will open automatically
