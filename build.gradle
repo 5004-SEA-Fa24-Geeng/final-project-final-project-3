@@ -124,3 +124,9 @@ test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
 }
+
+
+task run(type: JavaExec) {
+    mainClass = 'Main'
+    classpath = sourceSets.main.runtimeClasspath
+}
