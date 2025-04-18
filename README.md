@@ -59,12 +59,9 @@ This readme should contain the following information:
           ```
           gradle run
           ```
-          Or run the JAR directly:
-          ```
-          java -jar build/libs/final-project-final-project-3-1.0.jar
-          ```
+          Or run Main.java
     
-       5. Using the Application
+       6. Using the Application
            - Main window will open automatically
            - Use filter panel to search celebrities
            - Click heart icon to add to wishlist
