@@ -55,12 +55,15 @@ This readme should contain the following information:
            - Create executable JAR
     
        4. Running the Application
-          After successful build, run:
+          After successful build,
+          you can either
+          run Main.java directly
+          OR
+          run:
           ```
           gradle run
           ```
           
-    
        6. Using the Application
            - Main window will open automatically
            - Use filter panel to search celebrities
