@@ -59,7 +59,7 @@ This readme should contain the following information:
           ```
           gradle run
           ```
-          Or run Main.java
+          
     
        6. Using the Application
            - Main window will open automatically
