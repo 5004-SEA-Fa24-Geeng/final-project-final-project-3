@@ -45,14 +45,14 @@ public class SortPanel extends JPanel {
 
         // add sort field selection box
         JLabel sortByLabel = new JLabel("Sort by:");
-        sortByLabel.setFont(largeFont); // 🔧 apply font
+        sortByLabel.setFont(largeFont);
         add(sortByLabel);
         sortFieldComboBox.setFont(largeFont);
         add(sortFieldComboBox);
 
         // add sort order selection box
         JLabel orderLabel = new JLabel("Order:");
-        orderLabel.setFont(largeFont); // 🔧 apply font
+        orderLabel.setFont(largeFont);
         add(orderLabel);
         sortOrderComboBox.setFont(largeFont);
         add(sortOrderComboBox);
